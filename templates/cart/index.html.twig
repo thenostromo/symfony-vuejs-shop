@@ -1,0 +1,193 @@
+{% extends 'base.html.twig' %}
+
+{% block title %}Log in!{% endblock %}
+
+{% block body %}
+    <nav aria-label="breadcrumb" class="breadcrumb-nav">
+
+    </nav><!-- End .breadcrumb-nav -->
+
+    <div class="page-content">
+        <div class="cart">
+            <div class="container">
+                <div class="row">
+                    <div class="col-lg-9">
+                        <table class="table table-cart table-mobile">
+                            <thead>
+                            <tr>
+                                <th>Product</th>
+                                <th>Price</th>
+                                <th>Quantity</th>
+                                <th>Total</th>
+                                <th></th>
+                            </tr>
+                            </thead>
+
+                            <tbody id="cartPageProductsList">
+
+                            </tbody>
+                        </table><!-- End .table table-wishlist -->
+
+                    </div><!-- End .col-lg-9 -->
+                    <aside class="col-lg-3">
+                        <div class="summary summary-cart">
+                            <h3 class="summary-title">Cart Total</h3><!-- End .summary-title -->
+
+                            <table class="table table-summary">
+                                <tbody>
+                                <tr class="summary-subtotal">
+                                    <td>Subtotal:</td>
+                                    <td>$160.00</td>
+                                </tr><!-- End .summary-subtotal -->
+                                <tr class="summary-shipping">
+                                    <td>Shipping:</td>
+                                    <td>&nbsp;</td>
+                                </tr>
+
+                                <tr class="summary-shipping-row">
+                                    <td>
+                                        <div class="custom-control custom-radio">
+                                            <input type="radio" id="free-shipping" name="shipping" class="custom-control-input">
+                                            <label class="custom-control-label" for="free-shipping">Free Shipping</label>
+                                        </div><!-- End .custom-control -->
+                                    </td>
+                                    <td>$0.00</td>
+                                </tr><!-- End .summary-shipping-row -->
+
+                                <tr class="summary-shipping-row">
+                                    <td>
+                                        <div class="custom-control custom-radio">
+                                            <input type="radio" id="standart-shipping" name="shipping" class="custom-control-input">
+                                            <label class="custom-control-label" for="standart-shipping">Standart:</label>
+                                        </div><!-- End .custom-control -->
+                                    </td>
+                                    <td>$10.00</td>
+                                </tr><!-- End .summary-shipping-row -->
+
+                                <tr class="summary-shipping-row">
+                                    <td>
+                                        <div class="custom-control custom-radio">
+                                            <input type="radio" id="express-shipping" name="shipping" class="custom-control-input">
+                                            <label class="custom-control-label" for="express-shipping">Express:</label>
+                                        </div><!-- End .custom-control -->
+                                    </td>
+                                    <td>$20.00</td>
+                                </tr><!-- End .summary-shipping-row -->
+
+                                <tr class="summary-shipping-estimate">
+                                    <td>Estimate for Your Country<br> <a href="_profile.html">Change address</a></td>
+                                    <td>&nbsp;</td>
+                                </tr><!-- End .summary-shipping-estimate -->
+
+                                <tr class="summary-total">
+                                    <td>Total:</td>
+                                    <td id="totalPrice">$160.00</td>
+                                </tr><!-- End .summary-total -->
+                                </tbody>
+                            </table><!-- End .table table-summary -->
+
+                            <a href="checkout.html" class="btn btn-outline-primary-2 btn-order btn-block">PROCEED TO CHECKOUT</a>
+                        </div><!-- End .summary -->
+
+                        <a onclick="makeOrder()" class="btn btn-outline-dark-2 btn-block mb-3"><span>MAKE ORDER</span><i class="icon-refresh"></i></a>
+                    </aside><!-- End .col-lg-3 -->
+                </div><!-- End .row -->
+            </div><!-- End .container -->
+        </div><!-- End .cart -->
+    </div><!-- End .page-content -->
+
+    <script>
+        const urlCartMakeOrder = '{{ path('cart_make_order') }}';
+        const cartPageProductsListEl = document.getElementById('cartPageProductsList');
+        const cartPageTotalPriceEl = document.getElementById('totalPrice');
+        let cartPageJSON = sessionStorage.getItem('cart');
+        const cartPageCart = cartPageJSON ? JSON.parse(cartPageJSON) : {};
+        if (cartPageCart) {
+            initCartComponent();
+        }
+
+        function initCartComponent()
+        {
+            let HTMLProducts = '';
+            let host = window.location.protocol + "//" + window.location.host;
+            let totalPrice = 0;
+            for (let key in cartPageCart) {
+                const cartItem = cart[key];
+                const itemTotalPrice = (cartItem.quantity * cartItem.price);
+                HTMLProducts += '<tr>\n' +
+                    '                                    <td class="product-col">\n' +
+                    '                                        <div class="product">\n' +
+                    '                                            <figure class="product-media">\n' +
+                    '                                                <a href="#">\n' +
+                    '                                                    <img src="' + host + '/assets/images/products/' + cartItem.category.slug + '/' + cartItem.cover + '" alt="Product image">\n' +
+                    '                                                </a>\n' +
+                    '                                            </figure>\n' +
+                    '    \n' +
+                    '                                            <h3 class="product-title">\n' +
+                    '                                                <a href="#">Beige knitted elastic runner shoes</a>\n' +
+                    '                                            </h3><!-- End .product-title -->\n' +
+                    '                                        </div><!-- End .product -->\n' +
+                    '                                    </td>\n' +
+                    '                                    <td class="price-col">$' + cartItem.price + '</td>\n' +
+                    '                                    <td class="quantity-col">\n' +
+                    '                                        <div class="cart-product-quantity">\n' +
+                    '                                            <input type="number" class="form-control" value="' + cartItem.quantity + '" min="1" max="10" step="1" data-decimals="0" required>\n' +
+                    '                                        </div><!-- End .cart-product-quantity -->\n' +
+                    '                                    </td>\n' +
+                    '                                    <td class="total-col">$84.00</td>\n' +
+                    '                                    <td class="remove-col"><button class="btn-remove"><i class="icon-close"></i></button></td>\n' +
+                    '                                </tr>';
+                totalPrice += itemTotalPrice;
+            }
+            totalPrice = '$' + totalPrice;
+            cartPageProductsListEl.innerHTML = HTMLProducts;
+            cartPageTotalPriceEl.innerHTML = totalPrice;
+        }
+
+        function makeOrder()
+        {
+            let cartPageJSON = sessionStorage.getItem('cart');
+
+            let data = new FormData();
+            data.append("cart", cartPageJSON);
+
+            fetch(urlCartMakeOrder, {
+                method: "POST",
+                body: data
+            })
+            .then(response => {
+                if (response.status !== 200) {
+                    return Promise.reject();
+                }
+                return response.json();
+            })
+            .then(function (data) {
+                console.log(JSON.stringify(data))
+            })
+            .catch(() => console.log('ошибка'));
+        }
+
+
+        function addProductToCartComponent2(id)
+        {
+            const idNum = parseInt(id);
+
+            let cartJSON = sessionStorage.getItem('cart');
+            const cart = cartJSON ? JSON.parse(cartJSON) : {};
+            const product = productsModel.find(function(item) {
+                return (item.id === idNum);
+            })
+            if (product) {
+                if (cart[product.id] !== undefined) {
+                    cart[product.id] = product;
+                    cart[product.id]['quantity'] += 1;
+                } else {
+                    cart[product.id] = product;
+                    cart[product.id]['quantity'] = 1;
+                }
+            }
+
+            sessionStorage.setItem('cart', JSON.stringify(cart));
+        }
+    </script>
+{% endblock %}

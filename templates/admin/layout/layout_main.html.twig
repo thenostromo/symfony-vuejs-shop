@@ -1,0 +1,224 @@
+{% extends 'admin/base.html.twig' %}
+
+{% block title %}
+    Admin Panel | {% block title_detailed %}{% endblock %}
+{% endblock %}
+
+{% block layout_body %}
+    <body id="page-top">
+        <!-- Page Wrapper -->
+        <div id="wrapper">
+
+            <!-- Sidebar -->
+            <ul class="navbar-nav bg-gradient-primary sidebar sidebar-dark accordion" id="accordionSidebar">
+
+                <!-- Sidebar - Brand -->
+                <a class="sidebar-brand d-flex align-items-center justify-content-center" href="index.html">
+                    <div class="sidebar-brand-text mx-3"> Admin panel</div>
+                </a>
+
+                <!-- Divider -->
+                <hr class="sidebar-divider my-0">
+
+                <!-- Nav Item - Dashboard -->
+                <li class="nav-item active">
+                    <a class="nav-link" href="{{ path('admin_dashboard_show') }}">
+                        <i class="fas fa-fw fa-tachometer-alt"></i>
+                        <span>Dashboard</span></a>
+                </li>
+
+                <!-- Divider -->
+                <hr class="sidebar-divider">
+
+                <!-- Heading -->
+                <div class="sidebar-heading">
+                    Sales
+                </div>
+
+                <li class="nav-item">
+                    <a class="nav-link collapsed" href="#" data-toggle="collapse" data-target="#collapseOrders"
+                       aria-expanded="true" aria-controls="collapseOrders">
+                        <i class="fas fa-fw fa-credit-card"></i>
+                        <span>Orders</span>
+                    </a>
+                    <div id="collapseOrders" class="collapse" aria-labelledby="headingPages" data-parent="#accordionSidebar">
+                        <div class="py-2 collapse-inner">
+                            <a class="collapse-item" href="{{ path('admin_order_list') }}">All list</a>
+                            <a class="collapse-item" href="{{ path('admin_order_add') }}">Add new</a>
+                        </div>
+                    </div>
+                </li>
+
+                <li class="nav-item">
+                    <a class="nav-link collapsed" href="#" data-toggle="collapse" data-target="#collapsePages"
+                       aria-expanded="true" aria-controls="collapsePages">
+                        <i class="fas fa-fw fa-bolt"></i>
+                        <span>Promotional Codes</span>
+                    </a>
+                    <div id="collapsePages" class="collapse" aria-labelledby="headingPages" data-parent="#accordionSidebar">
+                        <div class="py-2 collapse-inner">
+                            <a class="collapse-item" href="{{ path('admin_category_list') }}">Все категории</a>
+                        </div>
+                    </div>
+                </li>
+
+                <li class="nav-item">
+                    <a class="nav-link collapsed" href="#" data-toggle="collapse" data-target="#collapsePages"
+                       aria-expanded="true" aria-controls="collapsePages">
+                        <i class="fas fa-fw fa-fire"></i>
+                        <span>Hot Sales</span>
+                    </a>
+                    <div id="collapsePages" class="collapse" aria-labelledby="headingPages" data-parent="#accordionSidebar">
+                        <div class="py-2 collapse-inner">
+                            <a class="collapse-item" href="{{ path('admin_category_list') }}">Все категории</a>
+                        </div>
+                    </div>
+                </li>
+
+                <!-- Divider -->
+                <hr class="sidebar-divider">
+
+                <!-- Heading -->
+                <div class="sidebar-heading">
+                    Products
+                </div>
+
+                <li class="nav-item">
+                    <a class="nav-link collapsed" href="#" data-toggle="collapse" data-target="#collapseCategories"
+                       aria-expanded="true" aria-controls="collapseCategories">
+                        <i class="fas fa-fw fa-folder"></i>
+                        <span>Categories</span>
+                    </a>
+                    <div id="collapseCategories" class="collapse" aria-labelledby="headingPages" data-parent="#accordionSidebar">
+                        <div class="py-2 collapse-inner">
+                            <a class="collapse-item" href="{{ path('admin_category_list') }}">All list</a>
+                            <a class="collapse-item" href="{{ path('admin_category_add') }}">Add new</a>
+                        </div>
+                    </div>
+                </li>
+
+                <li class="nav-item">
+                    <a class="nav-link collapsed" href="#" data-toggle="collapse" data-target="#collapseProducts"
+                       aria-expanded="true" aria-controls="collapseProducts">
+                        <i class="fas fa-fw fa-cubes"></i>
+                        <span>Products</span>
+                    </a>
+                    <div id="collapseProducts" class="collapse" aria-labelledby="headingPages" data-parent="#accordionSidebar">
+                        <div class="py-2 collapse-inner">
+                            <a class="collapse-item" href="{{ path('admin_product_list') }}">All list</a>
+                            <a class="collapse-item" href="{{ path('admin_product_add') }}">Add new</a>
+                        </div>
+                    </div>
+                </li>
+
+                <!-- Divider -->
+                <hr class="sidebar-divider">
+
+                <!-- Heading -->
+                <div class="sidebar-heading">
+                    General
+                </div>
+
+                <li class="nav-item">
+                    <a class="nav-link collapsed" href="#" data-toggle="collapse" data-target="#collapseUsers"
+                       aria-expanded="true" aria-controls="collapseUsers">
+                        <i class="fas fa-fw fa-user"></i>
+                        <span>Users</span>
+                    </a>
+                    <div id="collapseUsers" class="collapse" aria-labelledby="headingPages" data-parent="#accordionSidebar">
+                        <div class="py-2 collapse-inner">
+                            <a class="collapse-item" href="{{ path('admin_user_list') }}">All list</a>
+                            <a class="collapse-item" href="{{ path('admin_user_add') }}">Add new</a>
+                        </div>
+                    </div>
+                </li>
+
+                <!-- Nav Item - Charts -->
+                <li class="nav-item">
+                    <a class="nav-link" href="charts.html">
+                        <i class="fas fa-fw fa-cog"></i>
+                        <span>Settings</span></a>
+                </li>
+
+                <!-- Divider -->
+                <hr class="sidebar-divider d-none d-md-block">
+
+                <!-- Sidebar Toggler (Sidebar) -->
+                <div class="text-center d-none d-md-inline">
+                    <button class="rounded-circle border-0" id="sidebarToggle"></button>
+                </div>
+
+            </ul>
+            <!-- End of Sidebar -->
+
+            <!-- Content Wrapper -->
+            <div id="content-wrapper" class="d-flex flex-column">
+                <div id="content">
+
+                    <!-- Topbar -->
+                    <nav class="navbar navbar-expand navbar-light bg-white topbar mb-4 static-top shadow">
+
+                        <div
+                                class="d-none d-sm-inline-block form-inline mr-auto ml-md-3 my-2 my-md-0 mw-100 navbar-search">
+                            <div class="input-group">
+                                <a href="{{ path('shop_index') }}" target="_blank" class="d-none d-sm-inline-block btn btn-sm btn-default shadow-sm">
+                                    Go to main site
+                                </a>
+                            </div>
+                        </div>
+
+                        <!-- Sidebar Toggle (Topbar) -->
+                        <button id="sidebarToggleTop" class="btn btn-link d-md-none rounded-circle mr-3">
+                            <i class="fa fa-bars"></i>
+                        </button>
+
+                        <!-- Topbar Navbar -->
+                        <ul class="navbar-nav ml-auto">
+                            <!-- Nav Item - User Information -->
+                            <li class="nav-item dropdown no-arrow">
+                                <a class="nav-link dropdown-toggle" href="#" id="userDropdown" role="button"
+                                   data-toggle="dropdown" aria-haspopup="true" aria-expanded="false">
+                                    <span class="mr-2 d-none d-lg-inline text-gray-600 small">Douglas McGee</span>
+                                </a>
+                                <!-- Dropdown - User Information -->
+                                <div class="dropdown-menu dropdown-menu-right shadow animated--grow-in"
+                                     aria-labelledby="userDropdown">
+                                    <a class="dropdown-item" href="#" data-toggle="modal" data-target="#logoutModal">
+                                        <i class="fas fa-sign-out-alt fa-sm fa-fw mr-2 text-gray-400"></i>
+                                        Logout
+                                    </a>
+                                </div>
+                            </li>
+
+                        </ul>
+
+                    </nav>
+
+                    {% block body %}{% endblock %}
+                </div>
+
+                <!-- Footer -->
+                <footer class="sticky-footer bg-white">
+                    <div class="container my-auto">
+                        <div class="copyright text-center my-auto">
+                            <span>Copyright &copy; Your Website 2020</span>
+                        </div>
+                    </div>
+                </footer>
+                <!-- End of Footer -->
+
+            </div>
+            <!-- End of Content Wrapper -->
+
+        </div>
+        <!-- End of Page Wrapper -->
+
+        <!-- Scroll to Top Button-->
+        <a class="scroll-to-top rounded" href="#page-top">
+            <i class="fas fa-angle-up"></i>
+        </a>
+
+        {% block javascripts %}{% endblock %}
+        {% include 'admin/embed/_scripts.html.twig' %}
+    </body>
+{% endblock %}

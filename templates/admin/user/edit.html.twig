@@ -1,0 +1,105 @@
+{% extends 'admin/layout/layout_main.html.twig' %}
+
+{% block title_detailed %}Edit User{% endblock %}
+
+{% block body %}
+    <div class="container-fluid">
+
+        <div class="card shadow mb-4">
+            <div class="card-header py-3">
+                {% include 'admin/embed/card/_breadcrumbs.html.twig' with {
+                    'sectionTitle': 'Users',
+                    'actionUrl': path('admin_user_list'),
+                    'entity': user
+                } %}
+            </div>
+            <div class="card-body">
+                {{ form_start(userEditForm) }}
+                <div class="form-group row">
+                    <div class="col-sm-12 mb-3 mb-sm-0">
+                        <div style="display: flex; align-items: center;">
+                            Email: {{ user.email }}
+                        </div>
+                    </div>
+                </div>
+                    <div class="form-group row">
+                        <div class="col-sm-12 mb-3 mb-sm-0">
+                            <div style="display: flex; align-items: center;">
+                                {{ form_label(userEditForm.plainPassword) }}
+                                {{ form_widget(userEditForm.plainPassword, {'attr': {
+                                    'class': 'form-control'
+                                }}) }}
+                            </div>
+                        </div>
+                    </div>
+                    <div class="form-group row">
+                        <div class="col-sm-12 mb-3 mb-sm-0">
+                            <div style="display: flex; align-items: center;">
+                                {{ form_label(userEditForm.fullName) }}
+                                {{ form_widget(userEditForm.fullName, {'attr': {
+                                    'class': 'form-control',
+                                }}) }}
+                            </div>
+                        </div>
+                    </div>
+                    <div class="form-group row">
+                        <div class="col-sm-12 mb-3 mb-sm-0">
+                            <div style="display: flex; align-items: center;">
+                                {{ form_label(userEditForm.phone) }}
+                                {{ form_widget(userEditForm.phone, {'attr': {
+                                    'class': 'form-control',
+                                }}) }}
+                            </div>
+                        </div>
+                    </div>
+                    <div class="form-group row">
+                        <div class="col-sm-12 mb-3 mb-sm-0">
+                            <div style="display: flex; align-items: center;">
+                                {{ form_label(userEditForm.address) }}
+                                {{ form_widget(userEditForm.address, {'attr': {
+                                    'class': 'form-control',
+                                }}) }}
+                            </div>
+                        </div>
+                    </div>
+                    <div class="form-group row">
+                        <div class="col-sm-12 mb-3 mb-sm-0">
+                            <div style="display: flex; align-items: center;">
+                                {{ form_label(userEditForm.zipCode) }}
+                                {{ form_widget(userEditForm.zipCode, {'attr': {
+                                    'class': 'form-control',
+                                }}) }}
+                            </div>
+                        </div>
+                    </div>
+                    <div class="form-group row">
+                        <div class="col-sm-12 mb-3 mb-sm-0">
+                            <div style="display: flex; padding-left: 1.25rem;">
+                                {{ form_widget(userEditForm.isVerified, {'attr': {
+                                    'class': 'form-check-input' }}) }}
+                                {{ form_label(userEditForm.isVerified, null, {'label_attr': {
+                                    'class': 'form-check-label'
+                                }}) }}
+                            </div>
+                        </div>
+                    </div>
+                    <hr/>
+                    {% include 'admin/embed/card/_form_buttons.html.twig' with {
+                        'entity': user
+                    }  %}
+                {{ form_end(userEditForm) }}
+            </div>
+        </div>
+
+    </div>
+
+    {% if user.id %}
+        {% include 'admin/embed/utils/_modal.html.twig' with {
+            'id': 'approveDeleteModal',
+            'title': 'Are you sure?',
+            'text': 'User will be deleted.',
+            'actionUrl': path('admin_user_delete', {'id': user.id}),
+            'btnText': 'Delete row'
+        } %}
+    {% endif %}
+{% endblock %}

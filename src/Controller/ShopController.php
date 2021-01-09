@@ -18,15 +18,4 @@ class ShopController extends AbstractController
             'controller_name' => 'ShopController',
         ]);
     }
-
-    /**
-     * @Route("/category/{slug}", methods="GET", name="shop_category")
-     */
-    public function category(Category $category): Response
-    {
-        dump($category);exit();
-        return $this->render('shop/index.html.twig', [
-            'controller_name' => 'ShopController',
-        ]);
-    }
 }

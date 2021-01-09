@@ -1,0 +1,11 @@
+<div style="display: flex; align-items: center;">
+    <a href="{{ actionUrl }}" class="font-weight-bold text-primary">{{ sectionTitle }}</a>
+    <div style="margin-left: .5rem; margin-right: .5rem;">/</div>
+    <h6 class="m-0 font-weight-bold text-primary">
+        {% if entity.id %}
+            Edit
+        {% else %}
+            Add new
+        {% endif %}
+    </h6>
+</div>

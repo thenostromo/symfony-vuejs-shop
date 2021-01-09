@@ -1,0 +1,62 @@
+{% extends 'base.html.twig' %}
+
+{% block title %}Log in!{% endblock %}
+
+{% block body %}
+    <div class="login-page bg-image pt-8 pb-8 pt-md-12 pb-md-12 pt-lg-17 pb-lg-17" style="background-image: url('assets/images/backgrounds/login-bg.jpg')">
+        <div class="container">
+            <div class="form-box">
+                <div class="form-tab">
+                    <div class="tab-content">
+                        <div class="tab-pane fade show active" id="signin-2" role="tabpanel" aria-labelledby="signin-tab-2">
+                            <h1 class="h3 mb-3 font-weight-normal">Please sign in</h1>
+                            <form method="post">
+                                {% if error %}
+                                    <div class="alert alert-danger">{{ error.messageKey|trans(error.messageData, 'security') }}</div>
+                                {% endif %}
+
+                                {% if app.user %}
+                                    <div class="mb-3">
+                                        You are logged in as {{ app.user.username }}, <a href="{{ path('security_logout') }}">Logout</a>
+                                    </div>
+                                {% endif %}
+
+                                <div class="form-group">
+                                    <label for="inputEmail">Username or email address *</label>
+                                    <input type="email" value="{{ last_username }}" class="form-control" id="inputEmail" name="email" required autofocus>
+                                </div>
+
+                                <div class="form-group">
+                                    <label for="inputPassword">Password *</label>
+                                    <input type="password" class="form-control" id="inputPassword" name="password" required>
+                                </div>
+
+                                <input type="hidden" name="_csrf_token" value="{{ csrf_token('authenticate') }}">
+
+                                <div class="form-footer">
+                                    <button type="submit" class="btn btn-outline-primary-2">
+                                        <span>LOG IN</span>
+                                        <i class="icon-long-arrow-right"></i>
+                                    </button>
+
+                                    <div class="custom-control custom-checkbox">
+                                        <input type="checkbox" class="custom-control-input" id="rememberMe" name="_remember_me">
+                                        <label class="custom-control-label" for="rememberMe">Remember Me</label>
+                                    </div>
+
+                                    <a href="#" class="forgot-link">Forgot Your Password?</a>
+                                </div>
+
+                                <div class="row">
+                                    <div class="col-md-12">
+                                        <a href="{{ path('app_register') }}" class="forgot-link">Don't have an account yet? <br/> Register now -></a>
+                                    </div>
+                                </div>
+                            </form>
+                        </div>
+                    </div>
+                </div>
+            </div>
+        </div>
+    </div>
+{% endblock %}

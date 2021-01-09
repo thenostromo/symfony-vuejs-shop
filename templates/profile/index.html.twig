@@ -1,0 +1,43 @@
+{% extends 'base.html.twig' %}
+
+{% block title %}Log in!{% endblock %}
+
+{% block body %}
+    <div class="page-header text-center" style="background-image: url('assets/images/page-header-bg.jpg')">
+        <div class="container">
+            <h1 class="page-title">Profile</h1>
+        </div><!-- End .container -->
+    </div><!-- End .page-header -->
+    <nav aria-label="breadcrumb" class="breadcrumb-nav mb-2">
+
+    </nav><!-- End .breadcrumb-nav -->
+
+    <div class="page-content">
+        <div class="container">
+            <div class="row">
+                <div class="col-lg-12" style="text-align: center">
+                    <div class="products mb-8">
+                        <h1 class="h4 mb-3 font-weight-normal">Welcome, to your profile!</h1>
+                        Your email: {{ app.user.email }}<br/>
+                        Your full name: {% if app.user.fullName %}{{ app.user.fullName }}{% else %}-{% endif %}<br/>
+                        Your phone: {% if app.user.phone %}{{ app.user.phone }}{% else %}-{% endif %}<br/>
+                        Your address: {% if app.user.address %}{{ app.user.address }}{% else %}-{% endif %}<br/>
+                        Your zipcode: {% if app.user.zipcode %}{{ app.user.zipcode }}{% else %}-{% endif %}
+                        <div class="alert alert-info">
+                            Please, before you make some order fill your full information.
+                        </div>
+                        <hr/>
+                        <a href="{{ path('profile_edit') }}" class="btn btn-outline-primary-2">
+                            <span>EDIT PROFILE INFO</span>
+                            <i class="icon-long-arrow-right"></i>
+                        </a>
+                        <a href="{{ path('security_logout') }}" class="btn btn-outline-primary-2">
+                            <span>LOGOUT</span>
+                            <i class="icon-long-arrow-right"></i>
+                        </a>
+                    </div>
+                </div>
+            </div>
+        </div>
+    </div>
+{% endblock %}
