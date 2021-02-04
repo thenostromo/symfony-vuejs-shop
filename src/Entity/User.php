@@ -77,6 +77,7 @@ class User implements UserInterface
     public function __construct()
     {
         $this->orders = new ArrayCollection();
+        $this->isDeleted = false;
     }
 
     public function getId(): ?int

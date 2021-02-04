@@ -7,10 +7,10 @@ class ProductDataProvider
     public static function getSizeList()
     {
         return [
-            'Small',
-            'Medium',
-            'Large',
-            'Extra Large'
+            's' => 'Small',
+            'm' => 'Medium',
+            'l' => 'Large',
+            'el' => 'Extra Large'
         ];
     }
 }

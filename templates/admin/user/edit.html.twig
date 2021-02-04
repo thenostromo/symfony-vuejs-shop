@@ -14,72 +14,77 @@
                 } %}
             </div>
             <div class="card-body">
-                {{ form_start(userEditForm) }}
-                <div class="form-group row">
-                    <div class="col-sm-12 mb-3 mb-sm-0">
-                        <div style="display: flex; align-items: center;">
-                            Email: {{ user.email }}
+                {{ form_start(form) }}
+                    <div class="form-group row">
+                        <div class="col-md-1">
+                            Email:
+                        </div>
+                        <div class="col-md-11">
+                            {{ user.email }}
                         </div>
                     </div>
-                </div>
                     <div class="form-group row">
-                        <div class="col-sm-12 mb-3 mb-sm-0">
-                            <div style="display: flex; align-items: center;">
-                                {{ form_label(userEditForm.plainPassword) }}
-                                {{ form_widget(userEditForm.plainPassword, {'attr': {
-                                    'class': 'form-control'
-                                }}) }}
+                        <div class="col-md-1">
+                            {{ form_label(form.plainPassword) }}
+                        </div>
+                        <div class="col-md-11">
+                            {{ form_widget(form.plainPassword) }}
+                            <div class="form-error">
+                                {{ form_errors(form.plainPassword) }}
                             </div>
                         </div>
                     </div>
                     <div class="form-group row">
-                        <div class="col-sm-12 mb-3 mb-sm-0">
-                            <div style="display: flex; align-items: center;">
-                                {{ form_label(userEditForm.fullName) }}
-                                {{ form_widget(userEditForm.fullName, {'attr': {
-                                    'class': 'form-control',
-                                }}) }}
+                        <div class="col-md-1">
+                            {{ form_label(form.fullName) }}
+                        </div>
+                        <div class="col-md-11">
+                            {{ form_widget(form.fullName) }}
+                            <div class="form-error">
+                                {{ form_errors(form.fullName) }}
                             </div>
                         </div>
                     </div>
                     <div class="form-group row">
-                        <div class="col-sm-12 mb-3 mb-sm-0">
-                            <div style="display: flex; align-items: center;">
-                                {{ form_label(userEditForm.phone) }}
-                                {{ form_widget(userEditForm.phone, {'attr': {
-                                    'class': 'form-control',
-                                }}) }}
+                        <div class="col-md-1">
+                            {{ form_label(form.phone) }}
+                        </div>
+                        <div class="col-md-11">
+                            {{ form_widget(form.phone) }}
+                            <div class="form-error">
+                                {{ form_errors(form.phone) }}
                             </div>
                         </div>
                     </div>
                     <div class="form-group row">
-                        <div class="col-sm-12 mb-3 mb-sm-0">
-                            <div style="display: flex; align-items: center;">
-                                {{ form_label(userEditForm.address) }}
-                                {{ form_widget(userEditForm.address, {'attr': {
-                                    'class': 'form-control',
-                                }}) }}
+                        <div class="col-md-1">
+                            {{ form_label(form.address) }}
+                        </div>
+                        <div class="col-md-11">
+                            {{ form_widget(form.address) }}
+                            <div class="form-error">
+                                {{ form_errors(form.address) }}
                             </div>
                         </div>
                     </div>
                     <div class="form-group row">
-                        <div class="col-sm-12 mb-3 mb-sm-0">
-                            <div style="display: flex; align-items: center;">
-                                {{ form_label(userEditForm.zipCode) }}
-                                {{ form_widget(userEditForm.zipCode, {'attr': {
-                                    'class': 'form-control',
-                                }}) }}
+                        <div class="col-md-1">
+                            {{ form_label(form.zipCode) }}
+                        </div>
+                        <div class="col-md-11">
+                            {{ form_widget(form.zipCode) }}
+                            <div class="form-error">
+                                {{ form_errors(form.zipCode) }}
                             </div>
                         </div>
                     </div>
                     <div class="form-group row">
-                        <div class="col-sm-12 mb-3 mb-sm-0">
-                            <div style="display: flex; padding-left: 1.25rem;">
-                                {{ form_widget(userEditForm.isVerified, {'attr': {
-                                    'class': 'form-check-input' }}) }}
-                                {{ form_label(userEditForm.isVerified, null, {'label_attr': {
-                                    'class': 'form-check-label'
-                                }}) }}
+                        <div class="col-md-1"></div>
+                        <div class="col-md-11 pl-5">
+                            {{ form_widget(form.isVerified) }}
+                            {{ form_label(form.isVerified) }}
+                            <div class="form-error">
+                                {{ form_errors(form.isVerified) }}
                             </div>
                         </div>
                     </div>
@@ -87,7 +92,7 @@
                     {% include 'admin/embed/card/_form_buttons.html.twig' with {
                         'entity': user
                     }  %}
-                {{ form_end(userEditForm) }}
+                {{ form_end(form) }}
             </div>
         </div>
 

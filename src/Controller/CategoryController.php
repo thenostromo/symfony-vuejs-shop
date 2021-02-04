@@ -17,7 +17,7 @@ class CategoryController extends AbstractController
      */
     public function show(Category $category, ProductRepository $productRepository): Response
     {
-        if (!$category) {
+        if (!$category || $category->getIsHidden() || $category->getIsDeleted()) {
             throw new NotFoundHttpException();
         }
 
@@ -26,12 +26,14 @@ class CategoryController extends AbstractController
 
         /** @var Product $product */
         foreach ($products as $product) {
+            $images = $product->getProductImages()->getValues();
+
             $productsModel[] = [
                 'id' => $product->getId(),
                 'title' => $product->getTitle(),
                 'price' => $product->getPrice(),
                 'quantity' => $product->getQuantity(),
-                'cover' => $product->getCover(),
+                'images' => $images,
                 'category' => [
                     'id' => $product->getCategory()->getId(),
                     'title' => $product->getCategory()->getTitle(),
@@ -40,7 +42,13 @@ class CategoryController extends AbstractController
             ];
         }
 
+        $categoryModel = [
+            'id' => $category->getId(),
+            'title' => $category->getTitle()
+        ];
+
         return $this->render('category/show.html.twig', [
+            'categoryModel' => $categoryModel,
             'category' => $category,
             'products' => $products,
             'productsModel' => $productsModel

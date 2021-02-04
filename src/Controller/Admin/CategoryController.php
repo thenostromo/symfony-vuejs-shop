@@ -20,7 +20,7 @@ class CategoryController extends AbstractController
      */
     public function index(CategoryRepository $categoryRepository): Response
     {
-        $categoryList = $categoryRepository->findBy([], ['id' => 'DESC']);
+        $categoryList = $categoryRepository->findBy(['isDeleted' => false], ['id' => 'DESC']);
 
         return $this->render('admin/category/list.html.twig', [
             'categoryList' => $categoryList,
@@ -50,7 +50,7 @@ class CategoryController extends AbstractController
 
         return $this->render('admin/category/edit.html.twig', [
             'category' => $category,
-            'categoryEditForm' => $form->createView(),
+            'form' => $form->createView(),
         ]);
     }
 

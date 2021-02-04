@@ -37,7 +37,7 @@
                                     Address: {{ user.address }}<br/>
                                     ZipCode: {{ user.zipcode }}<br/>
                                 </td>
-                                <td>{{ user.isVerified }}</td>
+                                <td>{% if user.isVerified %}verified{% else %}not verified{% endif %}</td>
                                 <td>
                                     <a href="{{ path('admin_user_edit', {'id': user.id}) }}" class="btn btn-outline-info">Edit</a>
                                 </td>

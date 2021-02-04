@@ -37,7 +37,14 @@
                                 <td>{{ product.price }}</td>
                                 <td>{{ product.quantity }}</td>
                                 <td>
-                                    - images -
+                                    {% set images = product.getProductImages().getValues() %}
+                                    {% if images|length %}
+                                        {% set image = images[0] %}
+                                        <img
+                                            src="{{ asset('uploads/images/products/' ~ product.id ~ '/' ~ image.filenameSmall) }}"
+                                            alt="{{ image.filenameSmall }}"
+                                        >
+                                    {% endif %}
                                 </td>
                                 <td>{{ product.rating }}</td>
                                 <td>

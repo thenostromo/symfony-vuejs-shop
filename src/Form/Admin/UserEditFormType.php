@@ -15,23 +15,50 @@ class UserEditFormType extends AbstractType
     {
         $builder
             ->add('plainPassword', TextType::class, [
+                'label' => 'New password',
                 'required' => false,
-                'mapped' => false
+                'mapped' => false,
+                'attr' => [
+                    'class' => 'form-control',
+                ],
             ])
             ->add('fullName', TextType::class, [
-                'required' => false
+                'label' => 'Full name',
+                'required' => false,
+                'attr' => [
+                    'class' => 'form-control',
+                ],
             ])
             ->add('phone', TextType::class, [
-                'required' => false
+                'label' => 'Phone',
+                'required' => false,
+                'attr' => [
+                    'class' => 'form-control',
+                ],
             ])
             ->add('address', TextType::class, [
-                'required' => false
+                'label' => 'Address',
+                'required' => false,
+                'attr' => [
+                    'class' => 'form-control',
+                ],
             ])
             ->add('zipCode', TextType::class, [
-                'required' => false
+                'label' => 'Zip code',
+                'required' => false,
+                'attr' => [
+                    'class' => 'form-control',
+                ],
             ])
             ->add('isVerified', CheckboxType::class, [
-                'required' => false
+                'label' => 'Is verified',
+                'required' => false,
+                'label_attr' => [
+                    'class' => 'form-check-label'
+                ],
+                'attr' => [
+                    'class' => 'form-check-input'
+                ]
             ])
         ;
     }

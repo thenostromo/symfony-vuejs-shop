@@ -26,7 +26,7 @@ class ProductController extends AbstractController
      */
     public function index(ProductRepository $productRepository): Response
     {
-        $productList = $productRepository->findBy([], ['id' => 'DESC']);
+        $productList = $productRepository->findBy(['isDeleted' => false], ['id' => 'DESC']);
 
         return $this->render('admin/product/list.html.twig', [
             'productList' => $productList,
@@ -35,6 +35,7 @@ class ProductController extends AbstractController
 
     /**
      * @Route("/edit/{id}", name="edit")
+     * @Route("/edit", name="edit_blank")
      * @Route("/add", name="add")
      */
     public function edit(Request $request, FileSaver $fileSaver, ProductManager $productManager, Product $product = null): Response
@@ -43,35 +44,36 @@ class ProductController extends AbstractController
             $product = new Product();
         }
 
+        if ($product->getIsDeleted()) {
+            return $this->redirectToRoute('admin_product_list');
+        }
+
         $form = $this->createForm(ProductEditFormType::class, $product);
         $form->handleRequest($request);
 
         if ($form->isSubmitted() && $form->isValid()) {
-            /** @var UploadedFile $brochureFile */
-            $coverFile = $form->get('cover')->getData();
+            /** @var UploadedFile $newImageFile */
+            $newImageFile = $form->get('newImage')->getData();
 
-            $coverFileName = $coverFile
-                ? $fileSaver->saveUploadedFileIntoTemp($coverFile)
+            $newImageFileName = $newImageFile
+                ? $fileSaver->saveUploadedFileIntoTemp($newImageFile)
                 : null;
 
-            $product = $productManager->updateProductImages($product, $coverFileName);
+            $product = $productManager->updateProductImages($product, $newImageFileName);
 
             $entityManager = $this->getDoctrine()->getManager();
             $entityManager->persist($product);
             $entityManager->flush();
 
-            return $this->redirectToRoute('admin_product_list');
+            return $this->redirectToRoute('admin_product_edit', ['id' => $product->getId()]);
         }
 
-        $images = [];
-        if ($product->getMediumImages()) {
-            $images = json_decode($product->getMediumImages(), true);
-        }
+        $images = $product->getProductImages()->getValues();
 
         return $this->render('admin/product/edit.html.twig', [
             'product' => $product,
             'images' => $images,
-            'productEditForm' => $form->createView(),
+            'form' => $form->createView(),
         ]);
     }
 

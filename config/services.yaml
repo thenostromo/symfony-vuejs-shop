@@ -35,7 +35,12 @@ services:
         resource: '../src/Controller/'
         tags: ['controller.service_arguments']
 
+    Twig\Extra\Intl\:
+        resource: '../vendor/twig/intl-extra/*'
+        tags: [ 'twig.extension' ]
 
+    my.oauth_aware.user_provider.service:
+        class: HWI\Bundle\OAuthBundle\Security\Core\User\OAuthUserProvider
 
     # add more service definitions when explicit configuration is needed
     # please note that last definitions always *replace* previous ones

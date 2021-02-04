@@ -1,0 +1,8 @@
+hwi_oauth:
+  firewall_names: [user_secured_area]
+  resource_owners:
+    google_auth:
+      type: google
+      client_id: handy-cathode-289717
+      client_secret: AIzaSyD_qtDZWKUyqJGo_lL-dkDvViuDqHVo4iA
+      scope: "email profile"

@@ -7,6 +7,7 @@ use Symfony\Component\Form\AbstractType;
 use Symfony\Component\Form\Extension\Core\Type\TextType;
 use Symfony\Component\Form\FormBuilderInterface;
 use Symfony\Component\OptionsResolver\OptionsResolver;
+use Symfony\Component\Validator\Constraints\NotBlank;
 
 class CategoryEditFormType extends AbstractType
 {
@@ -14,10 +15,24 @@ class CategoryEditFormType extends AbstractType
     {
         $builder
             ->add('title', TextType::class, [
-                'label' => 'Title'
+                'label' => 'Title',
+                'required' => true,
+                'attr' => [
+                    'class' => 'form-control',
+                ],
+                'constraints' => [
+                    new NotBlank(),
+                ],
             ])
             ->add('slug', TextType::class, [
-                'label' => 'Slug'
+                'label' => 'Slug',
+                'required' => true,
+                'attr' => [
+                    'class' => 'form-control',
+                ],
+                'constraints' => [
+                    new NotBlank(),
+                ],
             ])
         ;
     }

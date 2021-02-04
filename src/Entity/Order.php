@@ -38,19 +38,9 @@ class Order
     private $owner;
 
     /**
-     * @ORM\ManyToMany(targetEntity=Product::class, inversedBy="orders")
-     */
-    private $products;
-
-    /**
      * @ORM\Column(type="integer")
      */
     private $status;
-
-    /**
-     * @ORM\Column(type="string", length=255)
-     */
-    private $quantity;
 
     /**
      * @ORM\Column(type="integer")
@@ -62,11 +52,28 @@ class Order
      */
     private $isDeleted;
 
+    /**
+     * @ORM\Column(type="datetime")
+     */
+    private $changedAt;
+
+    /**
+     * @ORM\OneToMany(targetEntity=OrderProduct::class, mappedBy="appOrder", orphanRemoval=true)
+     */
+    private $orderProducts;
+
+    /**
+     * @ORM\ManyToOne(targetEntity=PromoCode::class, inversedBy="orders")
+     */
+    private $promoCode;
+
     public function __construct()
     {
         $this->createdAt = new \DateTimeImmutable();
-        $this->products = new ArrayCollection();
         $this->status = self::STATUS_CREATED;
+        $this->orderProducts = new ArrayCollection();
+        $this->changedAt = new \DateTimeImmutable();
+        $this->isDeleted = false;
     }
 
     public function getId(): ?int
@@ -98,30 +105,6 @@ class Order
         return $this;
     }
 
-    /**
-     * @return Collection|Product[]
-     */
-    public function getProducts(): Collection
-    {
-        return $this->products;
-    }
-
-    public function addProduct(Product $product): self
-    {
-        if (!$this->products->contains($product)) {
-            $this->products[] = $product;
-        }
-
-        return $this;
-    }
-
-    public function removeProduct(Product $product): self
-    {
-        $this->products->removeElement($product);
-
-        return $this;
-    }
-
     public function getStatus(): ?int
     {
         return $this->status;
@@ -130,18 +113,6 @@ class Order
     public function setStatus(int $status): self
     {
         $this->status = $status;
-
-        return $this;
-    }
-
-    public function getQuantity(): ?string
-    {
-        return $this->quantity;
-    }
-
-    public function setQuantity(string $quantity): self
-    {
-        $this->quantity = $quantity;
 
         return $this;
     }
@@ -166,6 +137,60 @@ class Order
     public function setIsDeleted(bool $isDeleted): self
     {
         $this->isDeleted = $isDeleted;
+
+        return $this;
+    }
+
+    public function getChangedAt(): ?\DateTimeInterface
+    {
+        return $this->changedAt;
+    }
+
+    public function setChangedAt(\DateTimeInterface $changedAt): self
+    {
+        $this->changedAt = $changedAt;
+
+        return $this;
+    }
+
+    /**
+     * @return Collection|OrderProduct[]
+     */
+    public function getOrderProducts(): Collection
+    {
+        return $this->orderProducts;
+    }
+
+    public function addOrderProduct(OrderProduct $orderProduct): self
+    {
+        if (!$this->orderProducts->contains($orderProduct)) {
+            $this->orderProducts[] = $orderProduct;
+            $orderProduct->setAppOrder($this);
+        }
+
+        return $this;
+    }
+
+    public function removeOrderProduct(OrderProduct $orderProduct): self
+    {
+        if ($this->orderProducts->removeElement($orderProduct)) {
+            // set the owning side to null (unless already changed)
+            if ($orderProduct->getAppOrder() === $this) {
+                $orderProduct->setAppOrder(null);
+            }
+        }
+
+        return $this;
+    }
+
+    public function getPromoCode(): ?PromoCode
+    {
+        return $this->promoCode;
+    }
+
+    public function setPromoCode(?PromoCode $promoCode): self
+    {
+        $this->promoCode = $promoCode;
 
         return $this;
     }

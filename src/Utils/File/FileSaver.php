@@ -2,6 +2,7 @@
 
 namespace App\Utils\File;
 
+use App\Utils\FileSystem\FileSystemWorker;
 use App\Utils\FileSystem\FolderWorker;
 use Symfony\Component\HttpFoundation\File\Exception\FileException;
 use Symfony\Component\HttpFoundation\File\UploadedFile;
@@ -15,19 +16,19 @@ class FileSaver
     private $slugger;
 
     /**
-     * @var FolderWorker
+     * @var FileSystemWorker
      */
-    private $folderWorker;
+    private $fileSystemWorker;
 
     /**
      * @var string
      */
     private $uploadsTempDir;
 
-    public function __construct(SluggerInterface $slugger, FolderWorker $folderWorker, string $uploadsTempDir)
+    public function __construct(SluggerInterface $slugger, FileSystemWorker $fileSystemWorker, string $uploadsTempDir)
     {
         $this->slugger = $slugger;
-        $this->folderWorker = $folderWorker;
+        $this->fileSystemWorker = $fileSystemWorker;
         $this->uploadsTempDir = $uploadsTempDir;
     }
 
@@ -43,7 +44,7 @@ class FileSaver
 
         $fileName = sprintf('%s-%s.%s', $safeFilename, uniqid(), $uploadedFile->guessExtension());
 
-        $this->folderWorker->createFolderIfNotExist($this->uploadsTempDir);
+        $this->fileSystemWorker->createFolderIfNotExist($this->uploadsTempDir);
 
         try {
             $uploadedFile->move($this->uploadsTempDir, $fileName);

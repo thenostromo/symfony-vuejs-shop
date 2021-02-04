@@ -29,10 +29,10 @@
                         {% for order in orderList %}
                             <tr>
                                 <td>{{ order.id }}</td>
-                                <td>{{ order.createdAt|format_datetime() }}</td>
-                                <td>{{ order.products.getValues()|length }}</td>
+                                <td>{{ order.createdAt|date('H:i:s d/m/Y') }}</td>
+                                <td>{{ order.getOrderProducts.getValues()|length }}</td>
                                 <td>{{ order.totalPrice|format_currency('USD') }}</td>
-                                <td>{{ order.status }}</td>
+                                <td>{{ statusList[order.status] }}</td>
                                 <td>
                                     <a href="{{ path('admin_order_edit', {'id': order.id}) }}" class="btn btn-outline-info">Edit</a>
                                 </td>

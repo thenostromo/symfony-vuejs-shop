@@ -3,21 +3,29 @@
 namespace App\Utils\Product;
 
 use App\Entity\Product;
+use App\Entity\ProductImage;
 use App\Utils\File\ImageResizer;
+use App\Utils\FileSystem\FileSystemWorker;
 use App\Utils\FileSystem\FolderWorker;
 use Symfony\Component\Filesystem\Filesystem;
+use Doctrine\ORM\EntityManagerInterface;
 
 class ProductManager
 {
     /**
-     * @var FolderWorker
+     * @var FileSystemWorker
      */
-    private $folderWorker;
+    private $fileSystemWorker;
 
     /**
      * @var ImageResizer
      */
     private $imageResizer;
+
+    /**
+     * @var EntityManagerInterface
+     */
+    private $entityManager;
 
     /**
      * @var string
@@ -29,10 +37,16 @@ class ProductManager
      */
     private $imagesProductsDir;
 
-    public function __construct(FolderWorker $folderWorker, ImageResizer $imageResizer, string $uploadsTempDir, string $imagesProductsDir)
-    {
-        $this->folderWorker = $folderWorker;
+    public function __construct(
+        FileSystemWorker $fileSystemWorker,
+        ImageResizer $imageResizer,
+        EntityManagerInterface $entityManager,
+        string $uploadsTempDir,
+        string $imagesProductsDir
+    ) {
+        $this->fileSystemWorker = $fileSystemWorker;
         $this->imageResizer = $imageResizer;
+        $this->entityManager = $entityManager;
         $this->uploadsTempDir = $uploadsTempDir;
         $this->imagesProductsDir = $imagesProductsDir;
     }
@@ -47,21 +61,21 @@ class ProductManager
 
      /*   $filesystem = new Filesystem();
         $filesystem->remove($productDir);*/
-        $this->folderWorker->createFolderIfNotExist($this->imagesProductsDir);
-        $this->folderWorker->createFolderIfNotExist($productDir);
+        $this->fileSystemWorker->createFolderIfNotExist($this->imagesProductsDir);
+        $this->fileSystemWorker->createFolderIfNotExist($productDir);
 
         $fileNameId = uniqid();
         $params = [
             'width' => 60,
-            'height' => 40,
+            'height' => 0,
             'newFolder' => $productDir,
             'newFileName' => sprintf('%s_%s.jpg', $fileNameId, 'small')
         ];
         $imageSmall = $this->imageResizer->resizeImageAndSave($this->uploadsTempDir, $filename, $params);
 
         $params = [
-            'width' => 280,
-            'height' => 280,
+            'width' => 430,
+            'height' => 0,
             'newFolder' => $productDir,
             'newFileName' => sprintf('%s_%s.jpg', $fileNameId, 'medium')
         ];
@@ -69,15 +83,23 @@ class ProductManager
 
         $params = [
             'width' => 800,
-            'height' => 533,
+            'height' => 0,
             'newFolder' => $productDir,
-            'newFileName' => sprintf('%s_%s.jpg', $fileNameId, 'large')
+            'newFileName' => sprintf('%s_%s.jpg', $fileNameId, 'big')
         ];
-        $imageLarge = $this->imageResizer->resizeImageAndSave($this->uploadsTempDir, $filename, $params);
+        $imageBig = $this->imageResizer->resizeImageAndSave($this->uploadsTempDir, $filename, $params);
 
-        $product->setSmallImages(json_encode([$imageSmall]));
-        $product->setMediumImages(json_encode([$imageMedium]));
-        $product->setLargeImages(json_encode([$imageLarge]));
+        $productImage = new ProductImage();
+        $productImage->setFilenameSmall($imageSmall);
+        $productImage->setFilenameMiddle($imageMedium);
+        $productImage->setFilenameBig($imageBig);
+
+        $this->entityManager->persist($productImage);
+
+        $product->addProductImage($productImage);
+
+        $originalFilePath = $this->uploadsTempDir . '/' . $filename;
+        //$this->fileSystemWorker->remove($originalFilePath);
 
         return $product;
     }

@@ -3,12 +3,21 @@
 namespace App\Entity;
 
 use App\Repository\ProductRepository;
+use ApiPlatform\Core\Annotation\ApiResource;
+use Symfony\Component\Serializer\Annotation\Groups;
 use Doctrine\Common\Collections\ArrayCollection;
 use Doctrine\Common\Collections\Collection;
 use Doctrine\ORM\Mapping as ORM;
 
 /**
  * @ORM\Entity(repositoryClass=ProductRepository::class)
+ *
+ * @ApiResource(
+ *     collectionOperations={"get"={"normalization_context"={"groups"="product:list"}}},
+ *     itemOperations={"get"={"normalization_context"={"groups"="product:item"}}},
+ *     order={"id"="DESC", "price"="ASC"},
+ *     paginationEnabled=false
+ * )
  */
 class Product
 {
@@ -16,16 +25,22 @@ class Product
      * @ORM\Id
      * @ORM\GeneratedValue
      * @ORM\Column(type="integer")
+     *
+     * @Groups({"product:list", "product:item"})
      */
     private $id;
 
     /**
      * @ORM\Column(type="string", length=255)
+     *
+     * @Groups({"product:list", "product:item"})
      */
     private $title;
 
     /**
      * @ORM\Column(type="decimal", precision=6, scale=2)
+     *
+     * @Groups({"product:list", "product:item"})
      */
     private $price;
 
@@ -50,7 +65,7 @@ class Product
     private $rating;
 
     /**
-     * @ORM\Column(type="integer", nullable=true)
+     * @ORM\Column(type="string", length=3, nullable=true)
      */
     private $size;
 
@@ -75,24 +90,35 @@ class Product
     private $isDeleted;
 
     /**
-     * @ORM\Column(type="string", length=255, nullable=true)
+     * @ORM\ManyToMany(targetEntity=SaleCollection::class, mappedBy="products")
      */
-    private $smallImages;
+    private $saleCollections;
 
     /**
-     * @ORM\Column(type="string", length=255, nullable=true)
+     * @ORM\OneToMany(targetEntity=ProductImage::class, mappedBy="product", orphanRemoval=true)
      */
-    private $mediumImages;
+    private $productImages;
 
     /**
-     * @ORM\Column(type="string", length=255, nullable=true)
+     * @ORM\OneToMany(targetEntity=SaleCollectionProduct::class, mappedBy="product")
      */
-    private $largeImages;
+    private $saleCollectionProducts;
+
+    /**
+     * @ORM\OneToMany(targetEntity=OrderProduct::class, mappedBy="product")
+     */
+    private $orderProducts;
 
     public function __construct()
     {
         $this->createdAt = new \DateTimeImmutable();
         $this->orders = new ArrayCollection();
+        $this->isHidden = false;
+        $this->isDeleted = false;
+        $this->saleCollections = new ArrayCollection();
+        $this->productImages = new ArrayCollection();
+        $this->saleCollectionProducts = new ArrayCollection();
+        $this->orderProducts = new ArrayCollection();
     }
 
     public function getId(): ?int
@@ -172,12 +198,12 @@ class Product
         return $this;
     }
 
-    public function getSize(): ?int
+    public function getSize(): ?string
     {
         return $this->size;
     }
 
-    public function setSize(?int $size): self
+    public function setSize(?string $size): self
     {
         $this->size = $size;
 
@@ -247,38 +273,119 @@ class Product
         return $this;
     }
 
-    public function getSmallImages(): ?string
+    /**
+     * @return Collection|SaleCollection[]
+     */
+    public function getSaleCollections(): Collection
     {
-        return $this->smallImages;
+        return $this->saleCollections;
     }
 
-    public function setSmallImages(?string $smallImages): self
+    public function addSaleCollection(SaleCollection $saleCollection): self
     {
-        $this->smallImages = $smallImages;
+        if (!$this->saleCollections->contains($saleCollection)) {
+            $this->saleCollections[] = $saleCollection;
+            $saleCollection->addProduct($this);
+        }
 
         return $this;
     }
 
-    public function getMediumImages(): ?string
+    public function removeSaleCollection(SaleCollection $saleCollection): self
     {
-        return $this->mediumImages;
-    }
-
-    public function setMediumImages(?string $mediumImages): self
-    {
-        $this->mediumImages = $mediumImages;
+        if ($this->saleCollections->removeElement($saleCollection)) {
+            $saleCollection->removeProduct($this);
+        }
 
         return $this;
     }
 
-    public function getLargeImages(): ?string
+    /**
+     * @return Collection|ProductImage[]
+     */
+    public function getProductImages(): Collection
     {
-        return $this->largeImages;
+        return $this->productImages;
     }
 
-    public function setLargeImages(?string $largeImages): self
+    public function addProductImage(ProductImage $productImage): self
     {
-        $this->largeImages = $largeImages;
+        if (!$this->productImages->contains($productImage)) {
+            $this->productImages[] = $productImage;
+            $productImage->setProduct($this);
+        }
+
+        return $this;
+    }
+
+    public function removeProductImage(ProductImage $productImage): self
+    {
+        if ($this->productImages->removeElement($productImage)) {
+            // set the owning side to null (unless already changed)
+            if ($productImage->getProduct() === $this) {
+                $productImage->setProduct(null);
+            }
+        }
+
+        return $this;
+    }
+
+    /**
+     * @return Collection|SaleCollectionProduct[]
+     */
+    public function getSaleCollectionProducts(): Collection
+    {
+        return $this->saleCollectionProducts;
+    }
+
+    public function addSaleCollectionProduct(SaleCollectionProduct $saleCollectionProduct): self
+    {
+        if (!$this->saleCollectionProducts->contains($saleCollectionProduct)) {
+            $this->saleCollectionProducts[] = $saleCollectionProduct;
+            $saleCollectionProduct->setProduct($this);
+        }
+
+        return $this;
+    }
+
+    public function removeSaleCollectionProduct(SaleCollectionProduct $saleCollectionProduct): self
+    {
+        if ($this->saleCollectionProducts->removeElement($saleCollectionProduct)) {
+            // set the owning side to null (unless already changed)
+            if ($saleCollectionProduct->getProduct() === $this) {
+                $saleCollectionProduct->setProduct(null);
+            }
+        }
+
+        return $this;
+    }
+
+    /**
+     * @return Collection|OrderProduct[]
+     */
+    public function getOrderProducts(): Collection
+    {
+        return $this->orderProducts;
+    }
+
+    public function addOrderProduct(OrderProduct $orderProduct): self
+    {
+        if (!$this->orderProducts->contains($orderProduct)) {
+            $this->orderProducts[] = $orderProduct;
+            $orderProduct->setProduct($this);
+        }
+
+        return $this;
+    }
+
+    public function removeOrderProduct(OrderProduct $orderProduct): self
+    {
+        if ($this->orderProducts->removeElement($orderProduct)) {
+            // set the owning side to null (unless already changed)
+            if ($orderProduct->getProduct() === $this) {
+                $orderProduct->setProduct(null);
+            }
+        }
 
         return $this;
     }

@@ -26,8 +26,12 @@ class ImageResizer
         $ratio = $iwidth / $iheight;
         $width = $targetParams['width'];
         $height = $targetParams['height'];
-        if ($width / $height > $ratio) {
-            $width = $height * $ratio;
+        if ($height) {
+            if ($width / $height > $ratio) {
+                $width = $height * $ratio;
+            } else {
+                $height = $width / $ratio;
+            }
         } else {
             $height = $width / $ratio;
         }

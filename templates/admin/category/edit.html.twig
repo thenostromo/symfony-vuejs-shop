@@ -14,24 +14,26 @@
                 } %}
             </div>
             <div class="card-body">
-                {{ form_start(categoryEditForm) }}
+                {{ form_start(form) }}
                     <div class="form-group row">
-                        <div class="col-sm-12 mb-3 mb-sm-0">
-                            <div style="display: flex; align-items: center;">
-                                {{ form_label(categoryEditForm.title) }}
-                                {{ form_widget(categoryEditForm.title, {'attr': {
-                                    'class': 'form-control',
-                                    'placeholder': 'title'}}) }}
+                        <div class="col-md-1">
+                            {{ form_label(form.title) }}
+                        </div>
+                        <div class="col-md-11">
+                            {{ form_widget(form.title) }}
+                            <div class="form-error">
+                                {{ form_errors(form.title) }}
                             </div>
                         </div>
                     </div>
                     <div class="form-group row">
-                        <div class="col-sm-12 mb-3 mb-sm-0">
-                            <div style="display: flex; align-items: center;">
-                                {{ form_label(categoryEditForm.slug) }}
-                                {{ form_widget(categoryEditForm.slug, {'attr': {
-                                    'class': 'form-control',
-                                    'placeholder': 'slug'}}) }}
+                        <div class="col-md-1">
+                            {{ form_label(form.slug) }}
+                        </div>
+                        <div class="col-md-11">
+                            {{ form_widget(form.slug) }}
+                            <div class="form-error">
+                                {{ form_errors(form.slug) }}
                             </div>
                         </div>
                     </div>
@@ -39,7 +41,8 @@
                     {% include 'admin/embed/card/_form_buttons.html.twig' with {
                         'entity': category
                     }  %}
-                {{ form_end(categoryEditForm) }}
+                {{ form_rest(form) }}
+                {{ form_end(form) }}
             </div>
         </div>
 

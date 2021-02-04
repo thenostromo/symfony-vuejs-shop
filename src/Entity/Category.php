@@ -44,9 +44,16 @@ class Category
      */
     private $isDeleted;
 
+    /**
+     * @ORM\Column(type="string", length=255)
+     */
+    private $titlePlural;
+
     public function __construct()
     {
         $this->products = new ArrayCollection();
+        $this->isHidden = false;
+        $this->isDeleted = false;
     }
 
     public function getId(): ?int
@@ -128,6 +135,18 @@ class Category
     public function setIsDeleted(bool $isDeleted): self
     {
         $this->isDeleted = $isDeleted;
+
+        return $this;
+    }
+
+    public function getTitlePlural(): ?string
+    {
+        return $this->titlePlural;
+    }
+
+    public function setTitlePlural(string $titlePlural): self
+    {
+        $this->titlePlural = $titlePlural;
 
         return $this;
     }

@@ -50,27 +50,29 @@
                 </li>
 
                 <li class="nav-item">
-                    <a class="nav-link collapsed" href="#" data-toggle="collapse" data-target="#collapsePages"
-                       aria-expanded="true" aria-controls="collapsePages">
+                    <a class="nav-link collapsed" href="#" data-toggle="collapse" data-target="#collapsePromoCodes"
+                       aria-expanded="true" aria-controls="collapsePromoCodes">
                         <i class="fas fa-fw fa-bolt"></i>
                         <span>Promotional Codes</span>
                     </a>
-                    <div id="collapsePages" class="collapse" aria-labelledby="headingPages" data-parent="#accordionSidebar">
+                    <div id="collapsePromoCodes" class="collapse" aria-labelledby="headingPages" data-parent="#accordionSidebar">
                         <div class="py-2 collapse-inner">
-                            <a class="collapse-item" href="{{ path('admin_category_list') }}">Все категории</a>
+                            <a class="collapse-item" href="{{ path('admin_promo_code_list') }}">All list</a>
+                            <a class="collapse-item" href="{{ path('admin_promo_code_add') }}">Add new</a>
                         </div>
                     </div>
                 </li>
 
                 <li class="nav-item">
-                    <a class="nav-link collapsed" href="#" data-toggle="collapse" data-target="#collapsePages"
-                       aria-expanded="true" aria-controls="collapsePages">
+                    <a class="nav-link collapsed" href="#" data-toggle="collapse" data-target="#collapseSaleCollections"
+                       aria-expanded="true" aria-controls="collapseSaleCollections">
                         <i class="fas fa-fw fa-fire"></i>
                         <span>Hot Sales</span>
                     </a>
-                    <div id="collapsePages" class="collapse" aria-labelledby="headingPages" data-parent="#accordionSidebar">
+                    <div id="collapseSaleCollections" class="collapse" aria-labelledby="headingPages" data-parent="#accordionSidebar">
                         <div class="py-2 collapse-inner">
-                            <a class="collapse-item" href="{{ path('admin_category_list') }}">Все категории</a>
+                            <a class="collapse-item" href="{{ path('admin_sale_collection_list') }}">All list</a>
+                            <a class="collapse-item" href="{{ path('admin_sale_collection_add') }}">Add new</a>
                         </div>
                     </div>
                 </li>
@@ -131,13 +133,6 @@
                             <a class="collapse-item" href="{{ path('admin_user_add') }}">Add new</a>
                         </div>
                     </div>
-                </li>
-
-                <!-- Nav Item - Charts -->
-                <li class="nav-item">
-                    <a class="nav-link" href="charts.html">
-                        <i class="fas fa-fw fa-cog"></i>
-                        <span>Settings</span></a>
                 </li>
 
                 <!-- Divider -->
