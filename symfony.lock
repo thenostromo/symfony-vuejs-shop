@@ -143,6 +143,18 @@
     "imagine/imagine": {
         "version": "1.2.4"
     },
+    "knpuniversity/oauth2-client-bundle": {
+        "version": "1.20",
+        "recipe": {
+            "repo": "github.com/symfony/recipes-contrib",
+            "branch": "master",
+            "version": "1.20",
+            "ref": "80acc9223a205cbf5d9828fd616c82a374d281dd"
+        },
+        "files": [
+            "config/packages/knpu_oauth2_client.yaml"
+        ]
+    },
     "laminas/laminas-code": {
         "version": "4.0.0"
     },
@@ -151,6 +163,15 @@
     },
     "laminas/laminas-zendframework-bridge": {
         "version": "1.1.1"
+    },
+    "league/oauth2-client": {
+        "version": "2.6.0"
+    },
+    "league/oauth2-facebook": {
+        "version": "2.0.5"
+    },
+    "league/oauth2-google": {
+        "version": "3.0.3"
     },
     "monolog/monolog": {
         "version": "2.2.0"
@@ -169,6 +190,9 @@
     },
     "nikic/php-parser": {
         "version": "v4.10.4"
+    },
+    "paragonie/random_compat": {
+        "version": "v9.99.100"
     },
     "php": {
         "version": "7.4"

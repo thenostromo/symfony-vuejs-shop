@@ -127,7 +127,7 @@
         window.staticStore.categories = JSON.parse('{{ categories|json_encode|raw }}')
         window.staticStore.orderId = "{{ order.id }}"
         window.staticStore.urlProductView = "{{ path('admin_product_edit_blank') }}"
-        window.staticStore.urlGetProductsByCategory = "{{ path('admin_order_get_products_by_category') }}"
+        window.staticStore.urlGetProductsByCategory = "{{ path('product_get_products_by_category') }}"
         window.staticStore.urlGetProductsByOrder = "{{ path('admin_order_add_products_by_order') }}"
         window.staticStore.urlAddProductToOrder = "{{ path('admin_order_add_product_to_order') }}"
         window.staticStore.urlRemoveProductFromOrder = "{{ path('admin_order_remove_product_from_order') }}"

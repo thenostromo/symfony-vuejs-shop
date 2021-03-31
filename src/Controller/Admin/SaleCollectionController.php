@@ -68,6 +68,13 @@ class SaleCollectionController extends AbstractController
         $form->handleRequest($request);
 
         if ($form->isSubmitted() && $form->isValid()) {
+            $saleCollectionSlugRaw = strtolower(
+                preg_replace("/[^a-zA-Z0-9 ]+/", "", $saleCollection->getTitle())
+            );
+            $saleCollectionSlugRaw = trim($saleCollectionSlugRaw);
+            $saleCollectionSlug = str_replace(" ", "-", $saleCollectionSlugRaw);
+            $saleCollection->setSlug($saleCollectionSlug);
+
             $entityManager = $this->getDoctrine()->getManager();
             $entityManager->persist($saleCollection);
             $entityManager->flush();

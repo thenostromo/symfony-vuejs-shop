@@ -3,7 +3,10 @@
 namespace App\Controller;
 
 use App\Entity\Order;
+use App\Entity\OrderProduct;
 use App\Entity\Product;
+use App\Entity\PromoCode;
+use App\Repository\PromoCodeRepository;
 use Symfony\Bundle\FrameworkBundle\Controller\AbstractController;
 use Symfony\Component\HttpFoundation\JsonResponse;
 use Symfony\Component\HttpFoundation\Request;
@@ -23,9 +26,35 @@ class CartController extends AbstractController
     }
 
     /**
+     * @Route("/approve-promo-code", name="cart_approve_promo_code")
+     */
+    public function approvePromoCode(Request $request, PromoCodeRepository $promoCodeRepository): Response
+    {
+        $promoCodeValue = $request->request->get('promo_code');
+
+        /** @var PromoCode $promoCode */
+        $promoCode = $promoCodeRepository->getValidPromoCodeByValue($promoCodeValue);
+
+        if (!$promoCode) {
+            return new JsonResponse([
+                'success' => false,
+                'data' => []
+            ]);
+        }
+
+        $promoCodeModel = [];
+        $promoCodeModel['discount'] = $promoCode->getDiscount();
+
+        return new JsonResponse([
+            'success' => true,
+            'data' => $promoCodeModel
+        ]);
+    }
+
+    /**
      * @Route("/make-order", name="cart_make_order")
      */
-    public function makeOrder(Request $request): Response
+    public function makeOrder(Request $request, PromoCodeRepository $promoCodeRepository): Response
     {
         $user = $this->getUser();
         if (!$user) {
@@ -34,6 +63,7 @@ class CartController extends AbstractController
                 'message' => 'You are not authorized'
             ]);
         }
+
         $cartJson = $request->request->get('cart');
         if (!$cartJson) {
             return new JsonResponse([
@@ -43,22 +73,45 @@ class CartController extends AbstractController
         }
 
         $cart = json_decode($cartJson, true);
+        $promoCodeValue = $request->request->get('promoCodeValue');
+
         if (count($cart) > 0) {
+            $entityManager = $this->getDoctrine()->getManager();
+
             $order = new Order();
             $order->setOwner($this->getUser());
-            $productsQuantity = [];
             $totalPrice = 0;
 
             foreach ($cart as $cartItem) {
-                $product = $this->getDoctrine()->getManager()->getRepository(Product::class)->find($cartItem['id']);
-                $productsQuantity[$cartItem['id']] = $cartItem['quantity'];
+                /** @var Product $product */
+                $product = $entityManager->getRepository(Product::class)->findOneBy([
+                    'id' => $cartItem['id'],
+                    'isHidden' => false,
+                    'isDeleted' => false
+                ]);
+                if (!$product) {
+                    continue;
+                }
+
+                $orderProduct = new OrderProduct();
+                $orderProduct->setQuantity($cartItem['quantity']);
+                $orderProduct->setProduct($product);
+                $orderProduct->setPricePerOne($product->getPrice());
+                $orderProduct->setAppOrder($order);
+
+                $entityManager->persist($orderProduct);
+                $order->addOrderProduct($orderProduct);
+
                 $totalPrice += $cartItem['quantity'] * $product->getPrice();
             }
 
-            $order->setQuntity(json_encode($productsQuantity));
             $order->setTotalPrice($totalPrice);
 
-            $entityManager = $this->getDoctrine()->getManager();
+            $promoCode = $promoCodeRepository->getValidPromoCodeByValue($promoCodeValue);
+            if ($promoCode) {
+                $order->setPromoCode($promoCode);
+            }
+
             $entityManager->persist($order);
             $entityManager->flush();
         }

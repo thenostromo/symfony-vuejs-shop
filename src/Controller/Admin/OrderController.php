@@ -107,33 +107,6 @@ class OrderController extends AbstractController
     }
 
     /**
-     * @Route("/get-products-by-category", name="get_products_by_category")
-     */
-    public function getProductsByCategory(Request $request, ProductRepository $productRepository): Response
-    {
-        $categoryId = intval($request->request->get('categoryId'));
-        $products = $productRepository->findBy(['category' => $categoryId], ['id' => 'ASC']);
-        $data = [];
-        foreach ($products as $product) {
-            $data[] = [
-                'id' => $product->getId(),
-                'title' => sprintf(
-                    '#%s %s / P: %s$ / Q: %s',
-                    $product->getId(),
-                    $product->getTitle(),
-                    $product->getPrice(),
-                    $product->getQuantity()
-                ),
-            ];
-        }
-
-        return new JsonResponse([
-            'success' => true,
-            'data' => $data
-        ]);
-    }
-
-    /**
      * @Route("/add-product-to-order", name="add_product_to_order")
      */
     public function addProductToOrder(Request $request, ProductRepository $productRepository, OrderRepository $orderRepository)

@@ -104,8 +104,6 @@ class CategoryProductFixtures extends Fixture
                 case ('sneakers'):
                     $product->setCategory($categorySneakers);
                     break;
-                default:
-                    continue;
             }
 
             $product->setQuantity($productRaw['quantity']);

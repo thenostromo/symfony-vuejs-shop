@@ -33,130 +33,46 @@
 
 {% block body %}
     <div id="app"></div>
-
-    <div class="text-center">
-        <div class="container mt-3 mb-2">
-            <div class="row">
-                <div class="col-lg-12 mb-2" style="display: flex; align-items: center; justify-content: center; text-align: center">
-                    <div class="products-count">
-                        Showing <span>9 of 56</span> Products
-                    </div>
-                    <div class="page-title2">
-                        <a class="page-title">{{ category.title }}</a>
-                    </div>
-                    <div class="products-sort">
-                        <label for="sortby" style="margin: 0 .5rem 0 0;">Sort by:</label>
-                        <select name="sortby" id="sortby" class="form-control" style="width: 200px;">
-                            <option value="popularity" selected="selected">Most Popular</option>
-                            <option value="rating">Most Rated</option>
-                            <option value="date">Date</option>
-                        </select>
-                    </div>
-                </div>
-            </div>
-        </div>
-        <div class="container">
-            <div class="row">
-                <div class="col-lg-12">
-                    <div class="products mb-3">
-                        <div class="row justify-content-center">
-                            {% for product in productsModel %}
-
-                                <div class="col-6 col-md-4 col-lg-4 col-xl-3">
-                                    <div class="product text-center">
-                                        <div class="product-content">
-                                            <figure class="product-media">
-                                                <span class="product-label label-new">New</span>
-                                                <a href="{{ path('product_show', {id: product.id}) }}">
-                                                    {% for image in product.images %}
-                                                        <img src="{{ asset('uploads/images/products/' ~ product.id ~ '/' ~ image.getFilenameMiddle()) }}"
-                                                             alt="{{ product.title }}"
-                                                             class="product-image">
-                                                    {% endfor %}
-                                                </a>
-
-                                                <div class="product-action">
-                                                    <a onclick="addProductToCart({{ product.id }})" href="#" class="btn-product btn-cart"><span>add to cart</span></a>
-                                                </div><!-- End .product-action -->
-                                            </figure><!-- End .product-media -->
-
-                                            <div class="product-body">
-                                                <h3 class="product-title"><a href="product.html">{{ product.title }}</a></h3><!-- End .product-title -->
-                                                <div class="product-price">
-                                                    ${{ product.price }}
-                                                </div><!-- End .product-price -->
-                                            </div><!-- End .product-body -->
-                                        </div>
-                                    </div><!-- End .product -->
-                                </div><!-- End .col-sm-6 col-lg-4 col-xl-3 -->
-
-                            {% endfor %}
-                        </div><!-- End .row -->
-                    </div><!-- End .products -->
-
-
-                    <nav aria-label="Page navigation">
-                        <ul class="pagination justify-content-center">
-                            <li class="page-item disabled">
-                                <a class="page-link page-link-prev" href="#" aria-label="Previous" tabindex="-1" aria-disabled="true" style="color: #333333">
-                                    <span aria-hidden="true"><i class="fas fa-angle-left"></i></span>Prev
-                                </a>
-                            </li>
-                            <li class="page-item active" aria-current="page"><a class="page-link" style="border-bottom: 2px solid #ff59bd !important;" href="#">1</a></li>
-                            <li class="page-item"><a class="page-link" href="#">2</a></li>
-                            <li class="page-item"><a class="page-link" href="#">3</a></li>
-                            <li class="page-item-total">...</li>
-                            <li class="page-item"><a class="page-link" href="#">6</a></li>
-                            <li class="page-item">
-                                <a class="page-link page-link-next" href="#" aria-label="Next">
-                                    Next <span aria-hidden="true"><i class="fas fa-angle-right"></i></span>
-                                </a>
-                            </li>
-                        </ul>
-                    </nav>
-                </div><!-- End .col-lg-9 -->
-            </div>
-        </div><!-- End .container -->
-    </div><!-- End .page-header -->
-
 {% endblock %}
 
 {% block javascripts %}
     <script>
-      //  let productsModel = JSON.parse('{{ productsModel|json_encode|raw }}');
-
-        function addProductToCart(id)
+        function addProductToCart(productData)
         {
-            const idNum = parseInt(id);
-
             let cartJSON = sessionStorage.getItem('cart');
-            const cart = cartJSON ? JSON.parse(cartJSON) : {};
-            const product = productsModel.find(function(item) {
-                return (item.id === idNum);
+            let cart = cartJSON ? JSON.parse(cartJSON) : [];
+            cart = cart.filter(item => {
+                return item.id !== productData.id
             })
-            if (product) {
-                if (cart[product.id] !== undefined) {
-                    cart[product.id] = product;
-                    cart[product.id]['quantity'] += 1;
-                } else {
-                    cart[product.id] = product;
-                    cart[product.id]['quantity'] = 1;
-                }
-            }
+            cart.push({
+                id: productData.id,
+                title: productData.title,
+                categoryName: productData.category.title,
+                price: productData.price,
+                image: productData.images.length
+                    ? productData.images[0].filenameSmall
+                    : null,
+                quantity: 1
+            })
 
             sessionStorage.setItem('cart', JSON.stringify(cart));
+            window.vueMenuCartInstance.getProductsOfCart()
         }
 
         console.log(sessionStorage.getItem('cart'))
     </script>
     <script>
-        window.staticStore = {}
-        window.staticStore.category = JSON.parse('{{ categoryModel|json_encode|raw }}')
-        window.staticStore.urlProductView = "{{ path('admin_product_edit_blank') }}"
-        window.staticStore.urlGetProductsByCategory = "{{ path('admin_order_get_products_by_category') }}"
-        window.staticStore.urlGetProductsByOrder = "{{ path('admin_order_add_products_by_order') }}"
-        window.staticStore.urlAddProductToOrder = "{{ path('admin_order_add_product_to_order') }}"
-        window.staticStore.urlRemoveProductFromOrder = "{{ path('admin_order_remove_product_from_order') }}"
+        if (typeof window.staticStore === 'undefined') {
+            window.staticStore = {}
+        }
+        window.staticStore.offset = 0
+        window.staticStore.limit = 4
+        window.staticStore.selectedCategory = JSON.parse('{{ categoryModel|json_encode|raw }}')
+        window.staticStore.urlProductShow = "{{ path('product_show_blank') }}"
+        window.staticStore.urlAssetImageProducts = "{{ asset('uploads/images/products') }}"
+        window.staticStore.urlGetCountOfProductsByCategory = "{{ path('product_get_count_of_products_by_category') }}"
+        window.staticStore.urlGetProductsByCategory = "{{ path('product_get_products_by_category') }}"
+        window.staticStore.addProductToCart = addProductToCart
     </script>
     {{ encore_entry_script_tags('appMainCategoryShow') }}
 {% endblock %}

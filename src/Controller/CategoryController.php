@@ -4,6 +4,7 @@ namespace App\Controller;
 
 use App\Entity\Category;
 use App\Entity\Product;
+use App\Entity\ProductImage;
 use App\Repository\ProductRepository;
 use Symfony\Bundle\FrameworkBundle\Controller\AbstractController;
 use Symfony\Component\HttpFoundation\Response;
@@ -28,18 +29,30 @@ class CategoryController extends AbstractController
         foreach ($products as $product) {
             $images = $product->getProductImages()->getValues();
 
-            $productsModel[] = [
+            $productModel = [
                 'id' => $product->getId(),
-                'title' => $product->getTitle(),
+                'title' => str_replace("'", "", $product->getTitle()),
                 'price' => $product->getPrice(),
                 'quantity' => $product->getQuantity(),
-                'images' => $images,
+                'images' => [],
                 'category' => [
                     'id' => $product->getCategory()->getId(),
                     'title' => $product->getCategory()->getTitle(),
                     'slug' => $product->getCategory()->getSlug()
                 ]
             ];
+
+            /** @var ProductImage $image */
+            foreach ($images as $image) {
+                $productModel['images'][] = [
+                    'id' => $image->getId(),
+                    'filenameBig' => $image->getFilenameBig(),
+                    'filenameMiddle' => $image->getFilenameMiddle(),
+                    'filenameSmall' => $image->getFilenameSmall()
+                ];
+            }
+
+            $productsModel[] = $productModel;
         }
 
         $categoryModel = [

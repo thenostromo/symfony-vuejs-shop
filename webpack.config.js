@@ -9,6 +9,8 @@ Encore
     .addEntry('appAdminSaleCollection', './assets/js/admin-sale-collection/app.js')
     .addEntry('appAdminOrder', './assets/js/admin-order/app.js')
     .addEntry('appMainCategoryShow', './assets/js/main-category-show/app.js')
+    .addEntry('appMenuCart', './assets/js/menu-cart/app.js')
+    .addEntry('appMainCartShow', './assets/js/main-cart-show/app.js')
 //.addStyleEntry('css/app', './assets/scss/style.scss')
     .splitEntryChunks()
 

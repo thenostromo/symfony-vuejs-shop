@@ -1,68 +1,14 @@
-<div class="dropdown cart-dropdown">
-    <a href="#" class="dropdown-toggle" role="button" data-toggle="dropdown" aria-haspopup="true" aria-expanded="false" data-display="static">
-        <i class="fas fa-shopping-basket"></i>
-        <span class="cart-count">2</span>
-    </a>
-
-    <div class="dropdown-menu dropdown-menu-right">
-        <div class="dropdown-cart-products" id="productsList">
-
-        </div><!-- End .cart-product -->
-
-        <div class="dropdown-cart-total">
-            <span>Total</span>
-
-            <span class="cart-total-price" id="totalPrice">-</span>
-        </div><!-- End .dropdown-cart-total -->
-
-        <div class="dropdown-cart-action">
-            <a href="{{ path('cart_index') }}" class="btn btn-primary">View Cart</a>
-            <a href="checkout.html" class="btn btn-outline-primary-2"><span>Checkout</span></a>
-        </div><!-- End .dropdown-cart-total -->
-    </div>
-</div>
+{{ encore_entry_link_tags('appMainCategoryShow') }}
+<div id="appMenuCart"></div>
 
 <script>
-    const productsListEl = document.getElementById('productsList');
-    const totalPriceEl = document.getElementById('totalPrice');
-    let cartJSON = sessionStorage.getItem('cart');
-    const cart = cartJSON ? JSON.parse(cartJSON) : {};
-    if (cart) {
-        initCartComponent();
-    }
 
-    function initCartComponent()
-    {
-        let HTMLProducts = '';
-        let host = window.location.protocol + "//" + window.location.host;
-        let totalPrice = 0;
-        for (let key in cart) {
-            const cartItem = cart[key];
-            HTMLProducts += '<div class="product">\n' +
-                '                <div class="product-cart-details">\n' +
-                '                    <h4 class="product-title">\n' +
-                '                        <a href="product.html">Beige knitted elastic runner shoes</a>\n' +
-                '                    </h4>\n' +
-                '\n' +
-                '                    <span class="cart-product-info">\n' +
-                '                        <span class="cart-product-qty">' + cartItem.quantity + '</span>\n' +
-                '                        x $' + cartItem.price + '\n' +
-                '                    </span>\n' +
-                '                </div><!-- End .product-cart-details -->\n' +
-                '\n' +
-                '                <figure class="product-image-container">\n' +
-                '                    <a href="product.html" class="product-image">\n' +
-                '                        <img src="' + host + '/assets/images/products/' + cartItem.category.slug + '/' + cartItem.cover + '" alt="product">\n' +
-                '                    </a>\n' +
-                '                </figure>\n' +
-                '                <a href="#" class="btn-remove" title="Remove Product"><i class="icon-close"></i></a>\n' +
-                '            </div>';
-            totalPrice += (cartItem.quantity * cartItem.price);
-        }
-        totalPrice = '$' + totalPrice;
-        productsListEl.innerHTML = HTMLProducts;
-        totalPriceEl.innerHTML = totalPrice;
+    if (typeof window.staticStore === 'undefined') {
+        window.staticStore = {}
     }
+    window.staticStore.urlCartIndex = "{{ path('cart_index') }}"
+    window.staticStore.urlProductShow = "{{ path('product_show_blank') }}"
+    window.staticStore.urlAssetImageProducts = "{{ asset('uploads/images/products') }}"
 
     function addProductToCartComponent(id)
     {
@@ -86,3 +32,4 @@
         sessionStorage.setItem('cart', JSON.stringify(cart));
     }
 </script>
+{{ encore_entry_script_tags('appMenuCart') }}

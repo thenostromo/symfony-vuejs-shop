@@ -1,57 +1,9 @@
-/* Skin demo 7 - index-7.html */
-/* Skin structure */
-::-moz-selection {
-    background-color: #cc6666; }
-
-::selection {
-    background-color: #cc6666; }
-
-.bg-primary {
-    background-color: #cc6666 !important; }
-
-.bg-secondary {
-    background-color: #fcb941 !important; }
-
 a {
-    color: #cc6666; }
+    color: #dc143c; }
 
 a:hover,
 a:focus {
     color: #bf4040; }
-
-.link-underline {
-    box-shadow: 0 1px 0 0 #cc6666; }
-
-.text-primary {
-    color: #cc6666 !important; }
-
-.text-secondary {
-    color: #fcb941 !important; }
-
-/* Elements */
-.alert-primary {
-    background-color: #cc6666; }
-
-.banner-badge .banner-link:hover .banner-link-text,
-.banner-badge .banner-link:focus .banner-link-text {
-    background-color: #cc6666; }
-
-.header-3 .header-search-extended .btn,
-.header-4 .header-search-extended .btn {
-    background-color: transparent;
-    color: #333; }
-.header-3 .header-search-extended .btn:hover, .header-3 .header-search-extended .btn:focus,
-.header-4 .header-search-extended .btn:hover,
-.header-4 .header-search-extended .btn:focus {
-    color: #cc6666; }
-
-.btn-video {
-    color: #cc6666; }
-.btn-video:hover, .btn-video:focus {
-    background-color: #fcb941; }
-
-.breadcrumb-item a:hover, .breadcrumb-item a:focus {
-    color: #cc6666; }
 
 .btn-link {
     color: #cc6666; }
@@ -452,7 +404,7 @@ a:focus {
     color: #cc6666; }
 
 .product-price {
-    color: #cc6666; }
+    color: #ff59bd; }
 
 .product-label.label-primary {
     background-color: #cc6666; }
@@ -572,16 +524,16 @@ a:focus {
 .menu li:hover > a,
 .menu li.show > a,
 .menu li.active > a {
-    color: #cc6666; }
+    color: #dc143c; }
 
 .demo-item a:hover, .demo-item a:focus {
-    color: #cc6666; }
+    color: #dc143c; }
 
 .tip {
     background-color: #cc6666; }
 
 .header-bottom .menu > li > a:before {
-    background-color: #cc6666; }
+    background-color: #dc143c; }
 
 .category-dropdown .dropdown-toggle:before {
     background-color: #cc6666; }
@@ -600,11 +552,11 @@ a:focus {
 .menu-vertical li:hover > a,
 .menu-vertical li.show > a,
 .menu-vertical li.active > a {
-    color: #cc6666; }
+    color: #ff59bd; }
 .menu-vertical > li:hover > a,
 .menu-vertical > li.show > a,
 .menu-vertical > li.active > a {
-    color: #cc6666; }
+    color: #ff59bd; }
 
 .mobile-menu-close:hover, .mobile-menu-close:focus {
     color: #cc6666; }

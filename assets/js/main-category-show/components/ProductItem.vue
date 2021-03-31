@@ -1,74 +1,56 @@
 <template>
-  <div class="row mb-1">
-    <div class="col-md-1 text-center">
-      {{ rowNumber }}
-    </div>
-    <div class="col-md-1">
-      {{ category }}
-    </div>
-    <div class="col-md-3">
-      {{ product.title }}
-    </div>
-    <div class="col-md-2">
-      {{ product.quantity }}
-    </div>
-    <div class="col-md-2">
-      {{ product.pricePerOne }}$
-    </div>
-    <div class="col-md-3">
-      <button
-          @click="viewDetails"
-          class="btn btn-outline-info"
-      >
-        Details
-      </button>
-      <button
-          @click="remove"
-          class="btn btn-outline-success"
-      >
-        Remove
-      </button>
+  <div class="col-6 col-md-4 col-lg-4 col-xl-3">
+    <div class="product text-center">
+      <div class="product-content">
+        <figure class="product-media">
+          <span class="product-label label-new">New</span>
+          <a :href="getUrlProductShow(product.id)">
+            <img
+                v-for="image in product.images"
+                :src="getUrlProductImage(product, image)"
+                :alt="product.title"
+                :class="product-image"
+            >
+          </a>
+
+          <div class="product-action">
+            <a href="#" @click="addToCart(product)" class="btn-product btn-cart">
+              <span>add to cart</span>
+            </a>
+          </div><!-- End .product-action -->
+        </figure><!-- End .product-media -->
+
+        <div class="product-body">
+          <h3 class="product-title">
+            <a :href="getUrlProductShow(product.id)">{{ product.title }}</a>
+          </h3><!-- End .product-title -->
+          <div class="product-price">
+            ${{ product.price }}
+          </div><!-- End .product-price -->
+        </div><!-- End .product-body -->
+      </div>
     </div>
   </div>
 </template>
 
 <script>
-import {mapActions, mapGetters} from "vuex";
-
-const axios = require('axios');
+import {mapGetters} from "vuex";
 
 export default {
-  name: "ProductItem",
-  props: ['product', 'index'],
   computed: {
-    ...mapGetters('products', ['categories', 'urlProductView']),
-    rowNumber() {
-      return this.index + 1
-    },
-    category() {
-      const $this = this
-      let category = null
-      this.categories.forEach((item, index) => {
-        if (item.id === $this.product.category.id) {
-          category = item.title
-        }
-      })
-      return category
-    }
+    ...mapGetters('category', ['urlProductShow', 'getUrlAssetImageProducts']),
   },
+  props: ['product'],
   methods: {
-    ...mapActions('products', ['removeProduct', 'getProductsByOrder']),
-    viewDetails(event) {
-      event.preventDefault();
-
-      const url = window.location.protocol + "//" + window.location.host + this.urlProductView + '/' + this.product.id;
-      window.open(url, '_blank').focus();
+    getUrlProductShow(productId) {
+      return this.urlProductShow + "/" + productId
     },
-    remove(event) {
-      event.preventDefault()
-      this.removeProduct(this.product.id)
-    }
+    getUrlProductImage(product, image) {
+      return this.getUrlAssetImageProducts + "/" + product.id + "/" + image.filenameMiddle
+    },
+    addToCart (product) {
+      addProductToCart(product)
+    },
   }
 };
 </script>
-

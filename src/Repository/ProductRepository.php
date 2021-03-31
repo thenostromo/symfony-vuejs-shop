@@ -2,6 +2,7 @@
 
 namespace App\Repository;
 
+use App\Entity\Category;
 use App\Entity\Product;
 use Doctrine\Bundle\DoctrineBundle\Repository\ServiceEntityRepository;
 use Doctrine\Persistence\ManagerRegistry;
@@ -19,22 +20,48 @@ class ProductRepository extends ServiceEntityRepository
         parent::__construct($registry, Product::class);
     }
 
-    // /**
-    //  * @return Product[] Returns an array of Product objects
-    //  */
-    /*
-    public function findByExampleField($value)
+    /**
+     * @param Category $category
+     * @return int|mixed|string
+     * @throws \Doctrine\ORM\NoResultException
+     * @throws \Doctrine\ORM\NonUniqueResultException
+     */
+    public function getCountByCategory(Category $category)
     {
         return $this->createQueryBuilder('p')
-            ->andWhere('p.exampleField = :val')
-            ->setParameter('val', $value)
-            ->orderBy('p.id', 'ASC')
-            ->setMaxResults(10)
+            ->select('count(p.id)')
+            ->andWhere('p.category = :category')
+            ->setParameter('category', $category)
             ->getQuery()
-            ->getResult()
+            ->getSingleScalarResult()
         ;
     }
-    */
+
+    /**
+     * @param Category $category
+     * @param int $offset
+     * @param int $limit
+     * @return Product[]
+     */
+    public function getProductsByCategory(Category $category, int $offset = 0, int $limit = 0)
+    {
+        $queryBuilder = $this->createQueryBuilder('p')
+            ->select('p')
+            ->andWhere('p.category = :category')
+            ->orderBy('p.id', 'ASC')
+            ->setParameters([
+                'category' => $category
+            ])
+            ->setFirstResult($offset);
+
+        if ($limit) {
+            $queryBuilder->setMaxResults($limit);
+        }
+
+        return $queryBuilder
+            ->getQuery()
+            ->getResult();
+    }
 
     /*
     public function findOneBySomeField($value): ?Product

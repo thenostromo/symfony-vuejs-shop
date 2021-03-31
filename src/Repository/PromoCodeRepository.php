@@ -32,4 +32,36 @@ class PromoCodeRepository extends ServiceEntityRepository
             ->execute()
             ;
     }
+
+    /**
+     * @param string $promoCodeValue
+     * @return PromoCode
+     * @throws \Doctrine\ORM\NoResultException
+     * @throws \Doctrine\ORM\NonUniqueResultException
+     */
+    public function getValidPromoCodeByValue(string $promoCodeValue)
+    {
+        $currentDateTime = new \DateTime();
+        $qb = $this->createQueryBuilder('pc');
+
+        return $qb
+            ->andWhere(
+                $qb->expr()->gte('pc.validUntil', ':currentDateTime')
+            )
+            ->andWhere(
+                $qb->expr()->gte('pc.uses', ':usesMin')
+            )
+            ->andWhere('pc.isHidden = :isHidden')
+            ->andWhere('pc.isDeleted = :isDeleted')
+            ->orderBy('pc.id', 'ASC')
+            ->setParameters([
+                'currentDateTime' => $currentDateTime,
+                'usesMin' => 0,
+                'isHidden' => false,
+                'isDeleted' => false
+            ])
+            ->getQuery()
+            ->getOneOrNullResult()
+            ;
+    }
 }
