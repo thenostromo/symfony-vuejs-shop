@@ -7,14 +7,15 @@
 {% block stylesheets %}
     <style>
         .page-title {
-            font-size: 4rem;
+            font-size: 3rem;
             font-weight: 100;
-            border-bottom: 4px solid #ff59bd !important;
+            #border-bottom: 4px solid #ff59bd !important;
             #-webkit-clip-path: polygon(5% 0%, 100% 0, 95% 100%, 0% 100%);
             #clip-path: polygon(5% 0%, 100% 0%, 95% 100%, 0% 100%);
         }
         .products-count {
             margin-right: 5rem;
+            font-size: 1.4rem;
         }
         .products-sort {
             margin-left: 5rem;
@@ -26,6 +27,12 @@
         .page-header {
             background-color: #DFDBE5;
             background-image: url("data:image/svg+xml,%3Csvg width='20' height='20' viewBox='0 0 20 20' xmlns='http://www.w3.org/2000/svg'%3E%3Cg fill='%239C92AC' fill-opacity='0.1' fill-rule='evenodd'%3E%3Ccircle cx='3' cy='3' r='3'/%3E%3Ccircle cx='13' cy='13' r='3'/%3E%3C/g%3E%3C/svg%3E");
+        }
+        .page-item.active .page-link {
+            color: #f13c76;
+        }
+        .page-link:hover, .page-link:focus {
+            color: #f13c76;
         }
     </style>
     {{ encore_entry_link_tags('appMainCategoryShow') }}
@@ -39,7 +46,7 @@
     <script>
         function addProductToCart(productData)
         {
-            let cartJSON = sessionStorage.getItem('cart');
+            let cartJSON = localStorage.getItem('cart');
             let cart = cartJSON ? JSON.parse(cartJSON) : [];
             cart = cart.filter(item => {
                 return item.id !== productData.id
@@ -55,11 +62,11 @@
                 quantity: 1
             })
 
-            sessionStorage.setItem('cart', JSON.stringify(cart));
+            localStorage.setItem('cart', JSON.stringify(cart));
             window.vueMenuCartInstance.getProductsOfCart()
         }
 
-        console.log(sessionStorage.getItem('cart'))
+        console.log(localStorage.getItem('cart'))
     </script>
     <script>
         if (typeof window.staticStore === 'undefined') {

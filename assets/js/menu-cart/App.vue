@@ -1,7 +1,7 @@
 <template>
   <div class="dropdown cart-dropdown">
     <a href="#" class="dropdown-toggle" role="button" data-toggle="dropdown" aria-haspopup="true" aria-expanded="false" data-display="static">
-      <i class="fas fa-shopping-basket"></i>
+      <i class="fas fa-shopping-cart"></i>
       <span class="cart-count">{{ countCartProducts }}</span>
     </a>
 
@@ -17,13 +17,13 @@
       <div class="dropdown-cart-action">
         <a
           :href="urlCartIndex"
-          class="btn btn-primary"
+          class="btn btn-success"
         >
           View Cart
         </a>
         <a
           href="#"
-          class="btn btn-outline-primary-2"
+          class="btn btn-cancel mt-2"
           @click="cleanCart"
         >
           <span>Checkout</span>

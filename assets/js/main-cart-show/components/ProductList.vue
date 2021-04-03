@@ -1,5 +1,5 @@
 <template>
-  <table class="table table-cart table-mobile">
+  <table class="table table-cart table-mobile main-cart-show">
     <thead>
     <tr>
       <th>Product</th>

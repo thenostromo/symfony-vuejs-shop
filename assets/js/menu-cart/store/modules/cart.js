@@ -36,7 +36,7 @@ const getters = {
 
 const actions = {
     getProductsOfCart({commit}) {
-        let cartJSON = sessionStorage.getItem('cart');
+        let cartJSON = localStorage.getItem('cart');
         const cart = cartJSON ? JSON.parse(cartJSON) : [];
         commit('setProductsOfCart', cart)
     },

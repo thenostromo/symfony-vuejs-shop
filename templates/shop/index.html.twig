@@ -16,7 +16,7 @@
                     <div class="banner-content banner-content-center">
                         <h3 class="banner-subtitle text-white">New Collection 2020!</h3>
                         <h2 class="banner-title text-white">Jeans</h2>
-                        <a href="{{ path('category_show', {slug: 'jeans'}) }}" class="btn banner-link">Show me</a>
+                        <a href="{{ path('category_show', {slug: 'jeans'}) }}" class="btn btn-link">Show me</a>
                     </div><!-- End .banner-content -->
                 </div><!-- End .banner -->
             </div><!-- End .col-lg-6 -->
@@ -30,7 +30,7 @@
                     <div class="banner-content banner-content-center">
                         <h3 class="banner-subtitle text-white">Discounts Over 50%</h3>
                         <h2 class="banner-title text-white">Jackets</h2>
-                        <a href="{{ path('category_show', {slug: 'jackets'}) }}" class="btn banner-link"><span>Show me</span></a>
+                        <a href="{{ path('category_show', {slug: 'jackets'}) }}" class="btn btn-link"><span>Show me</span></a>
                     </div><!-- End .banner-content -->
                 </div><!-- End .banner -->
             </div><!-- End .col-lg-6 -->
@@ -45,7 +45,7 @@
 
                     <div class="banner-content banner-content-center">
                         <h3 class="banner-subtitle text-white">Unique!</h3>
-                        <a href="{{ path('category_show', {slug: 'hats'}) }}" class="btn banner-link">Hats</a>
+                        <a href="{{ path('category_show', {slug: 'hats'}) }}" class="btn btn-link">Hats</a>
                     </div><!-- End .banner-content -->
                 </div><!-- End .banner -->
             </div><!-- End .col-lg-4 -->
@@ -58,7 +58,7 @@
 
                     <div class="banner-content banner-content-center">
                         <h3 class="banner-subtitle text-white">Fashionable!</h3>
-                        <a href="{{ path('category_show', {slug: 'dresses'}) }}" class="btn banner-link">Dresses</a>
+                        <a href="{{ path('category_show', {slug: 'dresses'}) }}" class="btn btn-link">Dresses</a>
                     </div><!-- End .banner-content -->
                 </div><!-- End .banner -->
             </div><!-- End .col-lg-4 -->
@@ -71,14 +71,14 @@
 
                     <div class="banner-content banner-content-center">
                         <h3 class="banner-subtitle text-white">Branded!</h3>
-                        <a href="{{ path('category_show', {slug: 'sneakers'}) }}" class="btn banner-link">Sneakers</a>
+                        <a href="{{ path('category_show', {slug: 'sneakers'}) }}" class="btn btn-link">Sneakers</a>
                     </div><!-- End .banner-content -->
                 </div><!-- End .banner -->
             </div><!-- End .col-lg-4 -->
         </div><!-- End .row -->
     </div><!-- End .container-fluid -->
 
-    <div class="bg-light-2 pt-6 pb-6 featured">
+    <div class="bg-light-2 pt-2 pb-2 featured">
         <div class="container-fluid">
             <div class="heading heading-center mb-3">
                 <h2 class="title">We recommend</h2><!-- End .title -->
@@ -87,7 +87,7 @@
             <div class="row">
                 <div class="col-lg-12">
                     {{ render(controller('App\\Controller\\EmbedController::similarProducts', {
-                        'count': 6,
+                        'count': 4,
                     })) }}
                 </div><!-- End .col-lg-9 -->
             </div><!-- End .tab-content -->

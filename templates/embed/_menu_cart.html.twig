@@ -14,7 +14,7 @@
     {
         const idNum = parseInt(id);
 
-        let cartJSON = sessionStorage.getItem('cart');
+        let cartJSON = localStorage.getItem('cart');
         const cart = cartJSON ? JSON.parse(cartJSON) : {};
         const product = productsModel.find(function(item) {
             return (item.id === idNum);
@@ -29,7 +29,7 @@
             }
         }
 
-        sessionStorage.setItem('cart', JSON.stringify(cart));
+        localStorage.setItem('cart', JSON.stringify(cart));
     }
 </script>
 {{ encore_entry_script_tags('appMenuCart') }}

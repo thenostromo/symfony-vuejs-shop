@@ -1,8 +1,8 @@
 <template>
   <tr>
     <td class="product-col">
-      <div class="product">
-        <figure class="product-media">
+      <div class="text-center">
+        <figure class="mr-0">
           <a
             :href="getUrlProductShow(product.id)"
             target="_blank"

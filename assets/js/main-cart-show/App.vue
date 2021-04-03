@@ -65,7 +65,7 @@
 
               <a
                   @click="makeOrder"
-                  class="btn btn-primary mb-3"
+                  class="btn btn-success mb-3"
                   style="color: white;"
               >
                 <span>MAKE ORDER</span>

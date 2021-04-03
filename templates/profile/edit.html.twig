@@ -3,21 +3,12 @@
 {% block title %}Log in!{% endblock %}
 
 {% block body %}
-    <div class="page-header text-center" style="background-image: url('assets/images/page-header-bg.jpg')">
-        <div class="container">
-            <h1 class="page-title">Profile</h1>
-        </div><!-- End .container -->
-    </div><!-- End .page-header -->
-    <nav aria-label="breadcrumb" class="breadcrumb-nav mb-2">
-
-    </nav><!-- End .breadcrumb-nav -->
-
     <div class="page-content">
         <div class="container">
             <div class="row">
-                <div class="col-lg-12" style="text-align: center">
-                    <div class="products mb-8">
-                        <h1 class="h4 mb-3 font-weight-normal">Edit your profile</h1>
+                <div class="col-lg-12">
+                    <div class="page-details mt-4">
+                        <h1 class="h4 mb-3 text-center font-weight-normal gradient-heading1">Edit your profile</h1>
                         {{ form_start(profileEditForm) }}
 
                         <div class="form-group">
@@ -45,9 +36,8 @@
                         </div>
 
                         <div class="form-footer">
-                            <button type="submit" class="btn btn-outline-primary-2">
+                            <button type="submit" class="btn btn-success">
                                 <span>SAVE CHANGES</span>
-                                <i class="icon-long-arrow-right"></i>
                             </button>
                         </div>
 

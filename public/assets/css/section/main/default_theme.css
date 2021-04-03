@@ -404,7 +404,7 @@ a:focus {
     color: #cc6666; }
 
 .product-price {
-    color: #ff59bd; }
+    color: #3e3e3e; }
 
 .product-label.label-primary {
     background-color: #cc6666; }
@@ -497,7 +497,7 @@ a:focus {
 .cart-dropdown:hover .dropdown-toggle, .cart-dropdown.show .dropdown-toggle,
 .compare-dropdown:hover .dropdown-toggle,
 .compare-dropdown.show .dropdown-toggle {
-    color: #cc6666; }
+    color: #f13c76; }
 
 .compare-product-title a:hover, .compare-product-title a:focus {
     color: #cc6666; }
@@ -506,9 +506,18 @@ a:focus {
     color: #cc6666; }
 
 .cart-dropdown .cart-count {
-    background-color: #cc6666; }
+    background-color: #E20048; }
+.dropdown-cart-products .product-title {
+    font-size: 1.2rem;
+}
+.dropdown-cart-products .cart-product-info {
+    font-size: 1rem;
+}
+.dropdown-cart-total {
+    font-size: 1.2rem;
+}
 .cart-dropdown .product-title a:hover, .cart-dropdown .product-title a:focus {
-    color: #cc6666; }
+    color: #f13c76; }
 
 .wishlist-link .wishlist-count {
     background-color: #cc6666; }
@@ -910,7 +919,7 @@ a:focus {
 
 .title {
     font-weight: 400;
-    font-size: 2rem;
+    font-size: 1.4rem;
     text-transform: uppercase;
     letter-spacing: .1em; }
 
@@ -963,7 +972,7 @@ blockquote cite span {
 
 .banner-subtitle {
     font-weight: 300;
-    font-size: 1.4rem;
+    font-size: 1rem;
     letter-spacing: .1em;
     margin-bottom: 1.2rem;
     text-transform: uppercase; }
@@ -987,7 +996,7 @@ blockquote cite span {
 .banner-title {
     text-transform: uppercase;
     font-weight: 400;
-    font-size: 2rem;
+    font-size: 1.4rem;
     line-height: 1.2em;
     margin-bottom: 1rem;
     letter-spacing: .1em; }
@@ -1025,20 +1034,31 @@ blockquote cite span {
 .banner-big {
     color: #666666;
     font-size: 1.5rem;
-    line-height: 1.6; }
+    line-height: 1.6;
+    border: 20px #fff solid;
+}
+.banner-big:hover {
+    box-shadow: 0 5px 20px rgba(0, 0, 0, 0.05);
+}
 .banner-big .banner-content {
     max-width: 446px;
     left: 7rem; }
 .banner-big .banner-subtitle {
     font-weight: 300;
-    font-size: 1.4rem;
+    font-size: 1rem;
     letter-spacing: .1em;
     text-transform: uppercase; }
+.banner-middle {
+    border: 20px #fff solid;
+}
+.banner-middle:hover {
+    box-shadow: 0 5px 20px rgba(0, 0, 0, 0.05);
+}
 .banner-big .banner-title {
-    font-size: 3rem;
+    font-size: 2.6rem;
     font-weight: 400;
     letter-spacing: .1em;
-    margin-bottom: 2.2rem; }
+}
 .banner-big .banner-title + .btn {
     margin-top: 0; }
 .banner-big .btn {
@@ -1272,7 +1292,7 @@ blockquote cite span {
 .footer .widget {
     margin-bottom: 5rem; }
 .footer .footer-middle {
-    padding-top: 7rem;
+    padding-top: 4rem;
     padding-bottom: 1rem; }
 
 .widget-newsletter form {
@@ -1300,7 +1320,7 @@ blockquote cite span {
 
 @media screen and (min-width: 768px) {
     .title {
-        font-size: 2rem; }
+        font-size: 1.4rem; }
 
     .banner-big .btn {
         min-width: 170px; } }
