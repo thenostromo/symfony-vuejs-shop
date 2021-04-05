@@ -1,0 +1,87 @@
+.banner {
+    display: block;
+    position: relative;
+    background-color: #ccc;
+}
+
+.banner > a {
+    position: relative;
+    display: block;
+}
+
+.banner img {
+    display: block;
+    max-width: none;
+    width: 100%;
+    height: auto;
+}
+
+.banner-content {
+    display: inline-block;
+    position: absolute;
+    top: 50%;
+    z-index: 2;
+    right: auto !important;
+    left: 50% !important;
+    top: 50% !important;
+    -ms-transform: translate(-50%, -50%);
+    transform: translate(-50%, -50%);
+    background: rgba(0, 0, 0, .4);
+    -webkit-clip-path: polygon(12% 8%, 95% 0, 87% 88%, 0% 100%);
+    clip-path: polygon(12% 8%, 95% 0, 87% 88%, 0% 100%);
+    border: 3px solid #ff59bd!important;
+    padding: 25px 75px;
+    text-align: center;
+    color: white;
+}
+
+.banner-content a:hover, .banner-content a:focus {
+    text-decoration: none;
+}
+
+.banner-title {
+    color: white;
+    text-transform: uppercase;
+    font-size: 1.4rem;
+    margin-bottom: 1rem;
+}
+
+.banner-subtitle {
+    color: inherit;
+    font-weight: 400;
+    font-size: 1.6rem;
+    margin-bottom: 1rem;
+}
+
+.banner-big, .banner-middle {
+    border: 20px #fff solid;
+}
+
+.banner-big {
+    color: #666666;
+    font-size: 1.5rem;
+}
+
+.banner-big:hover, .banner-middle:hover {
+    box-shadow: 0 5px 20px rgba(0, 0, 0, 0.05);
+}
+
+.banner-big .banner-content {
+    text-align: center;
+    border: 3px solid #ff59bd!important;
+    padding: 25px 50px;
+    -webkit-clip-path: polygon(12% 8%, 95% 0, 87% 88%, 0% 100%);
+    clip-path: polygon(12% 8%, 95% 0, 87% 88%, 0% 100%);
+}
+
+.banner-big .banner-title {
+    font-size: 2.6rem;
+    font-weight: 400;
+}
+
+.banner-big .banner-subtitle {
+    font-weight: 300;
+    font-size: 1rem;
+    letter-spacing: .1em;
+    text-transform: uppercase;
+}

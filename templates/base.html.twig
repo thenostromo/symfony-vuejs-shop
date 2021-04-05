@@ -8,197 +8,25 @@
         <meta name="keywords" content="{% block page_keywords %}clothes, jackets, jeans{% endblock %}">
         <meta name="description" content="{% block page_description %}clothes, jackets, jeans{% endblock %}">
         <link rel="icon" type="image/x-icon" href="{{ asset('assets/images/icons/favicon.ico') }}" />
-        <!-- Plugins CSS File -->
         <link rel="stylesheet" href="{{ asset('assets/css/libs/bootstrap/bootstrap.min.css') }}">
-        <link rel="stylesheet" href="{{ asset('assets/css/libs/owl-carousel/owl.carousel.css') }}">
-        <link rel="stylesheet" href="{{ asset('assets/css/libs/magnific-popup/magnific-popup.css') }}">
-        <link rel="stylesheet" href="{{ asset('assets/css/libs/jquery-countdown/jquery.countdown.css') }}">
-        <!-- Main CSS File -->
-        <link rel="stylesheet" href="{{ asset('assets/css/section/main/core.css') }}">
-        <link rel="stylesheet" href="{{ asset('assets/css/section/main/default_theme.css') }}">
+        <link rel="stylesheet" href="{{ asset('assets/css/section/main/_base.css') }}">
+        <link rel="stylesheet" href="{{ asset('assets/css/section/main/_header.css') }}">
+        <link rel="stylesheet" href="{{ asset('assets/css/section/main/_header_menu.css') }}">
+        <link rel="stylesheet" href="{{ asset('assets/css/section/main/_product.css') }}">
+        <link rel="stylesheet" href="{{ asset('assets/css/section/main/_banner.css') }}">
+        <link rel="stylesheet" href="{{ asset('assets/css/section/main/_form.css') }}">
+        <link rel="stylesheet" href="{{ asset('assets/css/section/main/_pagination.css') }}">
+        <link rel="stylesheet" href="{{ asset('assets/css/section/main/_alert.css') }}">
+        <link rel="stylesheet" href="{{ asset('assets/css/section/main/_login.css') }}">
+        <link rel="stylesheet" href="{{ asset('assets/css/section/main/_cart.css') }}">
+        <link rel="stylesheet" href="{{ asset('assets/css/section/main/_button.css') }}">
+        <link rel="stylesheet" href="{{ asset('assets/css/section/main/_cart_dropdown.css') }}">
+        <link rel="stylesheet" href="{{ asset('assets/css/section/main/_spinner.css') }}">
+        <link rel="stylesheet" href="{{ asset('assets/css/section/main/_typography.css') }}">
+        <link rel="stylesheet" href="{{ asset('assets/css/section/main/_footer.css') }}">
+        <link rel="stylesheet" href="{{ asset('assets/css/section/main/core2.css') }}">
         <link href="{{ asset('assets/css/libs/fontawesome-free/all.css') }}" rel="stylesheet" type="text/css">
         {% block stylesheets %}{% endblock %}
-        <style>
-            .banner-big .banner-content {
-                /* max-width: none; */
-                /* left: 0; */
-                /* right: 0; */
-                right: auto;
-                left: 50% !important;
-                top: 50% !important;
-                transform: translate(-50%, -50%);
-                text-align: center;
-                background: rgba(0, 0, 0, .4);
-                border: 3px solid #ff59bd!important;
-                padding: 25px;
-                -webkit-clip-path: polygon(12% 8%, 95% 0, 87% 88%, 0% 100%);
-                clip-path: polygon(12% 8%, 95% 0, 87% 88%, 0% 100%);
-            }
-            .banner-title {
-                font-weight: 500 !important;
-            }
-            .banner-middle .banner-content {
-                right: auto !important;
-                left: 50%;
-                top: 50%;
-                transform: translate(-50%, -50%);
-                background: rgba(0, 0, 0, .4);
-                border: 3px solid #ff59bd!important;
-                padding: 25px 75px;
-                -webkit-clip-path: polygon(12% 8%, 95% 0, 87% 88%, 0% 100%);
-                clip-path: polygon(12% 8%, 95% 0, 87% 88%, 0% 100%);
-            }
-            .btn-link {
-                font-size: 1.5rem !important;
-                text-transform: uppercase;
-                border-bottom: 4px solid #ff59bd !important;
-                padding: 10px !important;
-                color: white;
-                border: none;
-                background-color: transparent;
-                #-webkit-clip-path: polygon(5% 0%, 100% 0, 95% 100%, 0% 100%);
-                #clip-path: polygon(5% 0%, 100% 0%, 95% 100%, 0% 100%);
-            }
-            .btn-link:hover {
-                color: white !important;
-                #background-color: #da2893 !important;
-                border: none;
-                text-decoration: none;
-                background: linear-gradient(to right, #da2893 2%,#93002F 82%);
-            }
-            .btn-success {
-                font-size: 1.5rem !important;
-                text-transform: uppercase;
-                padding: 10px !important;
-                border-bottom: 4px solid #799647 !important;
-                color: white;
-                border: none;
-                background-color: #a6c76c;
-                #-webkit-clip-path: polygon(5% 0%, 100% 0, 95% 100%, 0% 100%);
-                #clip-path: polygon(5% 0%, 100% 0%, 95% 100%, 0% 100%);
-            }
-            .btn-success:hover {
-                color: white !important;
-                border: none;
-                text-decoration: none;
-                background-color: #a6c76c;
-                background: linear-gradient(to right, #a6c76c 2%, #799647 82%);
-            }
-            .btn-cancel {
-                font-size: 1.5rem !important;
-                text-transform: uppercase;
-                padding: 10px !important;
-                border-bottom: 4px solid #909090 !important;
-                color: white;
-                border: none;
-                background-color: #f7f7f7;
-                #-webkit-clip-path: polygon(5% 0%, 100% 0, 95% 100%, 0% 100%);
-                #clip-path: polygon(5% 0%, 100% 0%, 95% 100%, 0% 100%);
-            }
-            .btn-cancel:hover {
-                color: #333 !important;
-                border: none;
-                text-decoration: none;
-                background-color: #f7f7f7;
-                background: linear-gradient(to right, #f7f7f7 2%, #dedede 82%);
-            }
-            .btn-dark {
-                color: #333;
-            }
-            .banner-middle .banner-link {
-                #-webkit-clip-path: polygon(10% 0%, 100% 0, 90% 100%, 0% 100%);
-                #clip-path: polygon(10% 0%, 100% 0%, 90% 100%, 0% 100%);
-            }
-            .fas {
-                font-size: 1.5rem;
-            }
-            .main {
-                #background-color: #ffffff;
-                #background-image: url("data:image/svg+xml,%3Csvg xmlns='http://www.w3.org/2000/svg' viewBox='0 0 56 28' width='56' height='28'%3E%3Cpath fill='%239C92AC' fill-opacity='0.09' d='M56 26v2h-7.75c2.3-1.27 4.94-2 7.75-2zm-26 2a2 2 0 1 0-4 0h-4.09A25.98 25.98 0 0 0 0 16v-2c.67 0 1.34.02 2 .07V14a2 2 0 0 0-2-2v-2a4 4 0 0 1 3.98 3.6 28.09 28.09 0 0 1 2.8-3.86A8 8 0 0 0 0 6V4a9.99 9.99 0 0 1 8.17 4.23c.94-.95 1.96-1.83 3.03-2.63A13.98 13.98 0 0 0 0 0h7.75c2 1.1 3.73 2.63 5.1 4.45 1.12-.72 2.3-1.37 3.53-1.93A20.1 20.1 0 0 0 14.28 0h2.7c.45.56.88 1.14 1.29 1.74 1.3-.48 2.63-.87 4-1.15-.11-.2-.23-.4-.36-.59H26v.07a28.4 28.4 0 0 1 4 0V0h4.09l-.37.59c1.38.28 2.72.67 4.01 1.15.4-.6.84-1.18 1.3-1.74h2.69a20.1 20.1 0 0 0-2.1 2.52c1.23.56 2.41 1.2 3.54 1.93A16.08 16.08 0 0 1 48.25 0H56c-4.58 0-8.65 2.2-11.2 5.6 1.07.8 2.09 1.68 3.03 2.63A9.99 9.99 0 0 1 56 4v2a8 8 0 0 0-6.77 3.74c1.03 1.2 1.97 2.5 2.79 3.86A4 4 0 0 1 56 10v2a2 2 0 0 0-2 2.07 28.4 28.4 0 0 1 2-.07v2c-9.2 0-17.3 4.78-21.91 12H30zM7.75 28H0v-2c2.81 0 5.46.73 7.75 2zM56 20v2c-5.6 0-10.65 2.3-14.28 6h-2.7c4.04-4.89 10.15-8 16.98-8zm-39.03 8h-2.69C10.65 24.3 5.6 22 0 22v-2c6.83 0 12.94 3.11 16.97 8zm15.01-.4a28.09 28.09 0 0 1 2.8-3.86 8 8 0 0 0-13.55 0c1.03 1.2 1.97 2.5 2.79 3.86a4 4 0 0 1 7.96 0zm14.29-11.86c1.3-.48 2.63-.87 4-1.15a25.99 25.99 0 0 0-44.55 0c1.38.28 2.72.67 4.01 1.15a21.98 21.98 0 0 1 36.54 0zm-5.43 2.71c1.13-.72 2.3-1.37 3.54-1.93a19.98 19.98 0 0 0-32.76 0c1.23.56 2.41 1.2 3.54 1.93a15.98 15.98 0 0 1 25.68 0zm-4.67 3.78c.94-.95 1.96-1.83 3.03-2.63a13.98 13.98 0 0 0-22.4 0c1.07.8 2.09 1.68 3.03 2.63a9.99 9.99 0 0 1 16.34 0z'%3E%3C/path%3E%3C/svg%3E");
-                background-color: #f8f9fa!important;
-            }
-            .product {
-                transition: none;
-                border: 20px solid #fff;
-            }
-            .product:hover {
-                box-shadow: 0 5px 20px rgba(0, 0, 0, 0.05);
-            }
-            .product-details-top {
-                margin-bottom: 1rem;
-                background-color: #fff;
-                #padding: 20px;
-                border: 20px solid #fff;
-            }
-            .product-details-tab {
-                margin-bottom: 5rem;
-                background-color: #fff;
-                padding: 20px;
-                margin: 10px;
-            }
-            .product-body {
-                padding: 1.6rem 2rem 0 1.6rem
-            }
-            .product-body .product-title > a {
-                position: relative;
-                z-index: 0;
-            }
-            .product-details > .product-price {
-                margin-bottom: 1.3rem;
-            }
-            .header-middle .menu > li > a {
-                font-size: 1rem !important;
-                font-weight: 400;
-                letter-spacing: 0;
-            }
-            .gradient-heading1 {
-                background: #3264f5;
-                background: -webkit-linear-gradient(left, #F16C97 2%,#93002F 82%);
-                background: -moz-linear-gradient(left, #f16c97 2%, #93002F 82%);
-                background: linear-gradient(to right, #F16C97 2%,#93002F 82%);
-                filter: progid:DXImageTransform.Microsoft.gradient( startColorstr='#F16C97', endColorstr='#93002F',GradientType=1 );
-                -webkit-background-clip: text;
-                -webkit-text-fill-color: transparent;
-            }
-            .menu .megamenu-container .active {
-                display: inline;
-                border-bottom: 3px solid #F13C76;
-                color: #f13c76
-            }
-            ::-webkit-scrollbar-track {
-                background-color: #e9edf0;
-                border-left: 1px solid #ededed;
-            }
-            ::-webkit-scrollbar {
-                width: 7px;
-                background-color: #fdbcd1;
-            }
-            ::-webkit-scrollbar-thumb {
-                background: #fdbcd1;
-            }
-            .page-details {
-                max-width: 900px;
-                margin-left: auto;
-                margin-right: auto;
-                background-color: #fff;
-                padding: .5rem;
-                box-shadow: 0 5px 20px rgba(0, 0, 0, 0.05);
-                border: 20px solid #fff;
-            }
-            .product-col figure {
-                margin: 15px 40px;
-            }
-            .table.main-cart-show td, .ain-cart-show th {
-                vertical-align: middle;
-            }
-            .alert {
-                font-size: 1.4rem;
-                line-height: 1.43;
-                margin: 0;
-                padding: 1rem 1.5rem;
-                border: none;
-            }
-        </style>
     </head>
 
     <body>
@@ -206,7 +34,7 @@
         <div class="page-wrapper">
             {% block header %}
                 {{ render(controller('App\\Controller\\EmbedController::saleCollectionHeader')) }}
-                <header class="header header-7">
+                <header class="header">
                     <div class="header-middle sticky-header">
                         <div class="container-fluid">
                             <div class="header-left">
@@ -242,10 +70,9 @@
                                 </div>
 
                                 {{ include('embed/_menu_cart.html.twig') }}
-                                <!-- End .cart-dropdown -->
-                            </div><!-- End .header-right -->
-                        </div><!-- End .container-fluid -->
-                    </div><!-- End .header-middle -->
+                            </div>
+                        </div>
+                    </div>
                 </header>
             {% endblock %}
 
@@ -254,88 +81,7 @@
                 {% endblock %}
             </main>
 
-            {% block footer %}
-                <style>
-                    .footer {
-                        text-align: center;
-                        background: #333;
-                        background: -webkit-linear-gradient(left, #565656 2%,#333 82%);
-                        background: -moz-linear-gradient(left, #565656 2%, #333 82%);
-                        background: linear-gradient(to right, #565656 2%,#333 82%);
-                    }
-                    .widget-list li {
-                        display: inline;
-                        margin-right: 5px;
-                        font-size: 1rem;
-                    }
-                    .widget-list li:after {
-                        content: " \00b7";
-                        font-weight: 700;
-                        vertical-align: middle;
-                        padding: 0 10px;
-                    }
-                    .widget-list li:last-child:after {
-                        content: none;
-                    }
-                    .footer .widget-title {
-                        font-size: 1.2rem;
-                    }
-                </style>
-                <footer class="footer footer-2">
-                    <div class="footer-middle">
-                        <div class="container-fluid">
-                            <div class="row">
-                                <div class="col-sm-12">
-                                    <h4 class="widget-title">Useful links</h4>
-                                    <ul class="widget-list">
-                                        <li><a href="{{ path('shop_about') }}">About Shop</a></li>
-                                        <li><a href="{{ path('shop_contact_us') }}">Contact us</a></li>
-                                        <li><a href="{{ path('app_register') }}">Sign up</a></li>
-                                    </ul>
-                                </div>
-                                <div class="col-sm-12 mt-3">
-                                    <h4 class="widget-title">My Account</h4><!-- End .widget-title -->
-                                    <ul class="widget-list">
-                                        <li><a href="{{ path('security_login') }}">Sign In</a></li>
-                                        <li><a href="{{ path('cart_index') }}">View Cart</a></li>
-                                        <li><a href="{{ path('profile_index') }}">My profile</a></li>
-                                    </ul>
-                                </div>
-                                <div class="col-sm-12 mt-3">
-                                    <p class="widget-copyright">Copyright © 2020 RankeeClothes Team. All Rights Reserved.</p>
-                                </div><!-- End .col-sm-12 col-lg-4 -->
-<!--
-                                <div class="col-sm-4 col-lg-2">
-                                    <div class="widget">
-                                        <h4 class="widget-title">Useful links</h4>
-
-                                        <ul class="widget-list">
-                                            <li><a href="about.html">About Molla</a></li>
-                                            <li><a href="#">Terms Of Use</a></li>
-                                            <li><a href="faq.html">Privacy Policy</a></li>
-                                            <li><a href="contact.html">Contact us</a></li>
-                                            <li><a href="{{ path('app_register') }}">Sign up</a></li>
-                                        </ul>
-                                    </div>
-                                </div>
-
-                                <div class="col-sm-4 col-lg-2">
-                                    <div class="widget">
-                                        <h4 class="widget-title">My Account</h4>
-
-                                        <ul class="widget-list">
-                                            <li><a href="{{ path('security_login') }}">Sign In</a></li>
-                                            <li><a href="{{ path('cart_index') }}">View Cart</a></li>
-                                            <li><a href="{{ path('profile_index') }}">My profile</a></li>
-                                        </ul>
-                                    </div>
-                                </div>
-                                -->
-                            </div><!-- End .row -->
-                        </div><!-- End .container-fluid -->
-                    </div><!-- End .footer-middle -->
-                </footer>
-            {% endblock %}
+            {{ include('embed/_footer.html.twig') }}
         </div>
 
         {% block javascripts %}{% endblock %}

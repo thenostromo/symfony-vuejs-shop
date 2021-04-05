@@ -1,9 +1,9 @@
 <template>
   <div class="col-6 col-md-4 col-lg-4 col-xl-3">
-    <div class="product text-center">
+    <div class="product-item text-center">
       <div class="product-content">
         <figure class="product-media">
-          <span class="product-label label-new">New</span>
+          <span class="product-sale-status sale-status-new">New</span>
           <a :href="getUrlProductShow(product.id)">
             <img
                 v-for="image in product.images"
@@ -13,21 +13,21 @@
             >
           </a>
 
-          <div class="product-action">
-            <a href="#" @click="addToCart(product)" class="btn-product btn-cart">
-              <span>add to cart</span>
+          <div class="product-actions">
+            <a href="#" @click="addToCart(product)" class="btn-add-to-cart">
+              add to cart
             </a>
-          </div><!-- End .product-action -->
-        </figure><!-- End .product-media -->
+          </div>
+        </figure>
 
         <div class="product-body">
           <h3 class="product-title">
             <a :href="getUrlProductShow(product.id)">{{ product.title }}</a>
-          </h3><!-- End .product-title -->
+          </h3>
           <div class="product-price">
             ${{ product.price }}
-          </div><!-- End .product-price -->
-        </div><!-- End .product-body -->
+          </div>
+        </div>
       </div>
     </div>
   </div>

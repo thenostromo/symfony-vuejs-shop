@@ -1,17 +1,4 @@
-a {
-    color: #dc143c; }
 
-a:hover,
-a:focus {
-    color: #bf4040; }
-
-.btn-link {
-    color: #cc6666; }
-.btn-link:hover, .btn-link:focus,
-.btn-link .btn-link-dark:hover,
-.btn-link .btn-link-dark:focus {
-    color: #cc6666;
-    border-color: #cc6666; }
 
 /* generated with mixins */
 .btn-primary {

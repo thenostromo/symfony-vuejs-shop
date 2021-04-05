@@ -1,0 +1,30 @@
+.table-cart .total-col {
+    width: 80px;
+    color: #dc143c;
+    font-size: 1.6rem;
+}
+
+.table-cart .price-col {
+    width: 120px;
+}
+
+.table-cart .quantity-col {
+    width: 135px;
+}
+
+.table-cart .quantity-col .form-control {
+    padding: .85rem 2.6rem;
+    height: 40px;
+    max-width: 100%;
+    border-color: #dadada;
+    background-color: #fff;
+    margin: 0;
+}
+
+.table-cart .product-col figure {
+    margin: 15px 40px;
+}
+
+.table-cart td, .table-cart th {
+    vertical-align: middle;
+}

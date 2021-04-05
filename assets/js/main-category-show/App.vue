@@ -1,6 +1,6 @@
 <template>
   <div>
-    <div class="lds-dual-ring" v-if="isLoading"></div>
+    <div class="spinner-dual-ring" v-if="isLoading"></div>
     <div class="text-center" v-else>
       <div class="container mt-3 mb-2">
         <Header/>

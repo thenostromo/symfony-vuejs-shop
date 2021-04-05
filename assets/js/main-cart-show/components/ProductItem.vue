@@ -27,8 +27,7 @@
       ${{ product.price }}
     </td>
     <td class="quantity-col">
-      <div class="cart-product-quantity">
-        <input
+      <input
           v-model="quantity"
           type="number"
           class="form-control"
@@ -37,8 +36,7 @@
           step="1"
           data-decimals="0"
           required
-        >
-      </div>
+      >
     </td>
     <td class="total-col">
       ${{ productPrice }}
