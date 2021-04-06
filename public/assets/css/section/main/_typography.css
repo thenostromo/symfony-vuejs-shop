@@ -67,7 +67,10 @@ h4, .h4 {
     font-size: 1.4rem;
     text-transform: uppercase;
     letter-spacing: .1em; }
-
+.page-title {
+    font-size: 3rem;
+    font-weight: 100;
+}
 .mt-0 {
     margin-top: 0rem !important; }
 
@@ -263,7 +266,7 @@ h4, .h4 {
 .fas {
     font-size: 1.5rem;
 }
-.gradient-heading1 {
+.title-gradient-1 {
     background: #3264f5;
     background: -webkit-linear-gradient(left, #F16C97 2%,#93002F 82%);
     background: -moz-linear-gradient(left, #f16c97 2%, #93002F 82%);
