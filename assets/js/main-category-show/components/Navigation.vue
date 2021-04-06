@@ -1,15 +1,14 @@
 <template>
-  <nav aria-label="Page navigation">
-    <ul class="pagination justify-content-center">
+  <nav>
+    <ul class="pagination align-items-center justify-content-center">
       <li class="page-item">
         <a
-            class="page-link page-link-prev"
+            class="btn-nav btn-nav-prev"
             href="#"
-            aria-label="Previous"
-            v-if="currentPage > 1"
+            v-if="currentPage < countOfPages"
             @click="prevPage"
         >
-          <span aria-hidden="true"><i class="fas fa-angle-left"></i></span> Prev
+          <i class="fas fa-angle-left"></i> Prev
         </a>
       </li>
       <li
@@ -17,7 +16,7 @@
           :class="getClassOfPageBlock(page)"
       >
         <a
-          class="page-link"
+          class="btn-nav"
           href="#"
           @click="setPage(page)"
         >
@@ -27,13 +26,12 @@
       <li class="page-item-total">...</li>
       <li class="page-item">
         <a
-            class="page-link page-link-next"
+            class="btn-nav btn-nav-next"
             href="#"
-            aria-label="Next"
             v-if="currentPage < countOfPages"
             @click="nextPage"
         >
-          Next <span aria-hidden="true"><i class="fas fa-angle-right"></i></span>
+          Next <i class="fas fa-angle-right"></i>
         </a>
       </li>
     </ul>

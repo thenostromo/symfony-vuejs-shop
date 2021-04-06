@@ -2,7 +2,7 @@
   <tr>
     <td class="product-col">
       <div class="text-center">
-        <figure class="mr-0">
+        <figure>
           <a
             :href="getUrlProductShow(product.id)"
             target="_blank"

@@ -13,12 +13,8 @@
 }
 
 .table-cart .quantity-col .form-control {
-    padding: .85rem 2.6rem;
     height: 40px;
-    max-width: 100%;
-    border-color: #dadada;
-    background-color: #fff;
-    margin: 0;
+    text-align: center;
 }
 
 .table-cart .product-col figure {
