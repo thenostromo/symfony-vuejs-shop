@@ -4,15 +4,11 @@ namespace App\Controller\Admin;
 
 use App\Entity\Category;
 use App\Entity\Product;
-use App\Entity\PromoCode;
 use App\Entity\SaleCollection;
 use App\Entity\SaleCollectionProduct;
-use App\Form\Admin\PromoCodeEditFormType;
 use App\Form\Admin\SaleCollectionEditFormType;
-use App\Form\CategoryEditFormType;
 use App\Repository\CategoryRepository;
 use App\Repository\ProductRepository;
-use App\Repository\PromoCodeRepository;
 use App\Repository\SaleCollectionProductRepository;
 use App\Repository\SaleCollectionRepository;
 use Symfony\Bundle\FrameworkBundle\Controller\AbstractController;
@@ -47,8 +43,7 @@ class SaleCollectionController extends AbstractController
         SaleCollection $saleCollection = null,
         ProductRepository $productRepository,
         CategoryRepository $categoryRepository
-    ): Response
-    {
+    ): Response {
         if (!$saleCollection) {
             $saleCollection = new SaleCollection();
         }
@@ -60,7 +55,7 @@ class SaleCollectionController extends AbstractController
         foreach ($categories as $category) {
             $categoryModels[] = [
                 'id' => $category->getId(),
-                'title' => $category->getTitle()
+                'title' => $category->getTitle(),
             ];
         }
 
@@ -69,10 +64,10 @@ class SaleCollectionController extends AbstractController
 
         if ($form->isSubmitted() && $form->isValid()) {
             $saleCollectionSlugRaw = strtolower(
-                preg_replace("/[^a-zA-Z0-9 ]+/", "", $saleCollection->getTitle())
+                preg_replace('/[^a-zA-Z0-9 ]+/', '', $saleCollection->getTitle())
             );
             $saleCollectionSlugRaw = trim($saleCollectionSlugRaw);
-            $saleCollectionSlug = str_replace(" ", "-", $saleCollectionSlugRaw);
+            $saleCollectionSlug = str_replace(' ', '-', $saleCollectionSlugRaw);
             $saleCollection->setSlug($saleCollectionSlug);
 
             $entityManager = $this->getDoctrine()->getManager();
@@ -85,7 +80,7 @@ class SaleCollectionController extends AbstractController
         return $this->render('admin/sale-collection/edit.html.twig', [
             'saleCollection' => $saleCollection,
             'form' => $form->createView(),
-            'categories' => $categoryModels
+            'categories' => $categoryModels,
         ]);
     }
 
@@ -99,6 +94,7 @@ class SaleCollectionController extends AbstractController
             $entityManager->remove($saleCollection);
             $entityManager->flush();
         }
+
         return $this->redirectToRoute('admin_sale_collection_list');
     }
 
@@ -125,7 +121,7 @@ class SaleCollectionController extends AbstractController
 
         return new JsonResponse([
             'success' => true,
-            'data' => $data
+            'data' => $data,
         ]);
     }
 
@@ -153,7 +149,7 @@ class SaleCollectionController extends AbstractController
 
         return new JsonResponse([
             'success' => true,
-            'data' => []
+            'data' => [],
         ]);
     }
 
@@ -175,7 +171,7 @@ class SaleCollectionController extends AbstractController
 
         return new JsonResponse([
             'success' => true,
-            'data' => []
+            'data' => [],
         ]);
     }
 
@@ -189,14 +185,14 @@ class SaleCollectionController extends AbstractController
         $saleCollection = $saleCollectionRepository->find($saleCollectionId);
         $saleCollectionProducts = $saleCollection->getSaleCollectionProducts()->getValues();
         $data = [];
-        /** @var SaleCollectionProduct $product */
+        /* @var SaleCollectionProduct $product */
         foreach ($saleCollectionProducts as $saleCollectionProduct) {
             $product = $saleCollectionProduct->getProduct();
             $data[] = [
                 'id' => $saleCollectionProduct->getId(),
                 'category' => [
                     'id' => $product->getCategory()->getId(),
-                    'title' => $product->getCategory()->getTitle()
+                    'title' => $product->getCategory()->getTitle(),
                 ],
                 'title' => sprintf(
                     '#%s %s / P: %s$ / Q: %s',
@@ -205,13 +201,13 @@ class SaleCollectionController extends AbstractController
                     $product->getPrice(),
                     $product->getQuantity()
                 ),
-                'discountAmount' => $saleCollectionProduct->getDiscountAmount()
+                'discountAmount' => $saleCollectionProduct->getDiscountAmount(),
             ];
         }
 
         return new JsonResponse([
             'success' => true,
-            'data' => $data
+            'data' => $data,
         ]);
     }
 }

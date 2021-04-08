@@ -7,17 +7,11 @@
     <title>{% block title %}RankedChoice - Shop Of Best Clothes{% endblock %}</title>
     <meta name="keywords" content="{% block page_keywords %}clothes, jackets, jeans{% endblock %}">
     <meta name="description" content="{% block page_description %}clothes, jackets, jeans{% endblock %}">
-    <link rel="icon" type="image/x-icon" href="{{ asset('assets/images/icons/favicon.ico') }}" />
-    <link href="{{ asset('assets/css/libs/fontawesome-free/all.css') }}" rel="stylesheet" type="text/css">
-    <link
-            href="https://fonts.googleapis.com/css?family=Nunito:200,200i,300,300i,400,400i,600,600i,700,700i,800,800i,900,900i"
-            rel="stylesheet">
-
-    <!-- Custom styles for this template-->
-    <link href="{{ asset('assets/css/libs/sb-admin-2/core.css') }}" rel="stylesheet">
-    <link href="{{ asset('assets/css/section/admin/core.css') }}" rel="stylesheet">
+    <link rel="icon" type="image/x-icon" href="{{ asset('build/images/icons/favicon.ico') }}" />
+    {{ encore_entry_link_tags('section-admin') }}
     {% block stylesheets %}{% endblock %}
 </head>
 
+{{ encore_entry_script_tags('section-admin') }}
 {% block layout_body %}{% endblock %}
 </html>

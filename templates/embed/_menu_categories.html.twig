@@ -1,7 +1,9 @@
 {% for category in categories %}
-    <li class="megamenu-container {% if pageRoute == 'category_show' and pageSlug == category.slug %}active{% endif %}">
+    <li class="menu-item {% if pageRoute == 'category_show' and pageSlug == category.slug %}active{% endif %}">
         <a href="{{ path('category_show', {slug: category.slug}) }}">
-            <div class="{% if pageRoute == 'category_show' and pageSlug == category.slug %}active{% endif %}">{{ category.title }}</div>
+            <div>
+                {{ category.title }}
+            </div>
         </a>
     </li>
 {% endfor %}

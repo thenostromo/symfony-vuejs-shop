@@ -43,11 +43,11 @@ class ProductEditFormType extends AbstractType
                 'attr' => [
                     'class' => 'form-control',
                     'min' => '0',
-                    'step' => '0.01'
+                    'step' => '0.01',
                 ],
                 'constraints' => [
                     new NotBlank(),
-                    new GreaterThanOrEqual(0)
+                    new GreaterThanOrEqual(0),
                 ],
             ])
             ->add('newImage', FileType::class, [
@@ -55,7 +55,7 @@ class ProductEditFormType extends AbstractType
                 'mapped' => false,
                 'required' => false,
                 'attr' => [
-                    'class' => 'form-control-file'
+                    'class' => 'form-control-file',
                 ],
                 'constraints' => [
                     new File([
@@ -64,60 +64,60 @@ class ProductEditFormType extends AbstractType
                             'image/png',
                         ],
                         'mimeTypesMessage' => 'Please upload an image',
-                    ])
+                    ]),
                 ],
             ])
             ->add('quantity', IntegerType::class, [
                 'label' => 'Quantity',
                 'required' => true,
                 'attr' => [
-                    'class' => 'form-control'
+                    'class' => 'form-control',
                 ],
                 'constraints' => [
                     new NotBlank(),
-                ]
+                ],
             ])
             ->add('isHidden', CheckboxType::class, [
                 'label' => 'Is hidden',
                 'required' => false,
                 'label_attr' => [
-                    'class' => 'form-check-label'
+                    'class' => 'form-check-label',
                 ],
                 'attr' => [
-                    'class' => 'form-check-input'
-                ]
+                    'class' => 'form-check-input',
+                ],
             ])
             ->add('isDeleted', CheckboxType::class, [
                 'label' => 'Is deleted',
                 'required' => false,
                 'label_attr' => [
-                    'class' => 'form-check-label'
+                    'class' => 'form-check-label',
                 ],
                 'attr' => [
-                    'class' => 'form-check-input'
-                ]
+                    'class' => 'form-check-input',
+                ],
             ])
             ->add('description', TextareaType::class, [
                 'label' => 'Description',
                 'required' => true,
                 'attr' => [
                     'class' => 'form-control',
-                    'style' => 'overflow: hidden;'
+                    'style' => 'overflow: hidden;',
                 ],
                 'constraints' => [
                     new NotBlank(),
-                ]
+                ],
             ])
             ->add('size', ChoiceType::class, [
                 'label' => 'Size',
                 'required' => true,
-                'choices'  => array_flip(ProductDataProvider::getSizeList()),
+                'choices' => array_flip(ProductDataProvider::getSizeList()),
                 'attr' => [
-                    'class' => 'form-control'
+                    'class' => 'form-control',
                 ],
                 'constraints' => [
                     new NotBlank(),
-                ]
+                ],
             ])
             ->add('category', EntityType::class, [
                 'label' => 'Category',
@@ -125,11 +125,11 @@ class ProductEditFormType extends AbstractType
                 'class' => Category::class,
                 'choice_label' => 'title',
                 'attr' => [
-                    'class' => 'form-control'
+                    'class' => 'form-control',
                 ],
                 'constraints' => [
                     new NotBlank(),
-                ]
+                ],
             ])
         ;
     }

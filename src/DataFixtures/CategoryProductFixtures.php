@@ -5,13 +5,10 @@ namespace App\DataFixtures;
 use App\Entity\Category;
 use App\Entity\Product;
 use App\Exception\FileNotFoundException;
-use App\Repository\CategoryRepository;
 use App\Utils\Extractor\JsonExtractor;
 use App\Utils\Product\ProductManager;
 use Doctrine\Bundle\FixturesBundle\Fixture;
-use Doctrine\ORM\EntityManagerInterface;
 use Doctrine\Persistence\ObjectManager;
-use Symfony\Component\Console\Style\SymfonyStyle;
 
 class CategoryProductFixtures extends Fixture
 {
@@ -39,7 +36,6 @@ class CategoryProductFixtures extends Fixture
 
     public function load(ObjectManager $manager)
     {
-
         $categoryJackets = new Category();
         $categoryJackets->setTitle('Jacket');
         $categoryJackets->setTitlePlural('Jackets');
@@ -89,19 +85,19 @@ class CategoryProductFixtures extends Fixture
             $product->setPrice($productRaw['price']);
 
             switch ($productRaw['category']) {
-                case ('jackets'):
+                case 'jackets':
                     $product->setCategory($categoryJackets);
                     break;
-                case ('hats'):
+                case 'hats':
                     $product->setCategory($categoryHats);
                     break;
-                case ('jeans'):
+                case 'jeans':
                     $product->setCategory($categoryJeans);
                     break;
-                case ('dresses'):
+                case 'dresses':
                     $product->setCategory($categoryDresses);
                     break;
-                case ('sneakers'):
+                case 'sneakers':
                     $product->setCategory($categorySneakers);
                     break;
             }

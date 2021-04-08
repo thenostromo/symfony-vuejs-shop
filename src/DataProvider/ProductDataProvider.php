@@ -10,7 +10,7 @@ class ProductDataProvider
             's' => 'Small',
             'm' => 'Medium',
             'l' => 'Large',
-            'el' => 'Extra Large'
+            'el' => 'Extra Large',
         ];
     }
 }

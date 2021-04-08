@@ -2,8 +2,6 @@
 
 namespace App\Controller;
 
-use App\Entity\Category;
-use App\Entity\Product;
 use App\Entity\ProductImage;
 use App\Entity\SaleCollectionProduct;
 use App\Repository\ProductRepository;
@@ -26,7 +24,6 @@ class SaleCollectionController extends AbstractController
             throw new NotFoundHttpException();
         }
 
-
         $productsModel = [];
 
         /** @var SaleCollectionProduct $saleCollectionProduct */
@@ -36,15 +33,15 @@ class SaleCollectionController extends AbstractController
 
             $productModel = [
                 'id' => $product->getId(),
-                'title' => str_replace("'", "", $product->getTitle()),
+                'title' => str_replace("'", '', $product->getTitle()),
                 'price' => $product->getPrice(),
                 'quantity' => $product->getQuantity(),
                 'images' => [],
                 'category' => [
                     'id' => $product->getCategory()->getId(),
                     'title' => $product->getCategory()->getTitle(),
-                    'slug' => $product->getCategory()->getSlug()
-                ]
+                    'slug' => $product->getCategory()->getSlug(),
+                ],
             ];
 
             /** @var ProductImage $image */
@@ -53,7 +50,7 @@ class SaleCollectionController extends AbstractController
                     'id' => $image->getId(),
                     'filenameBig' => $image->getFilenameBig(),
                     'filenameMiddle' => $image->getFilenameMiddle(),
-                    'filenameSmall' => $image->getFilenameSmall()
+                    'filenameSmall' => $image->getFilenameSmall(),
                 ];
             }
 
@@ -62,13 +59,13 @@ class SaleCollectionController extends AbstractController
 
         $saleCollectionModel = [
             'id' => $saleCollection->getId(),
-            'title' => $saleCollection->getTitle()
+            'title' => $saleCollection->getTitle(),
         ];
 
         return $this->render('category/show.html.twig', [
             'categoryModel' => $saleCollection,
             'category' => $saleCollection,
-            'productsModel' => $productsModel
+            'productsModel' => $productsModel,
         ]);
     }
 }

@@ -64,6 +64,7 @@ class CategoryController extends AbstractController
             $entityManager->remove($category);
             $entityManager->flush();
         }
+
         return $this->redirectToRoute('admin_category_list');
     }
 }

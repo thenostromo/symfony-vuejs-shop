@@ -7,11 +7,9 @@ use App\Entity\Order;
 use App\Entity\PromoCode;
 use App\Entity\User;
 use App\Repository\PromoCodeRepository;
-use Doctrine\ORM\EntityRepository;
 use Symfony\Bridge\Doctrine\Form\Type\EntityType;
 use Symfony\Component\Form\AbstractType;
 use Symfony\Component\Form\Extension\Core\Type\ChoiceType;
-use Symfony\Component\Form\Extension\Core\Type\TextType;
 use Symfony\Component\Form\FormBuilderInterface;
 use Symfony\Component\OptionsResolver\OptionsResolver;
 
@@ -39,22 +37,22 @@ class OrderEditFormType extends AbstractType
                 'required' => false,
                 'choice_label' => 'email',
                 'attr' => [
-                    'class' => 'form-control'
-                ]
+                    'class' => 'form-control',
+                ],
             ])
             ->add('status', ChoiceType::class, [
                 'label' => 'Status',
                 'required' => false,
-                'choices'  => array_flip(OrderDataProvider::getStatusList()),
+                'choices' => array_flip(OrderDataProvider::getStatusList()),
                 'attr' => [
-                    'class' => 'form-control'
-                ]
+                    'class' => 'form-control',
+                ],
             ])
             ->add('promoCode', EntityType::class, [
                 'label' => 'Promo code',
                 'class' => PromoCode::class,
                 'required' => false,
-                'choice_label' => function(PromoCode $promoCode) {
+                'choice_label' => function (PromoCode $promoCode) {
                     return sprintf(
                         '#%s %s (-%s%%): %s',
                         $promoCode->getId(),
@@ -65,7 +63,7 @@ class OrderEditFormType extends AbstractType
                 },
                 'choices' => $this->promoCodeRepository->getActiveList(),
                 'attr' => [
-                    'class' => 'form-control'
+                    'class' => 'form-control',
                 ],
             ])
         ;

@@ -4,7 +4,6 @@ namespace App\Controller\Admin;
 
 use App\Entity\PromoCode;
 use App\Form\Admin\PromoCodeEditFormType;
-use App\Form\CategoryEditFormType;
 use App\Repository\PromoCodeRepository;
 use Symfony\Bundle\FrameworkBundle\Controller\AbstractController;
 use Symfony\Component\HttpFoundation\Request;
@@ -69,6 +68,7 @@ class PromoCodeController extends AbstractController
             $entityManager->remove($promoCode);
             $entityManager->flush();
         }
+
         return $this->redirectToRoute('admin_promo_code_list');
     }
 }

@@ -65,7 +65,7 @@ class ImportDefaultCategoriesCommand extends Command
     }
 
     /**
-     * @param InputInterface $input
+     * @param InputInterface  $input
      * @param OutputInterface $output
      */
     protected function initialize(InputInterface $input, OutputInterface $output): void
@@ -74,8 +74,9 @@ class ImportDefaultCategoriesCommand extends Command
     }
 
     /**
-     * @param InputInterface $input
+     * @param InputInterface  $input
      * @param OutputInterface $output
+     *
      * @return int
      */
     protected function execute(InputInterface $input, OutputInterface $output): int
@@ -90,6 +91,7 @@ class ImportDefaultCategoriesCommand extends Command
             $categoriesRaw = $this->csvExtractor->getFormattedContent($fileName, $this->externalDefaultDir);
         } catch (FileNotFoundException $ex) {
             $this->io->error(sprintf('File not found: %s', $fileName));
+
             return Command::FAILURE;
         }
 
@@ -118,7 +120,7 @@ class ImportDefaultCategoriesCommand extends Command
         return Command::SUCCESS;
     }
 
-    CONST COUNTER_IMPORTED_CATEGORIES_KEY = 'imported_categories';
+    const COUNTER_IMPORTED_CATEGORIES_KEY = 'imported_categories';
 
     /**
      * @var array
@@ -127,12 +129,13 @@ class ImportDefaultCategoriesCommand extends Command
 
     /**
      * @param string $counter
+     *
      * @return int
      */
     private function toggleCounter(string $counter): int
     {
         if (array_key_exists($counter, $this->counters)) {
-            $this->counters[$counter]++;
+            ++$this->counters[$counter];
         } else {
             $this->counters[$counter] = 1;
         }
@@ -142,6 +145,7 @@ class ImportDefaultCategoriesCommand extends Command
 
     /**
      * @param string $counter
+     *
      * @return int
      */
     private function getCounter(string $counter): int

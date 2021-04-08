@@ -19,7 +19,7 @@ class ImageResizer
 
     public function resizeImageAndSave(string $originalFileFolder, string $originalFileName, $targetParams)
     {
-        $originalFilePath = $originalFileFolder . '/' . $originalFileName;
+        $originalFilePath = $originalFileFolder.'/'.$originalFileName;
 
         list($iwidth, $iheight) = getimagesize($originalFilePath);
 

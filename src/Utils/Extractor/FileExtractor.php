@@ -11,6 +11,7 @@ class FileExtractor
     /**
      * @param string $fileName
      * @param string $targetDir
+     *
      * @return string
      */
     public function getContent(string $fileName, string $targetDir): string

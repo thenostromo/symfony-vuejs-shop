@@ -2,11 +2,7 @@
 
 namespace App\Command;
 
-use App\Entity\Category;
-use App\Entity\Product;
 use App\Entity\User;
-use App\Exception\FileNotFoundException;
-use App\Repository\CategoryRepository;
 use App\Repository\UserRepository;
 use App\Utils\Extractor\JsonExtractor;
 use Doctrine\ORM\EntityManagerInterface;
@@ -18,10 +14,9 @@ use Symfony\Component\Security\Core\Encoder\UserPasswordEncoderInterface;
 use Symfony\Component\Stopwatch\Stopwatch;
 
 /**
- * НУЖНО УБРАТЬ ПЕРЕГРУЖЕННОСТЬ В КОНСТРУКТОРЕ, ВЫДЕЛИТЬ КЛАСС ДЛЯ СЧЕТЧИКА
+ * НУЖНО УБРАТЬ ПЕРЕГРУЖЕННОСТЬ В КОНСТРУКТОРЕ, ВЫДЕЛИТЬ КЛАСС ДЛЯ СЧЕТЧИКА.
  *
  * Class ImportDefaultProductsCommand
- * @package App\Command
  */
 class ImportDefaultUsersCommand extends Command
 {
@@ -72,7 +67,7 @@ class ImportDefaultUsersCommand extends Command
     }
 
     /**
-     * @param InputInterface $input
+     * @param InputInterface  $input
      * @param OutputInterface $output
      */
     protected function initialize(InputInterface $input, OutputInterface $output): void
@@ -81,15 +76,15 @@ class ImportDefaultUsersCommand extends Command
     }
 
     /**
-     * @param InputInterface $input
+     * @param InputInterface  $input
      * @param OutputInterface $output
+     *
      * @return int
      */
     protected function execute(InputInterface $input, OutputInterface $output): int
     {
         $stopwatch = new Stopwatch();
         $stopwatch->start('import-default-users');
-
 
         $user = new User();
         $user->setEmail('admin_1@ranked-choice.com');

@@ -6,7 +6,6 @@ use App\Entity\SaleCollection;
 use Symfony\Component\Form\AbstractType;
 use Symfony\Component\Form\Extension\Core\Type\CheckboxType;
 use Symfony\Component\Form\Extension\Core\Type\DateTimeType;
-use Symfony\Component\Form\Extension\Core\Type\IntegerType;
 use Symfony\Component\Form\Extension\Core\Type\TextareaType;
 use Symfony\Component\Form\Extension\Core\Type\TextType;
 use Symfony\Component\Form\FormBuilderInterface;
@@ -32,8 +31,8 @@ class SaleCollectionEditFormType extends AbstractType
                 'label' => 'Description',
                 'required' => false,
                 'attr' => [
-                    'class' => 'form-control'
-                ]
+                    'class' => 'form-control',
+                ],
             ])
             ->add('validUntil', DateTimeType::class, [
                 'label' => 'Valid until',
@@ -41,28 +40,28 @@ class SaleCollectionEditFormType extends AbstractType
                 'time_widget' => 'single_text',
                 'required' => true,
                 'attr' => [
-                    'class' => 'form-control'
-                ]
+                    'class' => 'form-control',
+                ],
             ])
             ->add('isHidden', CheckboxType::class, [
                 'label' => 'Is hidden',
                 'required' => false,
                 'attr' => [
-                    'class' => 'form-check-input'
+                    'class' => 'form-check-input',
                 ],
                 'label_attr' => [
-                    'class' => 'form-check-label'
-                ]
+                    'class' => 'form-check-label',
+                ],
             ])
             ->add('isDeleted', CheckboxType::class, [
                 'label' => 'Is deleted',
                 'required' => false,
                 'label_attr' => [
-                    'class' => 'form-check-label'
+                    'class' => 'form-check-label',
                 ],
                 'attr' => [
-                    'class' => 'form-check-input'
-                ]
+                    'class' => 'form-check-input',
+                ],
             ])
         ;
     }

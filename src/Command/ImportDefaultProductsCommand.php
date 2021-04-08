@@ -2,7 +2,6 @@
 
 namespace App\Command;
 
-use App\Entity\Category;
 use App\Entity\Product;
 use App\Exception\FileNotFoundException;
 use App\Repository\CategoryRepository;
@@ -15,10 +14,9 @@ use Symfony\Component\Console\Style\SymfonyStyle;
 use Symfony\Component\Stopwatch\Stopwatch;
 
 /**
- * НУЖНО УБРАТЬ ПЕРЕГРУЖЕННОСТЬ В КОНСТРУКТОРЕ, ВЫДЕЛИТЬ КЛАСС ДЛЯ СЧЕТЧИКА
+ * НУЖНО УБРАТЬ ПЕРЕГРУЖЕННОСТЬ В КОНСТРУКТОРЕ, ВЫДЕЛИТЬ КЛАСС ДЛЯ СЧЕТЧИКА.
  *
  * Class ImportDefaultProductsCommand
- * @package App\Command
  */
 class ImportDefaultProductsCommand extends Command
 {
@@ -72,7 +70,7 @@ class ImportDefaultProductsCommand extends Command
     }
 
     /**
-     * @param InputInterface $input
+     * @param InputInterface  $input
      * @param OutputInterface $output
      */
     protected function initialize(InputInterface $input, OutputInterface $output): void
@@ -81,8 +79,9 @@ class ImportDefaultProductsCommand extends Command
     }
 
     /**
-     * @param InputInterface $input
+     * @param InputInterface  $input
      * @param OutputInterface $output
+     *
      * @return int
      */
     protected function execute(InputInterface $input, OutputInterface $output): int
@@ -97,11 +96,13 @@ class ImportDefaultProductsCommand extends Command
             $productsRaw = $this->jsonExtractor->getFormattedContent($fileName, $this->externalDefaultDir);
         } catch (FileNotFoundException $ex) {
             $this->io->error(sprintf('File not found: %s', $fileName));
+
             return Command::FAILURE;
         }
 
         if (!array_key_exists('products', $productsRaw)) {
             $this->io->error(sprintf('Key \'product\' not found in the file: %s', $fileName));
+
             return Command::FAILURE;
         }
 
@@ -134,7 +135,7 @@ class ImportDefaultProductsCommand extends Command
         return Command::SUCCESS;
     }
 
-    CONST COUNTER_IMPORTED_PRODUCTS_KEY = 'imported_products';
+    const COUNTER_IMPORTED_PRODUCTS_KEY = 'imported_products';
 
     /**
      * @var array
@@ -143,12 +144,13 @@ class ImportDefaultProductsCommand extends Command
 
     /**
      * @param string $counter
+     *
      * @return int
      */
     private function toggleCounter(string $counter): int
     {
         if (array_key_exists($counter, $this->counters)) {
-            $this->counters[$counter]++;
+            ++$this->counters[$counter];
         } else {
             $this->counters[$counter] = 1;
         }
@@ -158,6 +160,7 @@ class ImportDefaultProductsCommand extends Command
 
     /**
      * @param string $counter
+     *
      * @return int
      */
     private function getCounter(string $counter): int

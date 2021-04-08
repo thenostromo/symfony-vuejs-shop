@@ -16,7 +16,7 @@ class CategoryController extends AbstractController
     /**
      * @Route("/category/{slug}", methods="GET", name="category_show")
      */
-    public function show(Category $category, ProductRepository $productRepository): Response
+    public function show(Category $category = null, ProductRepository $productRepository): Response
     {
         if (!$category || $category->getIsHidden() || $category->getIsDeleted()) {
             throw new NotFoundHttpException();
@@ -31,15 +31,15 @@ class CategoryController extends AbstractController
 
             $productModel = [
                 'id' => $product->getId(),
-                'title' => str_replace("'", "", $product->getTitle()),
+                'title' => str_replace("'", '', $product->getTitle()),
                 'price' => $product->getPrice(),
                 'quantity' => $product->getQuantity(),
                 'images' => [],
                 'category' => [
                     'id' => $product->getCategory()->getId(),
                     'title' => $product->getCategory()->getTitle(),
-                    'slug' => $product->getCategory()->getSlug()
-                ]
+                    'slug' => $product->getCategory()->getSlug(),
+                ],
             ];
 
             /** @var ProductImage $image */
@@ -48,7 +48,7 @@ class CategoryController extends AbstractController
                     'id' => $image->getId(),
                     'filenameBig' => $image->getFilenameBig(),
                     'filenameMiddle' => $image->getFilenameMiddle(),
-                    'filenameSmall' => $image->getFilenameSmall()
+                    'filenameSmall' => $image->getFilenameSmall(),
                 ];
             }
 
@@ -57,14 +57,14 @@ class CategoryController extends AbstractController
 
         $categoryModel = [
             'id' => $category->getId(),
-            'title' => $category->getTitle()
+            'title' => $category->getTitle(),
         ];
 
         return $this->render('category/show.html.twig', [
             'categoryModel' => $categoryModel,
             'category' => $category,
             'products' => $products,
-            'productsModel' => $productsModel
+            'productsModel' => $productsModel,
         ]);
     }
 }

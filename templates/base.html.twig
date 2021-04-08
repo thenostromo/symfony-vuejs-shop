@@ -7,74 +7,17 @@
         <title>{% block title %}RankedChoice - Shop Of Best Clothes{% endblock %}</title>
         <meta name="keywords" content="{% block page_keywords %}clothes, jackets, jeans{% endblock %}">
         <meta name="description" content="{% block page_description %}clothes, jackets, jeans{% endblock %}">
-        <link rel="icon" type="image/x-icon" href="{{ asset('assets/images/icons/favicon.ico') }}" />
-        <link rel="stylesheet" href="{{ asset('assets/css/libs/bootstrap/bootstrap.min.css') }}">
-        <link rel="stylesheet" href="{{ asset('assets/css/section/main/_base.css') }}">
-        <link rel="stylesheet" href="{{ asset('assets/css/section/main/_header.css') }}">
-        <link rel="stylesheet" href="{{ asset('assets/css/section/main/_header_menu.css') }}">
-        <link rel="stylesheet" href="{{ asset('assets/css/section/main/_product.css') }}">
-        <link rel="stylesheet" href="{{ asset('assets/css/section/main/_product_list.css') }}">
-        <link rel="stylesheet" href="{{ asset('assets/css/section/main/_banner.css') }}">
-        <link rel="stylesheet" href="{{ asset('assets/css/section/main/_form.css') }}">
-        <link rel="stylesheet" href="{{ asset('assets/css/section/main/_pagination.css') }}">
-        <link rel="stylesheet" href="{{ asset('assets/css/section/main/_alert.css') }}">
-        <link rel="stylesheet" href="{{ asset('assets/css/section/main/_cart.css') }}">
-        <link rel="stylesheet" href="{{ asset('assets/css/section/main/_button.css') }}">
-        <link rel="stylesheet" href="{{ asset('assets/css/section/main/_cart_dropdown.css') }}">
-        <link rel="stylesheet" href="{{ asset('assets/css/section/main/_spinner.css') }}">
-        <link rel="stylesheet" href="{{ asset('assets/css/section/main/_typography.css') }}">
-        <link rel="stylesheet" href="{{ asset('assets/css/section/main/_footer.css') }}">
-        <link rel="stylesheet" href="{{ asset('assets/css/section/main/core2.css') }}">
-        <link href="{{ asset('assets/css/libs/fontawesome-free/all.css') }}" rel="stylesheet" type="text/css">
+        <link rel="icon" type="image/x-icon" href="{{ asset('build/images/icons/favicon.ico') }}" />
+        {{ encore_entry_link_tags('section-main') }}
         {% block stylesheets %}{% endblock %}
     </head>
 
     <body>
         {% set ROUTE_NAME = app.request.attributes.get('_route') %}
         <div class="page-wrapper">
-            {% block header %}
-                {{ render(controller('App\\Controller\\EmbedController::saleCollectionHeader')) }}
-                <header class="header">
-                    <div class="header-middle sticky-header">
-                        <div class="container-fluid">
-                            <div class="header-left">
-                                <button class="mobile-menu-toggler">
-                                    <span class="sr-only">Toggle mobile menu</span>
-                                    <i class="icon-bars"></i>
-                                </button>
+            {{ render(controller('App\\Controller\\EmbedController::saleCollectionHeader')) }}
 
-                                <a href="{{ path('shop_index') }}" class="logo">
-                                    <img src="{{ asset('assets/images/icons/logo_366x79.svg') }}" alt="Molla Logo" width="366" height="79">
-                                </a>
-
-                                <nav class="main-nav">
-                                    <ul class="menu sf-arrows">
-                                        <li class="megamenu-container {% if ROUTE_NAME == "shop_index" %}active{% endif %}">
-                                            <a href="{{ path('shop_index') }}">Homepage</a>
-                                        </li>
-                                        {{ render(controller('App\\Controller\\EmbedController::menuCategories', {
-                                            'pageRoute': ROUTE_NAME,
-                                            'pageSlug': app.request.attributes.get('slug')
-                                        })) }}
-                                    </ul>
-                                </nav>
-                            </div>
-
-                            <div class="header-right">
-                                <div class="dropdown cart-dropdown">
-                                    {% if app.user %}
-                                        <a href="{{ path('profile_index') }}">My profile</a>
-                                    {% else %}
-                                        <a href="{{ path('security_login') }}">Login</a>
-                                    {% endif %}
-                                </div>
-
-                                {{ include('embed/_menu_cart.html.twig') }}
-                            </div>
-                        </div>
-                    </div>
-                </header>
-            {% endblock %}
+            {{ include('embed/_header.html.twig') }}
 
             <main class="main">
                 {% block body %}
@@ -84,6 +27,7 @@
             {{ include('embed/_footer.html.twig') }}
         </div>
 
+        {{ encore_entry_script_tags('section-main') }}
         {% block javascripts %}{% endblock %}
     </body>
 </html>

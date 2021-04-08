@@ -1,0 +1,53 @@
+.main-nav {
+    margin-left: 2rem;
+    display: none;
+}
+
+.menu {
+    display: flex;
+    align-items: center;
+}
+
+.main-nav ul {
+    margin: 0;
+    padding: 0;
+    list-style: none;
+}
+
+.menu > li > a {
+    display: block;
+    position: relative;
+    color: #333;
+    font-weight: 400;
+    font-size: 1rem !important;
+    letter-spacing: 0;
+    padding: 2.95rem 1.5rem;
+    text-transform: uppercase;
+    text-decoration: none;
+}
+
+.menu a:focus {
+    outline: none !important;
+}
+
+.menu .menu-item .active {
+    display: inline;
+    border-bottom: 3px solid #F13C76;
+    color: #f13c76
+}
+.menu .menu-item.active div {
+    display: inline;
+    border-bottom: 3px solid #F13C76;
+    color: #f13c76
+}
+
+@media screen and (min-width: 992px) {
+    .main-nav {
+        display: block;
+    }
+}
+
+.menu li:hover > a,
+.menu li.active > a {
+    color: #dc143c;
+}

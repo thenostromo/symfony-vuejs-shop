@@ -2,7 +2,6 @@
 
 namespace App\Command;
 
-use App\Entity\Category;
 use App\Entity\Product;
 use App\Repository\CategoryRepository;
 use App\Repository\ProductRepository;
@@ -65,7 +64,7 @@ class AddProductCommand extends Command
     }
 
     /**
-     * @param InputInterface $input
+     * @param InputInterface  $input
      * @param OutputInterface $output
      */
     protected function initialize(InputInterface $input, OutputInterface $output): void
@@ -74,12 +73,12 @@ class AddProductCommand extends Command
     }
 
     /**
-     * @param InputInterface $input
+     * @param InputInterface  $input
      * @param OutputInterface $output
      */
     protected function interact(InputInterface $input, OutputInterface $output)
     {
-        if ($input->getArgument('title') && $input->getArgument('price') && $input->getArgument('categoryId') && $input->getArgument('quantity') !== null) {
+        if ($input->getArgument('title') && $input->getArgument('price') && $input->getArgument('categoryId') && null !== $input->getArgument('quantity')) {
             return;
         }
 
@@ -90,7 +89,7 @@ class AddProductCommand extends Command
 
         $title = $input->getArgument('title');
         if ($title) {
-            $this->io->text(' > <info>Title</info>: ' . $title);
+            $this->io->text(' > <info>Title</info>: '.$title);
         } else {
             $title = $this->io->ask('Title', null);
             $input->setArgument('title', $title);
@@ -98,7 +97,7 @@ class AddProductCommand extends Command
 
         $price = $input->getArgument('price');
         if ($price) {
-            $this->io->text(' > <info>Price</info>: ' . $price);
+            $this->io->text(' > <info>Price</info>: '.$price);
         } else {
             $price = $this->io->ask('price', null);
             $input->setArgument('price', $price);
@@ -106,15 +105,15 @@ class AddProductCommand extends Command
 
         $categoryId = $input->getArgument('categoryId');
         if ($categoryId) {
-            $this->io->text(' > <info>Category Id</info>: ' . $categoryId);
+            $this->io->text(' > <info>Category Id</info>: '.$categoryId);
         } else {
             $categoryId = $this->io->ask('categoryId', null);
             $input->setArgument('categoryId', $categoryId);
         }
 
         $quantity = $input->getArgument('quantity');
-        if ($quantity !== null) {
-            $this->io->text(' > <info>Quantity</info>: ' . $quantity);
+        if (null !== $quantity) {
+            $this->io->text(' > <info>Quantity</info>: '.$quantity);
         } else {
             $quantity = $this->io->ask('quantity', 0);
             $input->setArgument('quantity', $quantity);
@@ -122,7 +121,7 @@ class AddProductCommand extends Command
 
         $cover = $input->getArgument('cover');
         if ($cover) {
-            $this->io->text(' > <info>cover</info>: ' . $cover);
+            $this->io->text(' > <info>cover</info>: '.$cover);
         } else {
             $cover = $this->io->ask('cover', null);
             $input->setArgument('cover', $cover);
@@ -130,8 +129,9 @@ class AddProductCommand extends Command
     }
 
     /**
-     * @param InputInterface $input
+     * @param InputInterface  $input
      * @param OutputInterface $output
+     *
      * @return int
      */
     protected function execute(InputInterface $input, OutputInterface $output): int

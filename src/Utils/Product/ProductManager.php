@@ -6,9 +6,8 @@ use App\Entity\Product;
 use App\Entity\ProductImage;
 use App\Utils\File\ImageResizer;
 use App\Utils\FileSystem\FileSystemWorker;
-use App\Utils\FileSystem\FolderWorker;
-use Symfony\Component\Filesystem\Filesystem;
 use Doctrine\ORM\EntityManagerInterface;
+use Symfony\Component\Filesystem\Filesystem;
 
 class ProductManager
 {
@@ -59,8 +58,8 @@ class ProductManager
 
         $productDir = sprintf('%s/%s', $this->imagesProductsDir, $product->getId());
 
-     /*   $filesystem = new Filesystem();
-        $filesystem->remove($productDir);*/
+        /*   $filesystem = new Filesystem();
+           $filesystem->remove($productDir);*/
         $this->fileSystemWorker->createFolderIfNotExist($this->imagesProductsDir);
         $this->fileSystemWorker->createFolderIfNotExist($productDir);
 
@@ -69,7 +68,7 @@ class ProductManager
             'width' => 60,
             'height' => 0,
             'newFolder' => $productDir,
-            'newFileName' => sprintf('%s_%s.jpg', $fileNameId, 'small')
+            'newFileName' => sprintf('%s_%s.jpg', $fileNameId, 'small'),
         ];
         $imageSmall = $this->imageResizer->resizeImageAndSave($this->uploadsTempDir, $filename, $params);
 
@@ -77,7 +76,7 @@ class ProductManager
             'width' => 430,
             'height' => 0,
             'newFolder' => $productDir,
-            'newFileName' => sprintf('%s_%s.jpg', $fileNameId, 'medium')
+            'newFileName' => sprintf('%s_%s.jpg', $fileNameId, 'medium'),
         ];
         $imageMedium = $this->imageResizer->resizeImageAndSave($this->uploadsTempDir, $filename, $params);
 
@@ -85,7 +84,7 @@ class ProductManager
             'width' => 800,
             'height' => 0,
             'newFolder' => $productDir,
-            'newFileName' => sprintf('%s_%s.jpg', $fileNameId, 'big')
+            'newFileName' => sprintf('%s_%s.jpg', $fileNameId, 'big'),
         ];
         $imageBig = $this->imageResizer->resizeImageAndSave($this->uploadsTempDir, $filename, $params);
 
@@ -98,7 +97,7 @@ class ProductManager
 
         $product->addProductImage($productImage);
 
-        $originalFilePath = $this->uploadsTempDir . '/' . $filename;
+        $originalFilePath = $this->uploadsTempDir.'/'.$filename;
         //$this->fileSystemWorker->remove($originalFilePath);
 
         return $product;

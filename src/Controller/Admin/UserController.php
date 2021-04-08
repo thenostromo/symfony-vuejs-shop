@@ -2,11 +2,8 @@
 
 namespace App\Controller\Admin;
 
-use App\Entity\Category;
 use App\Entity\User;
 use App\Form\Admin\UserEditFormType;
-use App\Form\CategoryEditFormType;
-use App\Repository\CategoryRepository;
 use App\Repository\UserRepository;
 use Symfony\Bundle\FrameworkBundle\Controller\AbstractController;
 use Symfony\Component\HttpFoundation\Request;
@@ -75,6 +72,7 @@ class UserController extends AbstractController
             $entityManager->remove($user);
             $entityManager->flush();
         }
+
         return $this->redirectToRoute('admin_user_list');
     }
 }

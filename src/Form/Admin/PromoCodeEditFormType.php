@@ -21,22 +21,22 @@ class PromoCodeEditFormType extends AbstractType
                 'label' => 'Title',
                 'required' => true,
                 'attr' => [
-                    'class' => 'form-control'
-                ]
+                    'class' => 'form-control',
+                ],
             ])
             ->add('description', TextareaType::class, [
                 'label' => 'Description',
                 'required' => false,
                 'attr' => [
-                    'class' => 'form-control'
-                ]
+                    'class' => 'form-control',
+                ],
             ])
             ->add('uses', IntegerType::class, [
                 'label' => 'Uses',
                 'required' => false,
                 'attr' => [
-                    'class' => 'form-control'
-                ]
+                    'class' => 'form-control',
+                ],
             ])
             ->add('value', TextType::class, [
                 'label' => 'Promo code',
@@ -49,8 +49,8 @@ class PromoCodeEditFormType extends AbstractType
                 'label' => 'Discount (%)',
                 'required' => true,
                 'attr' => [
-                    'class' => 'form-control'
-                ]
+                    'class' => 'form-control',
+                ],
             ])
             ->add('validUntil', DateTimeType::class, [
                 'label' => 'Valid until',
@@ -62,21 +62,21 @@ class PromoCodeEditFormType extends AbstractType
                 'label' => 'Is hidden',
                 'required' => false,
                 'attr' => [
-                    'class' => 'form-check-input'
+                    'class' => 'form-check-input',
                 ],
                 'label_attr' => [
-                    'class' => 'form-check-label'
-                ]
+                    'class' => 'form-check-label',
+                ],
             ])
             ->add('isDeleted', CheckboxType::class, [
                 'label' => 'Is deleted',
                 'required' => false,
                 'label_attr' => [
-                    'class' => 'form-check-label'
+                    'class' => 'form-check-label',
                 ],
                 'attr' => [
-                    'class' => 'form-check-input'
-                ]
+                    'class' => 'form-check-input',
+                ],
             ])
         ;
     }

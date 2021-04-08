@@ -54,11 +54,11 @@ class UserEditFormType extends AbstractType
                 'label' => 'Is verified',
                 'required' => false,
                 'label_attr' => [
-                    'class' => 'form-check-label'
+                    'class' => 'form-check-label',
                 ],
                 'attr' => [
-                    'class' => 'form-check-input'
-                ]
+                    'class' => 'form-check-input',
+                ],
             ])
         ;
     }

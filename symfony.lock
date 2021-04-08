@@ -16,11 +16,20 @@
             "src/Entity/.gitignore"
         ]
     },
+    "behat/transliterator": {
+        "version": "v1.3.0"
+    },
     "clue/stream-filter": {
         "version": "v1.5.0"
     },
     "composer/package-versions-deprecated": {
         "version": "1.11.99.1"
+    },
+    "composer/semver": {
+        "version": "3.2.4"
+    },
+    "composer/xdebug-handler": {
+        "version": "1.4.6"
     },
     "doctrine/annotations": {
         "version": "1.0",
@@ -119,8 +128,23 @@
     "fig/link-util": {
         "version": "1.1.1"
     },
+    "friendsofphp/php-cs-fixer": {
+        "version": "2.17",
+        "recipe": {
+            "repo": "github.com/symfony/recipes",
+            "branch": "master",
+            "version": "2.17",
+            "ref": "f0d4b4ddb4e2bb73b227e3987b6ecc53cd8be431"
+        },
+        "files": [
+            ".php_cs.dist"
+        ]
+    },
     "friendsofphp/proxy-manager-lts": {
         "version": "v1.0.2"
+    },
+    "gedmo/doctrine-extensions": {
+        "version": "v3.0.4"
     },
     "guzzlehttp/guzzle": {
         "version": "6.5.5"
@@ -197,6 +221,9 @@
     "php": {
         "version": "7.4"
     },
+    "php-cs-fixer/diff": {
+        "version": "v1.3.1"
+    },
     "php-http/client-common": {
         "version": "2.3.0"
     },
@@ -245,6 +272,15 @@
     "phpdocumentor/type-resolver": {
         "version": "1.4.0"
     },
+    "phpstan/extension-installer": {
+        "version": "1.1.0"
+    },
+    "phpstan/phpstan": {
+        "version": "0.12.83"
+    },
+    "phpstan/phpstan-symfony": {
+        "version": "0.12.22"
+    },
     "psr/cache": {
         "version": "1.0.1"
     },
@@ -282,6 +318,18 @@
         },
         "files": [
             "config/packages/sensio_framework_extra.yaml"
+        ]
+    },
+    "stof/doctrine-extensions-bundle": {
+        "version": "1.2",
+        "recipe": {
+            "repo": "github.com/symfony/recipes-contrib",
+            "branch": "master",
+            "version": "1.2",
+            "ref": "6c1ceb662f8997085f739cd089bfbef67f245983"
+        },
+        "files": [
+            "config/packages/stof_doctrine_extensions.yaml"
         ]
     },
     "symfony/asset": {
@@ -463,11 +511,17 @@
     "symfony/polyfill-mbstring": {
         "version": "v1.20.0"
     },
+    "symfony/polyfill-php70": {
+        "version": "v1.20.0"
+    },
     "symfony/polyfill-php73": {
         "version": "v1.20.0"
     },
     "symfony/polyfill-php80": {
         "version": "v1.20.0"
+    },
+    "symfony/process": {
+        "version": "v5.2.4"
     },
     "symfony/profiler-pack": {
         "version": "v1.0.5"
@@ -615,7 +669,7 @@
             "ref": "579d8de06df2ceb34d39e84e84c0c051b9b5ac68"
         },
         "files": [
-            "assets/app.js",
+            "assets/sectionMain.js",
             "assets/bootstrap.js",
             "assets/controllers.json",
             "assets/controllers/hello_controller.js",

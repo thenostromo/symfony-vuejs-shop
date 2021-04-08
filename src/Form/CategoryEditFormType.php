@@ -4,6 +4,7 @@ namespace App\Form;
 
 use App\Entity\Category;
 use Symfony\Component\Form\AbstractType;
+use Symfony\Component\Form\Extension\Core\Type\CheckboxType;
 use Symfony\Component\Form\Extension\Core\Type\TextType;
 use Symfony\Component\Form\FormBuilderInterface;
 use Symfony\Component\OptionsResolver\OptionsResolver;
@@ -24,14 +25,34 @@ class CategoryEditFormType extends AbstractType
                     new NotBlank(),
                 ],
             ])
-            ->add('slug', TextType::class, [
-                'label' => 'Slug',
+            ->add('titlePlural', TextType::class, [
+                'label' => 'Title (plural)',
                 'required' => true,
                 'attr' => [
                     'class' => 'form-control',
                 ],
                 'constraints' => [
                     new NotBlank(),
+                ],
+            ])
+            ->add('isHidden', CheckboxType::class, [
+                'label' => 'Is hidden',
+                'required' => false,
+                'label_attr' => [
+                    'class' => 'form-check-label',
+                ],
+                'attr' => [
+                    'class' => 'form-check-input',
+                ],
+            ])
+            ->add('isDeleted', CheckboxType::class, [
+                'label' => 'Is deleted',
+                'required' => false,
+                'label_attr' => [
+                    'class' => 'form-check-label',
+                ],
+                'attr' => [
+                    'class' => 'form-check-input',
                 ],
             ])
         ;

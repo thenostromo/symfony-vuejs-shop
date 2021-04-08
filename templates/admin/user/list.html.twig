@@ -19,7 +19,7 @@
                         <tr>
                             <th>Id</th>
                             <th>Email</th>
-                            <th>Roles</th>
+                            <th>Role</th>
                             <th>Profile info</th>
                             <th>Is verified email</th>
                             <th></th>
@@ -30,7 +30,12 @@
                             <tr>
                                 <td>{{ user.id }}</td>
                                 <td>{{ user.email }}</td>
-                                <td>{{ user.roles|json_encode }}</td>
+                                <td>
+                                    {% if "ROLE_ADMIN" in user.roles %}
+                                        <strong>Admin</strong>
+                                    {% else %}
+                                        User
+                                    {% endif %}
                                 <td>
                                     Full name: {{ user.fullName }}<br/>
                                     Phone: {{ user.phone }}<br/>

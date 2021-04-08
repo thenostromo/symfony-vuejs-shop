@@ -17,26 +17,26 @@ class ContactUsFormType extends AbstractType
             ->add('email', EmailType::class, [
                 'label' => 'Your email:',
                 'attr' => [
-                    'class' => 'form-control'
-                ]
+                    'class' => 'form-control',
+                ],
             ])
             ->add('name', TextType::class, [
                 'label' => 'Your name:',
                 'attr' => [
-                    'class' => 'form-control'
-                ]
+                    'class' => 'form-control',
+                ],
             ])
             ->add('letterTitle', TextType::class, [
                 'label' => 'Letter title:',
                 'attr' => [
-                    'class' => 'form-control'
-                ]
+                    'class' => 'form-control',
+                ],
             ])
             ->add('letterText', TextareaType::class, [
                 'label' => 'Letter text:',
                 'attr' => [
-                    'class' => 'form-control'
-                ]
+                    'class' => 'form-control',
+                ],
             ])
         ;
     }
@@ -44,7 +44,6 @@ class ContactUsFormType extends AbstractType
     public function configureOptions(OptionsResolver $resolver)
     {
         $resolver->setDefaults([
-            //
         ]);
     }
 }
