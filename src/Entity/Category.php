@@ -6,9 +6,12 @@ use App\Repository\CategoryRepository;
 use Doctrine\Common\Collections\ArrayCollection;
 use Doctrine\Common\Collections\Collection;
 use Doctrine\ORM\Mapping as ORM;
+use Gedmo\Mapping\Annotation as Gedmo;
+use ApiPlatform\Core\Annotation\ApiResource;
 
 /**
  * @ORM\Entity(repositoryClass=CategoryRepository::class)
+ * @ApiResource
  */
 class Category
 {
@@ -25,7 +28,8 @@ class Category
     private $title;
 
     /**
-     * @ORM\Column(type="string", length=50)
+     * @Gedmo\Slug(fields={"title"})
+     * @ORM\Column(length=128, unique=true)
      */
     private $slug;
 
@@ -66,8 +70,13 @@ class Category
         return $this->title;
     }
 
-    public function setTitle(string $title): self
+    public function setTitle(string $titleRaw): self
     {
+        $title = null;
+        if ($titleRaw) {
+            $title = ucfirst(strtolower($titleRaw));
+        }
+
         $this->title = $title;
 
         return $this;
@@ -144,8 +153,13 @@ class Category
         return $this->titlePlural;
     }
 
-    public function setTitlePlural(string $titlePlural): self
+    public function setTitlePlural(string $titlePluralRaw): self
     {
+        $titlePlural = null;
+        if ($titlePluralRaw) {
+            $titlePlural = ucfirst(strtolower($titlePluralRaw));
+        }
+
         $this->titlePlural = $titlePlural;
 
         return $this;

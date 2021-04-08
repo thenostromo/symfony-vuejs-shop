@@ -52,6 +52,9 @@ class ProductController extends AbstractController
         $form->handleRequest($request);
 
         if ($form->isSubmitted() && $form->isValid()) {
+            $entityManager = $this->getDoctrine()->getManager();
+            $entityManager->persist($product);
+
             /** @var UploadedFile $newImageFile */
             $newImageFile = $form->get('newImage')->getData();
 
@@ -61,8 +64,6 @@ class ProductController extends AbstractController
 
             $product = $productManager->updateProductImages($product, $newImageFileName);
 
-            $entityManager = $this->getDoctrine()->getManager();
-            $entityManager->persist($product);
             $entityManager->flush();
 
             return $this->redirectToRoute('admin_product_edit', ['id' => $product->getId()]);

@@ -16,7 +16,7 @@ class CategoryController extends AbstractController
     /**
      * @Route("/category/{slug}", methods="GET", name="category_show")
      */
-    public function show(Category $category, ProductRepository $productRepository): Response
+    public function show(Category $category = null, ProductRepository $productRepository): Response
     {
         if (!$category || $category->getIsHidden() || $category->getIsDeleted()) {
             throw new NotFoundHttpException();

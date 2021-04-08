@@ -6,15 +6,24 @@ Encore
 
     .enableVueLoader()
 
-    .addEntry('appAdminSaleCollection', './assets/js/admin-sale-collection/app.js')
-    .addEntry('appAdminOrder', './assets/js/admin-order/app.js')
-    .addEntry('appMainCategoryShow', './assets/js/main-category-show/app.js')
-    .addEntry('appMenuCart', './assets/js/menu-cart/app.js')
-    .addEntry('appMainCartShow', './assets/js/main-cart-show/app.js')
-//.addStyleEntry('css/app', './assets/scss/style.scss')
+    .addEntry('appAdminSaleCollection', './assets/js/section/admin/admin-sale-collection/app.js')
+    .addEntry('appAdminOrder', './assets/js/section/admin/admin-order/app.js')
+    .addEntry('appMainCategoryShow', './assets/js/section/main/main-category-show/app.js')
+    .addEntry('appMenuCart', './assets/js/section/main/menu-cart/app.js')
+    .addEntry('appMainCartShow', './assets/js/section/main/main-cart-show/app.js')
+
+    .addEntry('section-main', './assets/section-main.js')
+    .addEntry('section-admin', './assets/section-admin.js')
+    .autoProvidejQuery()
     .splitEntryChunks()
 
+    .copyFiles({
+        from: './assets/images',
+        to: 'images/[path][name].[hash:8].[ext]',
+    })
+
     .enableSingleRuntimeChunk()
+    .enableSassLoader()
 
     .cleanupOutputBeforeBuild()
     .enableBuildNotifications()
@@ -23,6 +32,16 @@ Encore
     .configureBabel(() => {}, {
         useBuiltIns: 'usage',
         corejs: 3
+    })
+    .configureImageRule({
+        // tell Webpack it should consider inlining
+        type: 'asset',
+        //maxSize: 4 * 1024, // 4 kb - the default is 8kb
+    })
+
+    .configureFontRule({
+        type: 'asset',
+        //maxSize: 4 * 1024
     })
 ;
 
