@@ -22,7 +22,9 @@ class ProductRepository extends ServiceEntityRepository
 
     /**
      * @param Category $category
+     *
      * @return int|mixed|string
+     *
      * @throws \Doctrine\ORM\NoResultException
      * @throws \Doctrine\ORM\NonUniqueResultException
      */
@@ -39,8 +41,9 @@ class ProductRepository extends ServiceEntityRepository
 
     /**
      * @param Category $category
-     * @param int $offset
-     * @param int $limit
+     * @param int      $offset
+     * @param int      $limit
+     *
      * @return Product[]
      */
     public function getProductsByCategory(Category $category, int $offset = 0, int $limit = 0)
@@ -50,7 +53,7 @@ class ProductRepository extends ServiceEntityRepository
             ->andWhere('p.category = :category')
             ->orderBy('p.id', 'ASC')
             ->setParameters([
-                'category' => $category
+                'category' => $category,
             ])
             ->setFirstResult($offset);
 

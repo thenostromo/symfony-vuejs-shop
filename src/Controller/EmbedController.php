@@ -3,7 +3,6 @@
 namespace App\Controller;
 
 use App\Entity\Product;
-use App\Entity\SaleCollection;
 use App\Repository\CategoryRepository;
 use App\Repository\ProductRepository;
 use App\Repository\SaleCollectionRepository;
@@ -14,24 +13,26 @@ class EmbedController extends AbstractController
 {
     /**
      * @param CategoryRepository $categoryRepository
+     *
      * @return Response
      */
     public function menuCategories(CategoryRepository $categoryRepository, string $pageRoute = null, string $pageSlug = null): Response
     {
         $categories = $categoryRepository->findBy([
             'isHidden' => false,
-            'isDeleted' => false
+            'isDeleted' => false,
         ], ['title' => 'ASC'], 5);
 
         return $this->render('embed/_menu_categories.html.twig', [
             'categories' => $categories,
             'pageRoute' => $pageRoute,
-            'pageSlug' => $pageSlug
+            'pageSlug' => $pageSlug,
         ]);
     }
 
     /**
      * @param ProductRepository $productRepository
+     *
      * @return Response
      */
     public function similarProducts(ProductRepository $productRepository, int $count = 4, int $categoryId = null): Response
@@ -56,18 +57,20 @@ class EmbedController extends AbstractController
                 'category' => [
                     'id' => $product->getCategory()->getId(),
                     'title' => $product->getCategory()->getTitle(),
-                    'slug' => $product->getCategory()->getSlug()
-                ]
+                    'slug' => $product->getCategory()->getSlug(),
+                ],
             ];
         }
+
         return $this->render('embed/_similar_products.html.twig', [
             'productsModel' => $productsModel,
-            'count' => $count
+            'count' => $count,
         ]);
     }
 
     /**
      * @param SaleCollectionRepository $saleCollectionRepository
+     *
      * @return Response
      */
     public function saleCollectionHeader(SaleCollectionRepository $saleCollectionRepository): Response
@@ -75,7 +78,7 @@ class EmbedController extends AbstractController
         $saleCollection = $saleCollectionRepository->findOneBy([], ['id' => 'ASC']);
 
         return $this->render('embed/_sale_collection_header.html.twig', [
-            'saleCollection' => $saleCollection
+            'saleCollection' => $saleCollection,
         ]);
     }
 }

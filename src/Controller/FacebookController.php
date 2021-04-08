@@ -1,4 +1,5 @@
 <?php
+
 namespace App\Controller;
 
 use KnpU\OAuth2ClientBundle\Client\ClientRegistry;
@@ -10,7 +11,7 @@ use Symfony\Component\Routing\Annotation\Route;
 class FacebookController extends AbstractController
 {
     /**
-     * Link to this controller to start the "connect" process
+     * Link to this controller to start the "connect" process.
      *
      * @Route("/connect/facebook", name="connect_facebook_start")
      */
@@ -22,14 +23,14 @@ class FacebookController extends AbstractController
         return $clientRegistry
             ->getClient('facebook_main') // key used in config/packages/knpu_oauth2_client.yaml
             ->redirect([
-                'public_profile', 'email' // the scopes you want to access
+                'public_profile', 'email', // the scopes you want to access
             ]);
     }
 
     /**
      * After going to Facebook, you're redirected back here
      * because this is the "redirect_route" you configured
-     * in config/packages/knpu_oauth2_client.yaml
+     * in config/packages/knpu_oauth2_client.yaml.
      *
      * @Route("/connect/facebook/check", name="connect_facebook_check")
      */
@@ -49,12 +50,14 @@ class FacebookController extends AbstractController
 
             // do something with all this new power!
             // e.g. $name = $user->getFirstName();
-            dump($user); die;
+            dump($user);
+            exit;
             // ...
         } catch (IdentityProviderException $e) {
             // something went wrong!
             // probably you should return the reason to the user
-            var_dump($e->getMessage()); die;
+            var_dump($e->getMessage());
+            exit;
         }
     }
 }

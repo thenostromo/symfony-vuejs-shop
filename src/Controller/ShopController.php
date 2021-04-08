@@ -2,14 +2,11 @@
 
 namespace App\Controller;
 
-use App\Entity\Category;
 use App\Form\ContactUsFormType;
-use App\Security\EmailVerifier;
 use Symfony\Bridge\Twig\Mime\TemplatedEmail;
 use Symfony\Bundle\FrameworkBundle\Controller\AbstractController;
 use Symfony\Component\HttpFoundation\Request;
 use Symfony\Component\HttpFoundation\Response;
-use Symfony\Component\Mailer\Mailer;
 use Symfony\Component\Mailer\MailerInterface;
 use Symfony\Component\Mime\Address;
 use Symfony\Component\Routing\Annotation\Route;
@@ -39,7 +36,6 @@ class ShopController extends AbstractController
     public function about(): Response
     {
         return $this->render('shop/about.html.twig', [
-
         ]);
     }
 
@@ -52,7 +48,7 @@ class ShopController extends AbstractController
             'email' => null,
             'name' => null,
             'letterTitle' => null,
-            'letterText' => null
+            'letterText' => null,
         ];
         $form = $this->createForm(ContactUsFormType::class, $data);
 
@@ -67,7 +63,7 @@ class ShopController extends AbstractController
             $templatedEmail = (new TemplatedEmaiL())
                 ->from(new Address('robot@ranked-choice.com', 'RankedChoice Shop Bot'))
                 ->to('contact@ranked-choice.com')
-                ->subject('[CONTACT US] ' . $letterTitle)
+                ->subject('[CONTACT US] '.$letterTitle)
                 ->htmlTemplate('email/contact_us.html.twig');
 
             $context = $templatedEmail->getContext();
@@ -84,7 +80,7 @@ class ShopController extends AbstractController
         }
 
         return $this->render('shop/contact_us.html.twig', [
-            'form' => $form->createView()
+            'form' => $form->createView(),
         ]);
     }
 }

@@ -35,7 +35,9 @@ class PromoCodeRepository extends ServiceEntityRepository
 
     /**
      * @param string $promoCodeValue
+     *
      * @return PromoCode
+     *
      * @throws \Doctrine\ORM\NoResultException
      * @throws \Doctrine\ORM\NonUniqueResultException
      */
@@ -58,7 +60,7 @@ class PromoCodeRepository extends ServiceEntityRepository
                 'currentDateTime' => $currentDateTime,
                 'usesMin' => 0,
                 'isHidden' => false,
-                'isDeleted' => false
+                'isDeleted' => false,
             ])
             ->getQuery()
             ->getOneOrNullResult()

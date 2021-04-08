@@ -54,7 +54,7 @@ class AddCategoryCommand extends Command
     }
 
     /**
-     * @param InputInterface $input
+     * @param InputInterface  $input
      * @param OutputInterface $output
      */
     protected function initialize(InputInterface $input, OutputInterface $output): void
@@ -63,7 +63,7 @@ class AddCategoryCommand extends Command
     }
 
     /**
-     * @param InputInterface $input
+     * @param InputInterface  $input
      * @param OutputInterface $output
      */
     protected function interact(InputInterface $input, OutputInterface $output)
@@ -79,7 +79,7 @@ class AddCategoryCommand extends Command
 
         $title = $input->getArgument('title');
         if ($title) {
-            $this->io->text(' > <info>Title</info>: ' . $title);
+            $this->io->text(' > <info>Title</info>: '.$title);
         } else {
             $title = $this->io->ask('Title', null);
             $input->setArgument('title', $title);
@@ -87,7 +87,7 @@ class AddCategoryCommand extends Command
 
         $slug = $input->getArgument('slug');
         if ($slug) {
-            $this->io->text(' > <info>Slug</info>: ' . $slug);
+            $this->io->text(' > <info>Slug</info>: '.$slug);
         } else {
             $slug = $this->io->ask('Slug', null);
             $input->setArgument('slug', $slug);
@@ -95,8 +95,9 @@ class AddCategoryCommand extends Command
     }
 
     /**
-     * @param InputInterface $input
+     * @param InputInterface  $input
      * @param OutputInterface $output
+     *
      * @return int
      */
     protected function execute(InputInterface $input, OutputInterface $output): int

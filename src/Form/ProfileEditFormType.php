@@ -15,16 +15,16 @@ class ProfileEditFormType extends AbstractType
     {
         $builder
             ->add('fullName', TextType::class, [
-                'label' => 'Please enter your full name'
+                'label' => 'Please enter your full name',
             ])
             ->add('phone', TextType::class, [
-                'label' => 'Please enter your phone'
+                'label' => 'Please enter your phone',
             ])
             ->add('address', TextType::class, [
-                'label' => 'Please enter your address'
+                'label' => 'Please enter your address',
             ])
             ->add('zipcode', IntegerType::class, [
-                'label' => 'Please enter your zipcode'
+                'label' => 'Please enter your zipcode',
             ])
         ;
     }

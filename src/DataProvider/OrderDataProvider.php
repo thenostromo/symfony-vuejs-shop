@@ -13,7 +13,7 @@ class OrderDataProvider
             Order::STATUS_PROCESSED => 'Processing',
             Order::STATUS_COMPLECTED => 'Complected',
             Order::STATUS_DELIVERED => 'Delivered',
-            Order::STATUS_DENIED => 'Denied'
+            Order::STATUS_DENIED => 'Denied',
         ];
     }
 }

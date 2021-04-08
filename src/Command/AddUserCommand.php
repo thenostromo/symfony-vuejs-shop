@@ -10,7 +10,6 @@ use Symfony\Component\Console\Command\Command;
 use Symfony\Component\Console\Exception\RuntimeException;
 use Symfony\Component\Console\Input\InputArgument;
 use Symfony\Component\Console\Input\InputInterface;
-use Symfony\Component\Console\Input\InputOption;
 use Symfony\Component\Console\Output\OutputInterface;
 use Symfony\Component\Console\Style\SymfonyStyle;
 use Symfony\Component\Security\Core\Encoder\UserPasswordEncoderInterface;
@@ -50,12 +49,12 @@ class AddUserCommand extends Command
             ->setDescription('Create user')
             ->addArgument('password', InputArgument::OPTIONAL, 'Password')
             ->addArgument('email', InputArgument::OPTIONAL, 'Email')
-            ->addArgument('isAdmin',  InputArgument::OPTIONAL, 'If set, the user is created as an administrator')
+            ->addArgument('isAdmin', InputArgument::OPTIONAL, 'If set, the user is created as an administrator')
         ;
     }
 
     /**
-     * @param InputInterface $input
+     * @param InputInterface  $input
      * @param OutputInterface $output
      */
     protected function initialize(InputInterface $input, OutputInterface $output): void

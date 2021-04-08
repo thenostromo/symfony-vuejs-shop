@@ -9,6 +9,7 @@ class OAuthUserProvider implements OAuthAwareUserProviderInterface
 {
     public function loadUserByOAuthUserResponse(UserResponseInterface $response)
     {
-        dump($response);exit();
+        dump($response);
+        exit();
     }
 }

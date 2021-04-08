@@ -38,7 +38,7 @@ class CartController extends AbstractController
         if (!$promoCode) {
             return new JsonResponse([
                 'success' => false,
-                'data' => []
+                'data' => [],
             ]);
         }
 
@@ -47,7 +47,7 @@ class CartController extends AbstractController
 
         return new JsonResponse([
             'success' => true,
-            'data' => $promoCodeModel
+            'data' => $promoCodeModel,
         ]);
     }
 
@@ -60,7 +60,7 @@ class CartController extends AbstractController
         if (!$user) {
             return new JsonResponse([
                 'status' => 0,
-                'message' => 'You are not authorized'
+                'message' => 'You are not authorized',
             ]);
         }
 
@@ -68,7 +68,7 @@ class CartController extends AbstractController
         if (!$cartJson) {
             return new JsonResponse([
                 'status' => 0,
-                'message' => 'You cart is empty, check your order again, please'
+                'message' => 'You cart is empty, check your order again, please',
             ]);
         }
 
@@ -87,7 +87,7 @@ class CartController extends AbstractController
                 $product = $entityManager->getRepository(Product::class)->findOneBy([
                     'id' => $cartItem['id'],
                     'isHidden' => false,
-                    'isDeleted' => false
+                    'isDeleted' => false,
                 ]);
                 if (!$product) {
                     continue;
@@ -118,7 +118,7 @@ class CartController extends AbstractController
 
         return new JsonResponse([
             'status' => 1,
-            'message' => 'Thank you for your purchase!'
+            'message' => 'Thank you for your purchase!',
         ]);
     }
 }

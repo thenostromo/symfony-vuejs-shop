@@ -7,7 +7,6 @@ use App\Entity\Category;
 use App\Entity\Order;
 use App\Entity\OrderProduct;
 use App\Form\Admin\OrderEditFormType;
-use App\Form\CategoryEditFormType;
 use App\Repository\CategoryRepository;
 use App\Repository\OrderProductRepository;
 use App\Repository\OrderRepository;
@@ -32,7 +31,7 @@ class OrderController extends AbstractController
 
         return $this->render('admin/order/list.html.twig', [
             'orderList' => $orderList,
-            'statusList' => OrderDataProvider::getStatusList()
+            'statusList' => OrderDataProvider::getStatusList(),
         ]);
     }
 
@@ -53,7 +52,7 @@ class OrderController extends AbstractController
         foreach ($categories as $category) {
             $categoryModels[] = [
                 'id' => $category->getId(),
-                'title' => $category->getTitle()
+                'title' => $category->getTitle(),
             ];
         }
 
@@ -89,7 +88,7 @@ class OrderController extends AbstractController
         return $this->render('admin/order/edit.html.twig', [
             'order' => $order,
             'form' => $form->createView(),
-            'categories' => $categoryModels
+            'categories' => $categoryModels,
         ]);
     }
 
@@ -103,6 +102,7 @@ class OrderController extends AbstractController
             $entityManager->remove($order);
             $entityManager->flush();
         }
+
         return $this->redirectToRoute('admin_order_list');
     }
 
@@ -132,7 +132,7 @@ class OrderController extends AbstractController
 
         return new JsonResponse([
             'success' => true,
-            'data' => []
+            'data' => [],
         ]);
     }
 
@@ -154,7 +154,7 @@ class OrderController extends AbstractController
 
         return new JsonResponse([
             'success' => true,
-            'data' => []
+            'data' => [],
         ]);
     }
 
@@ -175,7 +175,7 @@ class OrderController extends AbstractController
                 'id' => $orderProduct->getId(),
                 'category' => [
                     'id' => $product->getCategory()->getId(),
-                    'title' => $product->getCategory()->getTitle()
+                    'title' => $product->getCategory()->getTitle(),
                 ],
                 'title' => sprintf(
                     '#%s %s / P: %s$ / Q: %s',
@@ -185,13 +185,13 @@ class OrderController extends AbstractController
                     $product->getQuantity()
                 ),
                 'pricePerOne' => $orderProduct->getPricePerOne(),
-                'quantity' => $orderProduct->getQuantity()
+                'quantity' => $orderProduct->getQuantity(),
             ];
         }
 
         return new JsonResponse([
             'success' => true,
-            'data' => $data
+            'data' => $data,
         ]);
     }
 }

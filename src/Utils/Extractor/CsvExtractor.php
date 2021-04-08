@@ -7,6 +7,7 @@ class CsvExtractor extends FileExtractor
     /**
      * @param string $fileName
      * @param string $targetDir
+     *
      * @return array
      */
     public function getFormattedContent(string $fileName, string $targetDir): array

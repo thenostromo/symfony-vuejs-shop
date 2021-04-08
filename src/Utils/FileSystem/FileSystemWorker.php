@@ -18,6 +18,7 @@ class FileSystemWorker
 
     /**
      * @param string $folder
+     *
      * @return string
      */
     public function createFolderIfNotExist(string $folder)
@@ -29,6 +30,7 @@ class FileSystemWorker
 
     /**
      * @param string $item
+     *
      * @return string
      */
     public function remove(string $item)

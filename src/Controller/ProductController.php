@@ -7,7 +7,6 @@ use App\Entity\Product;
 use App\Entity\ProductImage;
 use App\Repository\CategoryRepository;
 use App\Repository\ProductRepository;
-use App\Repository\PromoCodeRepository;
 use Symfony\Bundle\FrameworkBundle\Controller\AbstractController;
 use Symfony\Component\HttpFoundation\JsonResponse;
 use Symfony\Component\HttpFoundation\Request;
@@ -37,14 +36,14 @@ class ProductController extends AbstractController
             'category' => [
                 'id' => $product->getCategory()->getId(),
                 'title' => $product->getCategory()->getTitle(),
-                'slug' => $product->getCategory()->getSlug()
-            ]
+                'slug' => $product->getCategory()->getSlug(),
+            ],
         ];
 
         return $this->render('product/show.html.twig', [
             'product' => $product,
             'productSizeChoice' => ProductDataProvider::getSizeList(),
-            'productModel' => $productModel
+            'productModel' => $productModel,
         ]);
     }
 
@@ -57,12 +56,12 @@ class ProductController extends AbstractController
         $category = $categoryRepository->find($categoryId);
         $countOfProducts = $productRepository->getCountByCategory($category);
         $data = [
-            'count' => $countOfProducts
+            'count' => $countOfProducts,
         ];
 
         return new JsonResponse([
             'success' => true,
-            'data' => $data
+            'data' => $data,
         ]);
     }
 
@@ -84,15 +83,15 @@ class ProductController extends AbstractController
 
             $productModel = [
                 'id' => $product->getId(),
-                'title' => str_replace("'", "", $product->getTitle()),
+                'title' => str_replace("'", '', $product->getTitle()),
                 'price' => $product->getPrice(),
                 'quantity' => $product->getQuantity(),
                 'images' => [],
                 'category' => [
                     'id' => $product->getCategory()->getId(),
                     'title' => $product->getCategory()->getTitle(),
-                    'slug' => $product->getCategory()->getSlug()
-                ]
+                    'slug' => $product->getCategory()->getSlug(),
+                ],
             ];
 
             /** @var ProductImage $image */
@@ -101,7 +100,7 @@ class ProductController extends AbstractController
                     'id' => $image->getId(),
                     'filenameBig' => $image->getFilenameBig(),
                     'filenameMiddle' => $image->getFilenameMiddle(),
-                    'filenameSmall' => $image->getFilenameSmall()
+                    'filenameSmall' => $image->getFilenameSmall(),
                 ];
             }
 
@@ -110,7 +109,7 @@ class ProductController extends AbstractController
 
         return new JsonResponse([
             'success' => true,
-            'data' => $data
+            'data' => $data,
         ]);
     }
 }
