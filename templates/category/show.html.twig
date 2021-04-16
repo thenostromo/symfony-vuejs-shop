@@ -42,13 +42,12 @@
         if (typeof window.staticStore === 'undefined') {
             window.staticStore = {}
         }
-        window.staticStore.offset = 0
+        window.staticStore.page = 1
         window.staticStore.limit = 4
         window.staticStore.selectedCategory = JSON.parse('{{ categoryModel|json_encode|raw }}')
         window.staticStore.urlProductShow = "{{ path('product_show_blank') }}"
         window.staticStore.urlAssetImageProducts = "{{ asset('uploads/images/products') }}"
-        window.staticStore.urlGetCountOfProductsByCategory = "{{ path('product_get_count_of_products_by_category') }}"
-        window.staticStore.urlGetProductsByCategory = "{{ path('product_get_products_by_category') }}"
+        window.staticStore.urlGetProductsByCategory = "{{ path('api_products_get_collection') }}.jsonhal";
         window.staticStore.addProductToCart = addProductToCart
     </script>
     {{ encore_entry_script_tags('appMainCategoryShow') }}

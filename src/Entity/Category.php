@@ -11,7 +11,15 @@ use Gedmo\Mapping\Annotation as Gedmo;
 
 /**
  * @ORM\Entity(repositoryClass=CategoryRepository::class)
- * @ApiResource
+ * @ApiResource(
+ *     collectionOperations={"get"},
+ *     itemOperations={"get"},
+ *     order={"id"="DESC"},
+ *     attributes={
+ *          "pagination_items_per_page"=2,
+ *          "formats"={"jsonld", "json", "html", "jsonhal", "csv"={"text/csv"}}
+ *     }
+ * )
  */
 class Category
 {

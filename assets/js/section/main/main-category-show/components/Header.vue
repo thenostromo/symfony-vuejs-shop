@@ -2,7 +2,7 @@
   <div class="row">
     <div class="col-lg-12 mb-2" style="display: flex; align-items: center; justify-content: center; text-align: center">
       <div class="products-count" v-if="countOfProducts">
-        Showing <span>{{ currentCount }} of {{ countOfProducts }}</span> Products
+        Showing <span>{{ page }} of {{ countOfProducts }}</span> Products
       </div>
       <div class="page-title2">
         <a class="page-title">{{ category.title }}</a>
@@ -24,7 +24,7 @@ import {mapGetters, mapState} from "vuex";
 
 export default {
   computed: {
-    ...mapState('category', ['countOfProducts']),
+    ...mapState('category', ['page', 'countOfProducts']),
     ...mapGetters('category', ['category', 'currentCount']),
   }
 };
