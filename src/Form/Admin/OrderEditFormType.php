@@ -6,6 +6,7 @@ use App\DataProvider\OrderDataProvider;
 use App\Entity\Order;
 use App\Entity\PromoCode;
 use App\Entity\User;
+use App\Form\DTO\OrderEditModel;
 use App\Repository\PromoCodeRepository;
 use Symfony\Bridge\Doctrine\Form\Type\EntityType;
 use Symfony\Component\Form\AbstractType;
@@ -72,7 +73,7 @@ class OrderEditFormType extends AbstractType
     public function configureOptions(OptionsResolver $resolver)
     {
         $resolver->setDefaults([
-            'data_class' => Order::class,
+            'data_class' => OrderEditModel::class,
         ]);
     }
 }

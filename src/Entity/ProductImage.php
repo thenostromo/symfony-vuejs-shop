@@ -2,10 +2,16 @@
 
 namespace App\Entity;
 
+use ApiPlatform\Core\Annotation\ApiResource;
 use App\Repository\ProductImageRepository;
 use Doctrine\ORM\Mapping as ORM;
+use Symfony\Component\Serializer\Annotation\Groups;
 
 /**
+ * @ApiResource(
+ *     collectionOperations={"get"={"normalization_context"={"groups"="product_image:list"}}},
+ *     itemOperations={"get"={"normalization_context"={"groups"="product:item"}}},
+ * )
  * @ORM\Entity(repositoryClass=ProductImageRepository::class)
  */
 class ProductImage
@@ -25,16 +31,19 @@ class ProductImage
 
     /**
      * @ORM\Column(type="string", length=255)
+     * @Groups({"product:list", "product:item"})
      */
     private $filenameBig;
 
     /**
      * @ORM\Column(type="string", length=255)
+     * @Groups({"product:list", "product:item"})
      */
     private $filenameMiddle;
 
     /**
      * @ORM\Column(type="string", length=255)
+     * @Groups({"product:list", "product:item"})
      */
     private $filenameSmall;
 

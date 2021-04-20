@@ -5,6 +5,8 @@ namespace App\Form;
 use App\DataProvider\ProductDataProvider;
 use App\Entity\Category;
 use App\Entity\Product;
+use App\Form\DTO\CategoryEditModel;
+use App\Form\DTO\ProductEditModel;
 use Symfony\Bridge\Doctrine\Form\Type\EntityType;
 use Symfony\Component\Form\AbstractType;
 use Symfony\Component\Form\Extension\Core\Type\CheckboxType;
@@ -31,9 +33,6 @@ class ProductEditFormType extends AbstractType
                 'attr' => [
                     'class' => 'form-control',
                 ],
-                'constraints' => [
-                    new NotBlank(),
-                ],
             ])
             ->add('price', NumberType::class, [
                 'label' => 'Price',
@@ -45,26 +44,12 @@ class ProductEditFormType extends AbstractType
                     'min' => '0',
                     'step' => '0.01',
                 ],
-                'constraints' => [
-                    new NotBlank(),
-                    new GreaterThanOrEqual(0),
-                ],
             ])
             ->add('newImage', FileType::class, [
                 'label' => 'Choose new image',
-                'mapped' => false,
                 'required' => false,
                 'attr' => [
                     'class' => 'form-control-file',
-                ],
-                'constraints' => [
-                    new File([
-                        'mimeTypes' => [
-                            'image/jpeg',
-                            'image/png',
-                        ],
-                        'mimeTypesMessage' => 'Please upload an image',
-                    ]),
                 ],
             ])
             ->add('quantity', IntegerType::class, [
@@ -73,12 +58,9 @@ class ProductEditFormType extends AbstractType
                 'attr' => [
                     'class' => 'form-control',
                 ],
-                'constraints' => [
-                    new NotBlank(),
-                ],
             ])
-            ->add('isHidden', CheckboxType::class, [
-                'label' => 'Is hidden',
+            ->add('isPublished', CheckboxType::class, [
+                'label' => 'Is published',
                 'required' => false,
                 'label_attr' => [
                     'class' => 'form-check-label',
@@ -104,9 +86,6 @@ class ProductEditFormType extends AbstractType
                     'class' => 'form-control',
                     'style' => 'overflow: hidden;',
                 ],
-                'constraints' => [
-                    new NotBlank(),
-                ],
             ])
             ->add('size', ChoiceType::class, [
                 'label' => 'Size',
@@ -114,9 +93,6 @@ class ProductEditFormType extends AbstractType
                 'choices' => array_flip(ProductDataProvider::getSizeList()),
                 'attr' => [
                     'class' => 'form-control',
-                ],
-                'constraints' => [
-                    new NotBlank(),
                 ],
             ])
             ->add('category', EntityType::class, [
@@ -127,9 +103,6 @@ class ProductEditFormType extends AbstractType
                 'attr' => [
                     'class' => 'form-control',
                 ],
-                'constraints' => [
-                    new NotBlank(),
-                ],
             ])
         ;
     }
@@ -137,7 +110,7 @@ class ProductEditFormType extends AbstractType
     public function configureOptions(OptionsResolver $resolver)
     {
         $resolver->setDefaults([
-            'data_class' => Product::class,
+            'data_class' => ProductEditModel::class,
         ]);
     }
 }

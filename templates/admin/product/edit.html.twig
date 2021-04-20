@@ -102,10 +102,10 @@
                 <div class="form-group row">
                     <div class="col-md-1"></div>
                     <div class="col-md-11 pl-5">
-                        {{ form_widget(form.isHidden) }}
-                        {{ form_label(form.isHidden) }}
+                        {{ form_widget(form.isPublished) }}
+                        {{ form_label(form.isPublished) }}
                         <div class="form-error">
-                            {{ form_errors(form.isHidden) }}
+                            {{ form_errors(form.isPublished) }}
                         </div>
                     </div>
                 </div>
@@ -128,26 +128,27 @@
                         </div>
                     </div>
 
-                    <div class="row">
-                        <div class="col-md-12" style="display: flex;">
-                            {% for image in images %}
-                                <div style="padding: 15px; text-align: center">
-                                    <img src="{{ asset('uploads/images/products/' ~ product.id ~ '/' ~ image.filenameMiddle) }}" alt="{{ image.filenameMiddle }}">
-                                    <a href="{{ path('admin_product_image_delete', {
-                                        'id': image.id
-                                    }) }}" class="btn btn-outline-info">
-                                        DELETE
-                                    </a>
-                                </div>
-                            {% endfor %}
+                    {% for image in images %}
+                        <div class="row mt-2">
+                            <div class="col-md-5">
+                                <img src="{{ asset('uploads/images/products/' ~ product.id ~ '/' ~ image.filenameMiddle) }}" alt="{{ image.filenameMiddle }}">
+                            </div>
+                            <div class="col-md-7 pl-5">
+                                <a href="{{ path('admin_product_image_delete', {
+                                    'id': image.id
+                                }) }}" class="btn btn-outline-info">
+                                    DELETE
+                                </a>
+                            </div>
                         </div>
-                    </div>
+                    {% endfor %}
 
                 {% endif %}
 
                 <hr/>
                 {% include 'admin/embed/card/_form_buttons.html.twig' with {
-                    'entity': product
+                    'entity': product,
+                    'catalogRoute': path('admin_product_list')
                 }  %}
                 {{ form_rest(form) }}
                 {{ form_end(form) }}
@@ -156,7 +157,7 @@
 
     </div>
 
-    {% if product.id %}
+    {% if product %}
         {% include 'admin/embed/utils/_modal.html.twig' with {
             'id': 'approveDeleteModal',
             'title': 'Are you sure?',

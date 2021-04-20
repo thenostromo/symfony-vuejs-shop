@@ -3,6 +3,7 @@
 namespace App\Form\Admin;
 
 use App\Entity\PromoCode;
+use App\Form\DTO\PromoCodeEditModel;
 use Symfony\Component\Form\AbstractType;
 use Symfony\Component\Form\Extension\Core\Type\CheckboxType;
 use Symfony\Component\Form\Extension\Core\Type\DateTimeType;
@@ -33,7 +34,7 @@ class PromoCodeEditFormType extends AbstractType
             ])
             ->add('uses', IntegerType::class, [
                 'label' => 'Uses',
-                'required' => false,
+                'required' => true,
                 'attr' => [
                     'class' => 'form-control',
                 ],
@@ -58,24 +59,14 @@ class PromoCodeEditFormType extends AbstractType
                 'time_widget' => 'single_text',
                 'required' => true,
             ])
-            ->add('isHidden', CheckboxType::class, [
-                'label' => 'Is hidden',
+            ->add('isActive', CheckboxType::class, [
+                'label' => 'Is active',
                 'required' => false,
                 'attr' => [
                     'class' => 'form-check-input',
                 ],
                 'label_attr' => [
                     'class' => 'form-check-label',
-                ],
-            ])
-            ->add('isDeleted', CheckboxType::class, [
-                'label' => 'Is deleted',
-                'required' => false,
-                'label_attr' => [
-                    'class' => 'form-check-label',
-                ],
-                'attr' => [
-                    'class' => 'form-check-input',
                 ],
             ])
         ;
@@ -84,7 +75,7 @@ class PromoCodeEditFormType extends AbstractType
     public function configureOptions(OptionsResolver $resolver)
     {
         $resolver->setDefaults([
-            'data_class' => PromoCode::class,
+            'data_class' => PromoCodeEditModel::class,
         ]);
     }
 }

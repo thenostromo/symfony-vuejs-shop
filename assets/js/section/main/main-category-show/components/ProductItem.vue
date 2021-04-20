@@ -5,10 +5,10 @@
         <span class="product-sale-status sale-status-new">New</span>
         <a :href="getUrlProductShow(product.id)">
           <img
-              v-for="image in product.images"
-              :src="getUrlProductImage(product, image)"
+              v-if="productImage"
+              :src="getUrlProductImage(product, productImage)"
               :alt="product.title"
-              :class="product-image"
+              :class="'product-image'"
           >
         </a>
 
@@ -37,6 +37,15 @@ import {mapGetters} from "vuex";
 export default {
   computed: {
     ...mapGetters('category', ['urlProductShow', 'getUrlAssetImageProducts']),
+    productImage() {
+      let productImages = []
+
+      if (this.product._embedded && this.product._embedded.productImages) {
+        productImages = this.product._embedded.productImages
+      }
+
+      return productImages.length ? productImages[0] : null
+    }
   },
   props: ['product'],
   methods: {

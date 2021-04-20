@@ -98,7 +98,8 @@
                     </div>
                     <hr/>
                     {% include 'admin/embed/card/_form_buttons.html.twig' with {
-                        'entity': user
+                        'entity': user,
+                        'catalogRoute': path('admin_user_list')
                     }  %}
                 {{ form_end(form) }}
             </div>

@@ -30,11 +30,10 @@ export default {
     ...mapState('category', ['isLoading'])
   },
   mounted() {
-    this.getCountOfProductsByCategory()
     this.getProductsByCategory()
   },
   methods: {
-    ...mapActions('category', ['getCountOfProductsByCategory', 'getProductsByCategory'])
+    ...mapActions('category', ['getProductsByCategory'])
   }
 };
 </script>

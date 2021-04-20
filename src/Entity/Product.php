@@ -2,7 +2,10 @@
 
 namespace App\Entity;
 
+use ApiPlatform\Core\Annotation\ApiFilter;
 use ApiPlatform\Core\Annotation\ApiResource;
+use ApiPlatform\Core\Bridge\Doctrine\Orm\Filter\BooleanFilter;
+use ApiPlatform\Core\Bridge\Doctrine\Orm\Filter\SearchFilter;
 use App\Repository\ProductRepository;
 use Doctrine\Common\Collections\ArrayCollection;
 use Doctrine\Common\Collections\Collection;
@@ -10,14 +13,25 @@ use Doctrine\ORM\Mapping as ORM;
 use Symfony\Component\Serializer\Annotation\Groups;
 
 /**
- * @ORM\Entity(repositoryClass=ProductRepository::class)
- *
  * @ApiResource(
  *     collectionOperations={"get"={"normalization_context"={"groups"="product:list"}}},
  *     itemOperations={"get"={"normalization_context"={"groups"="product:item"}}},
- *     order={"id"="DESC", "price"="ASC"},
- *     paginationEnabled=false
+ *     order={
+ *         "id"="DESC",
+ *         "price"="ASC"
+ *     },
+ *     attributes={
+ *          "pagination_client_items_per_page"=true,
+ *          "formats"={"jsonld", "json", "html", "jsonhal"}
+ *     },
+ *     paginationEnabled=true
  * )
+ * @ApiFilter(BooleanFilter::class, properties={"isHidden", "isDeleted"})
+ * @ApiFilter(SearchFilter::class, properties={
+ *     "category": "exact",
+ *     "category.id": "partial"
+ * })
+ * @ORM\Entity(repositoryClass=ProductRepository::class)
  */
 class Product
 {
@@ -46,26 +60,29 @@ class Product
 
     /**
      * @ORM\Column(type="integer")
+     *
+     * @Groups({"product:list", "product:item"})
      */
     private $quantity;
 
     /**
      * @ORM\Column(type="datetime")
+     *
+     * @Groups({"product:list", "product:item"})
      */
     private $createdAt;
 
     /**
      * @ORM\Column(type="text", nullable=true)
+     *
+     * @Groups({"product:list", "product:item"})
      */
     private $description;
 
     /**
-     * @ORM\Column(type="decimal", precision=3, scale=2, nullable=true)
-     */
-    private $rating;
-
-    /**
      * @ORM\Column(type="string", length=3, nullable=true)
+     *
+     * @Groups({"product:list", "product:item"})
      */
     private $size;
 
@@ -76,13 +93,14 @@ class Product
 
     /**
      * @ORM\ManyToOne(targetEntity=Category::class, inversedBy="products")
+     * @Groups({"product:list", "product:item"})
      */
     private $category;
 
     /**
      * @ORM\Column(type="boolean")
      */
-    private $isHidden;
+    private $isPublished;
 
     /**
      * @ORM\Column(type="boolean")
@@ -96,6 +114,8 @@ class Product
 
     /**
      * @ORM\OneToMany(targetEntity=ProductImage::class, mappedBy="product", orphanRemoval=true)
+     *
+     * @Groups({"product:list", "product:item"})
      */
     private $productImages;
 
@@ -113,7 +133,7 @@ class Product
     {
         $this->createdAt = new \DateTimeImmutable();
         $this->orders = new ArrayCollection();
-        $this->isHidden = false;
+        $this->isPublished = false;
         $this->isDeleted = false;
         $this->saleCollections = new ArrayCollection();
         $this->productImages = new ArrayCollection();
@@ -186,18 +206,6 @@ class Product
         return $this;
     }
 
-    public function getRating(): ?string
-    {
-        return $this->rating;
-    }
-
-    public function setRating(?string $rating): self
-    {
-        $this->rating = $rating;
-
-        return $this;
-    }
-
     public function getSize(): ?string
     {
         return $this->size;
@@ -249,14 +257,14 @@ class Product
         return $this;
     }
 
-    public function getIsHidden(): ?bool
+    public function getIsPublished(): ?bool
     {
-        return $this->isHidden;
+        return $this->isPublished;
     }
 
-    public function setIsHidden(bool $isHidden): self
+    public function setIsPublished(bool $isPublished): self
     {
-        $this->isHidden = $isHidden;
+        $this->isPublished = $isPublished;
 
         return $this;
     }

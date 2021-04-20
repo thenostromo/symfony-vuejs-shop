@@ -19,30 +19,33 @@
             </div>
             <div class="card-body">
                 {{ form_start(form) }}
-                <div class="form-group row">
-                    <div class="col-md-1">
-                        Id:
+                {% if order %}
+                    <div class="form-group row">
+                        <div class="col-md-1">
+                            Id:
+                        </div>
+                        <div class="col-md-11">
+                            {{ order.id }}
+                        </div>
                     </div>
-                    <div class="col-md-11">
-                        {{ order.id }}
+                    <div class="form-group row">
+                        <div class="col-md-1">
+                            Created at:
+                        </div>
+                        <div class="col-md-11">
+                            {{ order.createdAt|date('H:i:s d/m/Y') }}
+                        </div>
                     </div>
-                </div>
-                <div class="form-group row">
-                    <div class="col-md-1">
-                        Created at:
+                    <div class="form-group row">
+                        <div class="col-md-1">
+                            Changed at:
+                        </div>
+                        <div class="col-md-11">
+                            {{ order.changedAt|date('H:i:s d/m/Y') }}
+                        </div>
                     </div>
-                    <div class="col-md-11">
-                        {{ order.createdAt|date('H:i:s d/m/Y') }}
-                    </div>
-                </div>
-                <div class="form-group row">
-                    <div class="col-md-1">
-                        Changed at:
-                    </div>
-                    <div class="col-md-11">
-                        {{ order.changedAt|date('H:i:s d/m/Y') }}
-                    </div>
-                </div>
+                {% endif %}
+
                 <div class="form-group row">
                     <div class="col-md-1">
                         {{ form_label(form.owner) }}
@@ -76,32 +79,34 @@
                         </div>
                     </div>
                 </div>
-                <div class="form-group row">
-                    <div class="col-md-1"></div>
-                    <div class="col-md-11 pl-5">
-                        {% if order.id %}
+
+                {% if order %}
+                    <div class="form-group row">
+                        <div class="col-md-1"></div>
+                        <div class="col-md-11 pl-5">
                             <div id="app">
                                 <app></app>
                             </div>
-                        {% else %}
-                            <div class="alert alert-info">
-                                To add the product, save your changes.
-                            </div>
-                        {% endif %}
+                        </div>
+                    </div>
+                    <div class="form-group row">
+                        <div class="col-md-1 font-weight-bold">
+                            Total price:
+                        </div>
+                        <div class="col-md-11 font-weight-bold">
+                            ${{ order.totalPrice }}
+                        </div>
+                    </div>
+                {% else %}
+                    <div class="alert alert-info">
+                        To add the products, save your changes.
+                    </div>
+                {% endif %}
 
-                    </div>
-                </div>
-                <div class="form-group row">
-                    <div class="col-md-1 font-weight-bold">
-                        Total price:
-                    </div>
-                    <div class="col-md-11 font-weight-bold">
-                        ${{ order.totalPrice }}
-                    </div>
-                </div>
                 <hr/>
                 {% include 'admin/embed/card/_form_buttons.html.twig' with {
-                    'entity': order
+                    'entity': order,
+                    'catalogRoute': path('admin_order_list')
                 }  %}
                 {{ form_rest(form) }}
                 {{ form_end(form) }}
@@ -110,7 +115,7 @@
 
     </div>
 
-    {% if order.id %}
+    {% if order %}
         {% include 'admin/embed/utils/_modal.html.twig' with {
             'id': 'approveDeleteModal',
             'title': 'Are you sure?',
@@ -123,14 +128,16 @@
 
 {% block javascripts %}
     <script>
-        window.staticStore = {}
-        window.staticStore.categories = JSON.parse('{{ categories|json_encode|raw }}')
-        window.staticStore.orderId = "{{ order.id }}"
-        window.staticStore.urlProductView = "{{ path('admin_product_edit_blank') }}"
-        window.staticStore.urlGetProductsByCategory = "{{ path('product_get_products_by_category') }}"
-        window.staticStore.urlGetProductsByOrder = "{{ path('admin_order_add_products_by_order') }}"
-        window.staticStore.urlAddProductToOrder = "{{ path('admin_order_add_product_to_order') }}"
-        window.staticStore.urlRemoveProductFromOrder = "{{ path('admin_order_remove_product_from_order') }}"
+        {% if order %}
+            window.staticStore = {}
+            window.staticStore.categories = JSON.parse('{{ categories|json_encode|raw }}')
+            window.staticStore.orderId = "{{ order.id }}"
+            window.staticStore.urlProductView = "{{ path('admin_product_edit_blank') }}"
+            window.staticStore.urlGetProductsByCategory = "{{ path('product_get_products_by_category') }}"
+            window.staticStore.urlGetProductsByOrder = "{{ path('admin_order_add_products_by_order') }}"
+            window.staticStore.urlAddProductToOrder = "{{ path('admin_order_add_product_to_order') }}"
+            window.staticStore.urlRemoveProductFromOrder = "{{ path('admin_order_remove_product_from_order') }}"
+        {% endif %}
     </script>
     {{ encore_entry_script_tags('appAdminOrder') }}
 {% endblock %}

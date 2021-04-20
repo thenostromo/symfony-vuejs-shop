@@ -1,11 +1,12 @@
 const axios = require('axios');
+import {StatusCodes} from "http-status-codes";
 
 const state = () => ({
     categoryProducts: [],
     countOfProducts: 0,
     products: window.staticStore.products,
     staticStore: window.staticStore,
-    offset: window.staticStore.offset,
+    page: window.staticStore.page,
     limit: window.staticStore.limit,
     isLoading: true
 })
@@ -34,31 +35,21 @@ const getters = {
     },
     urlGetProductsByCategory(state) {
         return state.staticStore.urlGetProductsByCategory
-    },
-    urlGetCountOfProductsByCategory(state) {
-        return state.staticStore.urlGetCountOfProductsByCategory
     }
 }
 
 const actions = {
-    async getCountOfProductsByCategory({ commit, getters }) {
-        let data = new FormData();
-        data.append("categoryId", getters.selectedCategory.id);
-        const result = await axios.post(getters.urlGetCountOfProductsByCategory, data)
-
-        if (result.data.success) {
-            commit('setCountOfProductsByCategory', result.data.data.count)
-        }
-    },
     async getProductsByCategory({ commit, getters, state }) {
-        let data = new FormData();
-        data.append("categoryId", getters.selectedCategory.id);
-        data.append("offset", state.offset)
-        data.append("limit", state.limit)
-        const result = await axios.post(getters.urlGetProductsByCategory, data)
-
-        if (result.data.success) {
-            commit('setCategoryProducts', result.data.data)
+        const url = getters.urlGetProductsByCategory
+            + "?category=api/products/"
+            + getters.selectedCategory.id
+            + "&page=" + state.page
+            + "&itemsPerPage=" + state.limit
+            + "&isHidden=0&isDeleted=0";
+        const result = await axios.get(url)
+        if (result.data && result.status === StatusCodes.OK) {
+            commit('setCountOfProductsByCategory', result.data.totalItems)
+            commit('setCategoryProducts', result.data._embedded.item)
         }
 
         commit('setIsLoading', false)

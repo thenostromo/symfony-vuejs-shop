@@ -3,10 +3,12 @@
 namespace App\Controller\Admin;
 
 use App\Entity\Product;
+use App\Form\DTO\ProductEditModel;
+use App\Form\Handler\ProductFormHandler;
 use App\Form\ProductEditFormType;
 use App\Repository\ProductRepository;
 use App\Utils\File\FileSaver;
-use App\Utils\Product\ProductManager;
+use App\Utils\Manager\ProductManager;
 use Symfony\Bundle\FrameworkBundle\Controller\AbstractController;
 use Symfony\Component\HttpFoundation\File\UploadedFile;
 use Symfony\Component\HttpFoundation\Request;
@@ -35,38 +37,20 @@ class ProductController extends AbstractController
      * @Route("/edit", name="edit_blank")
      * @Route("/add", name="add")
      */
-    public function edit(Request $request, FileSaver $fileSaver, ProductManager $productManager, Product $product = null): Response
+    public function edit(Request $request, ProductFormHandler $productFormHandler, Product $product = null): Response
     {
-        if (!$product) {
-            $product = new Product();
-        }
+        $productEditModel = ProductEditModel::makeFromProduct($product);
 
-        if ($product->getIsDeleted()) {
-            return $this->redirectToRoute('admin_product_list');
-        }
-
-        $form = $this->createForm(ProductEditFormType::class, $product);
+        $form = $this->createForm(ProductEditFormType::class, $productEditModel);
         $form->handleRequest($request);
 
         if ($form->isSubmitted() && $form->isValid()) {
-            $entityManager = $this->getDoctrine()->getManager();
-            $entityManager->persist($product);
-
-            /** @var UploadedFile $newImageFile */
-            $newImageFile = $form->get('newImage')->getData();
-
-            $newImageFileName = $newImageFile
-                ? $fileSaver->saveUploadedFileIntoTemp($newImageFile)
-                : null;
-
-            $product = $productManager->updateProductImages($product, $newImageFileName);
-
-            $entityManager->flush();
+            $product = $productFormHandler->processProductEditForm($productEditModel);
 
             return $this->redirectToRoute('admin_product_edit', ['id' => $product->getId()]);
         }
 
-        $images = $product->getProductImages()->getValues();
+        $images = $product ? $product->getProductImages()->getValues() : [];
 
         return $this->render('admin/product/edit.html.twig', [
             'product' => $product,
@@ -78,13 +62,9 @@ class ProductController extends AbstractController
     /**
      * @Route("/delete/{id}", name="delete")
      */
-    public function delete(Product $product): Response
+    public function delete(Product $product, ProductManager $productManager): Response
     {
-        if ($product) {
-            $entityManager = $this->getDoctrine()->getManager();
-            $entityManager->remove($product);
-            $entityManager->flush();
-        }
+        $productManager->remove($product);
 
         return $this->redirectToRoute('admin_product_list');
     }

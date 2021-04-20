@@ -4,7 +4,10 @@ namespace App\Controller\Admin;
 
 use App\Entity\PromoCode;
 use App\Form\Admin\PromoCodeEditFormType;
+use App\Form\DTO\PromoCodeEditModel;
+use App\Form\Handler\PromoCodeFormHandler;
 use App\Repository\PromoCodeRepository;
+use App\Utils\Manager\PromoCodeManager;
 use Symfony\Bundle\FrameworkBundle\Controller\AbstractController;
 use Symfony\Component\HttpFoundation\Request;
 use Symfony\Component\HttpFoundation\Response;
@@ -31,25 +34,17 @@ class PromoCodeController extends AbstractController
      * @Route("/edit/{id}", name="edit")
      * @Route("/add", name="add")
      */
-    public function edit(Request $request, PromoCode $promoCode = null): Response
+    public function edit(Request $request, PromoCodeFormHandler $promoCodeFormHandler, PromoCode $promoCode = null): Response
     {
-        if (!$promoCode) {
-            $promoCode = new PromoCode();
-        }
+        $promoCodeEditModel = PromoCodeEditModel::makeFromPromoCode($promoCode);
 
-        $form = $this->createForm(PromoCodeEditFormType::class, $promoCode);
+        $form = $this->createForm(PromoCodeEditFormType::class, $promoCodeEditModel);
         $form->handleRequest($request);
 
         if ($form->isSubmitted() && $form->isValid()) {
-            if (!$promoCode->getValue()) {
-                $promoCode->setValue(uniqid());
-            }
-            $promoCode->setValue(strtoupper($promoCode->getValue()));
-            $entityManager = $this->getDoctrine()->getManager();
-            $entityManager->persist($promoCode);
-            $entityManager->flush();
+            $promoCode = $promoCodeFormHandler->processPromoCodeEditForm($promoCodeEditModel);
 
-            return $this->redirectToRoute('admin_promo_code_list');
+            return $this->redirectToRoute('admin_promo_code_list', ['id' => $promoCode->getId()]);
         }
 
         return $this->render('admin/promo-code/edit.html.twig', [
@@ -61,13 +56,10 @@ class PromoCodeController extends AbstractController
     /**
      * @Route("/delete/{id}", name="delete")
      */
-    public function delete(PromoCode $promoCode): Response
+    public function delete(PromoCode $promoCode, PromoCodeManager $promoCodeManager): Response
     {
-        if ($promoCode) {
-            $entityManager = $this->getDoctrine()->getManager();
-            $entityManager->remove($promoCode);
-            $entityManager->flush();
-        }
+        $promoCode->setIsDeleted(true);
+        $promoCodeManager->save($promoCode);
 
         return $this->redirectToRoute('admin_promo_code_list');
     }

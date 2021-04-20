@@ -26,41 +26,10 @@
                             </div>
                         </div>
                     </div>
-                    <div class="form-group row">
-                        <div class="col-md-1">
-                            {{ form_label(form.titlePlural) }}
-                        </div>
-                        <div class="col-md-11">
-                            {{ form_widget(form.titlePlural) }}
-                            <div class="form-error">
-                                {{ form_errors(form.titlePlural) }}
-                            </div>
-                        </div>
-                    </div>
-                    <div class="form-group row">
-                        <div class="col-md-1"></div>
-                        <div class="col-md-11 pl-5">
-                            {{ form_widget(form.isHidden) }}
-                            {{ form_label(form.isHidden) }}
-                            <div class="form-error">
-                                {{ form_errors(form.isHidden) }}
-                            </div>
-                        </div>
-                    </div>
-
-                    <div class="form-group row">
-                        <div class="col-md-1"></div>
-                        <div class="col-md-11 pl-5">
-                            {{ form_widget(form.isDeleted) }}
-                            {{ form_label(form.isDeleted) }}
-                            <div class="form-error">
-                                {{ form_errors(form.isDeleted) }}
-                            </div>
-                        </div>
-                    </div>
                     <hr/>
                     {% include 'admin/embed/card/_form_buttons.html.twig' with {
-                        'entity': category
+                        'entity': category,
+                        'catalogRoute': path('admin_category_list')
                     }  %}
                 {{ form_rest(form) }}
                 {{ form_end(form) }}
@@ -69,7 +38,7 @@
 
     </div>
 
-    {% if category.id %}
+    {% if category %}
         {% include 'admin/embed/utils/_modal.html.twig' with {
             'id': 'approveDeleteModal',
             'title': 'Are you sure?',

@@ -11,7 +11,15 @@ use Gedmo\Mapping\Annotation as Gedmo;
 
 /**
  * @ORM\Entity(repositoryClass=CategoryRepository::class)
- * @ApiResource
+ * @ApiResource(
+ *     collectionOperations={"get"},
+ *     itemOperations={"get"},
+ *     order={"id"="DESC"},
+ *     attributes={
+ *          "pagination_items_per_page"=2,
+ *          "formats"={"jsonld", "json", "html", "jsonhal", "csv"={"text/csv"}}
+ *     }
+ * )
  */
 class Category
 {
@@ -38,26 +46,9 @@ class Category
      */
     private $products;
 
-    /**
-     * @ORM\Column(type="boolean")
-     */
-    private $isHidden;
-
-    /**
-     * @ORM\Column(type="boolean")
-     */
-    private $isDeleted;
-
-    /**
-     * @ORM\Column(type="string", length=255)
-     */
-    private $titlePlural;
-
     public function __construct()
     {
         $this->products = new ArrayCollection();
-        $this->isHidden = false;
-        $this->isDeleted = false;
     }
 
     public function getId(): ?int
@@ -70,15 +61,9 @@ class Category
         return $this->title;
     }
 
-    public function setTitle(string $titleRaw): self
+    public function setTitle(string $title): self
     {
-        $title = null;
-        if ($titleRaw) {
-            $title = ucfirst(strtolower($titleRaw));
-        }
-
         $this->title = $title;
-
         return $this;
     }
 
@@ -120,47 +105,6 @@ class Category
                 $product->setCategory(null);
             }
         }
-
-        return $this;
-    }
-
-    public function getIsHidden(): ?bool
-    {
-        return $this->isHidden;
-    }
-
-    public function setIsHidden(bool $isHidden): self
-    {
-        $this->isHidden = $isHidden;
-
-        return $this;
-    }
-
-    public function getIsDeleted(): ?bool
-    {
-        return $this->isDeleted;
-    }
-
-    public function setIsDeleted(bool $isDeleted): self
-    {
-        $this->isDeleted = $isDeleted;
-
-        return $this;
-    }
-
-    public function getTitlePlural(): ?string
-    {
-        return $this->titlePlural;
-    }
-
-    public function setTitlePlural(string $titlePluralRaw): self
-    {
-        $titlePlural = null;
-        if ($titlePluralRaw) {
-            $titlePlural = ucfirst(strtolower($titlePluralRaw));
-        }
-
-        $this->titlePlural = $titlePlural;
 
         return $this;
     }

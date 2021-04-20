@@ -114,6 +114,7 @@ class AddUserCommand extends Command
 
         $user = new User();
         $user->setEmail($email);
+        $user->setUsername($email);
         $user->setRoles([$isAdmin ? 'ROLE_ADMIN' : 'ROLE_USER']);
 
         $encodedPassword = $this->passwordEncoder->encodePassword($user, $plainPassword);

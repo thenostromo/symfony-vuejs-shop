@@ -18,10 +18,7 @@ class EmbedController extends AbstractController
      */
     public function menuCategories(CategoryRepository $categoryRepository, string $pageRoute = null, string $pageSlug = null): Response
     {
-        $categories = $categoryRepository->findBy([
-            'isHidden' => false,
-            'isDeleted' => false,
-        ], ['title' => 'ASC'], 5);
+        $categories = $categoryRepository->findBy([], ['title' => 'ASC'], 5);
 
         return $this->render('embed/_menu_categories.html.twig', [
             'categories' => $categories,
