@@ -48,11 +48,6 @@ class Order
     private $totalPrice;
 
     /**
-     * @ORM\Column(type="boolean")
-     */
-    private $isDeleted;
-
-    /**
      * @ORM\Column(type="datetime")
      */
     private $changedAt;
@@ -67,13 +62,18 @@ class Order
      */
     private $promoCode;
 
+    /**
+     * @ORM\Column(type="boolean")
+     */
+    private $isDeleted;
+
     public function __construct()
     {
         $this->createdAt = new \DateTimeImmutable();
         $this->status = self::STATUS_CREATED;
+        $this->isDeleted = false;
         $this->orderProducts = new ArrayCollection();
         $this->changedAt = new \DateTimeImmutable();
-        $this->isDeleted = false;
     }
 
     public function getId(): ?int
@@ -129,18 +129,6 @@ class Order
         return $this;
     }
 
-    public function getIsDeleted(): ?bool
-    {
-        return $this->isDeleted;
-    }
-
-    public function setIsDeleted(bool $isDeleted): self
-    {
-        $this->isDeleted = $isDeleted;
-
-        return $this;
-    }
-
     public function getChangedAt(): ?\DateTimeInterface
     {
         return $this->changedAt;
@@ -191,6 +179,18 @@ class Order
     public function setPromoCode(?PromoCode $promoCode): self
     {
         $this->promoCode = $promoCode;
+
+        return $this;
+    }
+
+    public function getIsDeleted(): ?bool
+    {
+        return $this->isDeleted;
+    }
+
+    public function setIsDeleted(bool $isDeleted): self
+    {
+        $this->isDeleted = $isDeleted;
 
         return $this;
     }

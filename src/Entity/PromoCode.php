@@ -40,16 +40,6 @@ class PromoCode
     private $discount;
 
     /**
-     * @ORM\Column(type="boolean")
-     */
-    private $isHidden;
-
-    /**
-     * @ORM\Column(type="boolean")
-     */
-    private $isDeleted;
-
-    /**
      * @ORM\Column(type="datetime")
      */
     private $createdAt;
@@ -69,10 +59,20 @@ class PromoCode
      */
     private $orders;
 
+    /**
+     * @ORM\Column(type="boolean")
+     */
+    private $isActive;
+
+    /**
+     * @ORM\Column(type="boolean")
+     */
+    private $isDeleted;
+
     public function __construct()
     {
         $this->createdAt = new \DateTime();
-        $this->isHidden = false;
+        $this->isActive = false;
         $this->isDeleted = false;
         $this->orders = new ArrayCollection();
     }
@@ -126,30 +126,6 @@ class PromoCode
     public function setDiscount(int $discount): self
     {
         $this->discount = $discount;
-
-        return $this;
-    }
-
-    public function getIsHidden(): ?bool
-    {
-        return $this->isHidden;
-    }
-
-    public function setIsHidden(bool $isHidden): self
-    {
-        $this->isHidden = $isHidden;
-
-        return $this;
-    }
-
-    public function getIsDeleted(): ?bool
-    {
-        return $this->isDeleted;
-    }
-
-    public function setIsDeleted(bool $isDeleted): self
-    {
-        $this->isDeleted = $isDeleted;
 
         return $this;
     }
@@ -216,6 +192,30 @@ class PromoCode
                 $order->setPromoCode(null);
             }
         }
+
+        return $this;
+    }
+
+    public function getIsActive(): ?bool
+    {
+        return $this->isActive;
+    }
+
+    public function setIsActive(bool $isActive): self
+    {
+        $this->isActive = $isActive;
+
+        return $this;
+    }
+
+    public function getIsDeleted(): ?bool
+    {
+        return $this->isDeleted;
+    }
+
+    public function setIsDeleted(bool $isDeleted): self
+    {
+        $this->isDeleted = $isDeleted;
 
         return $this;
     }

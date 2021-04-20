@@ -7,10 +7,13 @@ use App\Entity\Category;
 use App\Entity\Order;
 use App\Entity\OrderProduct;
 use App\Form\Admin\OrderEditFormType;
+use App\Form\DTO\OrderEditModel;
+use App\Form\Handler\OrderFormHandler;
 use App\Repository\CategoryRepository;
 use App\Repository\OrderProductRepository;
 use App\Repository\OrderRepository;
 use App\Repository\ProductRepository;
+use App\Utils\Manager\OrderManager;
 use Symfony\Bundle\FrameworkBundle\Controller\AbstractController;
 use Symfony\Component\HttpFoundation\JsonResponse;
 use Symfony\Component\HttpFoundation\Request;
@@ -39,11 +42,9 @@ class OrderController extends AbstractController
      * @Route("/edit/{id}", name="edit")
      * @Route("/add", name="add")
      */
-    public function edit(Request $request, CategoryRepository $categoryRepository, Order $order = null): Response
+    public function edit(Request $request, CategoryRepository $categoryRepository, OrderFormHandler $orderFormHandler, Order $order = null): Response
     {
-        if (!$order) {
-            $order = new Order();
-        }
+        $orderEditModel = OrderEditModel::makeFromOrder($order);
 
         $categories = $categoryRepository->findBy([], ['title' => 'ASC']);
         $categoryModels = [];
@@ -56,33 +57,13 @@ class OrderController extends AbstractController
             ];
         }
 
-        $form = $this->createForm(OrderEditFormType::class, $order);
+        $form = $this->createForm(OrderEditFormType::class, $orderEditModel);
         $form->handleRequest($request);
 
         if ($form->isSubmitted() && $form->isValid()) {
-            $order->setTotalPrice(0);
-            $totalPrice = 0;
-            $totalPriceWithDiscount = 0;
+            $order = $orderFormHandler->processOrderEditForm($orderEditModel);
 
-            $orderProducts = $order->getOrderProducts()->getValues();
-
-            /** @var OrderProduct $orderProduct */
-            foreach ($orderProducts as $orderProduct) {
-                $totalPrice += $orderProduct->getQuantity() * $orderProduct->getPricePerOne();
-            }
-
-            $promoCode = $order->getPromoCode();
-            if ($promoCode) {
-                $promoCodeDiscount = $promoCode->getDiscount();
-                $totalPriceWithDiscount = $totalPrice - (($totalPrice / 100) * $promoCodeDiscount);
-            }
-
-            $order->setTotalPrice($totalPriceWithDiscount);
-            $entityManager = $this->getDoctrine()->getManager();
-            $entityManager->persist($order);
-            $entityManager->flush();
-
-            return $this->redirectToRoute('admin_order_list');
+            return $this->redirectToRoute('admin_order_edit', ['id' => $order->getId()]);
         }
 
         return $this->render('admin/order/edit.html.twig', [
@@ -95,13 +76,9 @@ class OrderController extends AbstractController
     /**
      * @Route("/delete/{id}", name="delete")
      */
-    public function delete(Order $order): Response
+    public function delete(Order $order, OrderManager $orderManager): Response
     {
-        if ($order) {
-            $entityManager = $this->getDoctrine()->getManager();
-            $entityManager->remove($order);
-            $entityManager->flush();
-        }
+        $orderManager->remove($order);
 
         return $this->redirectToRoute('admin_order_list');
     }

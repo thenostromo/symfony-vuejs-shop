@@ -6,7 +6,7 @@ use App\Entity\Category;
 use App\Entity\Product;
 use App\Exception\FileNotFoundException;
 use App\Utils\Extractor\JsonExtractor;
-use App\Utils\Product\ProductManager;
+use App\Utils\Manager\ProductManager;
 use Doctrine\Bundle\FixturesBundle\Fixture;
 use Doctrine\Persistence\ObjectManager;
 

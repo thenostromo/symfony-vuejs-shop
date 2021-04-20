@@ -80,13 +80,6 @@ class Product
     private $description;
 
     /**
-     * @ORM\Column(type="decimal", precision=3, scale=2, nullable=true)
-     *
-     * @Groups({"product:list", "product:item"})
-     */
-    private $rating;
-
-    /**
      * @ORM\Column(type="string", length=3, nullable=true)
      *
      * @Groups({"product:list", "product:item"})
@@ -107,7 +100,7 @@ class Product
     /**
      * @ORM\Column(type="boolean")
      */
-    private $isHidden;
+    private $isPublished;
 
     /**
      * @ORM\Column(type="boolean")
@@ -140,7 +133,7 @@ class Product
     {
         $this->createdAt = new \DateTimeImmutable();
         $this->orders = new ArrayCollection();
-        $this->isHidden = false;
+        $this->isPublished = false;
         $this->isDeleted = false;
         $this->saleCollections = new ArrayCollection();
         $this->productImages = new ArrayCollection();
@@ -213,18 +206,6 @@ class Product
         return $this;
     }
 
-    public function getRating(): ?string
-    {
-        return $this->rating;
-    }
-
-    public function setRating(?string $rating): self
-    {
-        $this->rating = $rating;
-
-        return $this;
-    }
-
     public function getSize(): ?string
     {
         return $this->size;
@@ -276,14 +257,14 @@ class Product
         return $this;
     }
 
-    public function getIsHidden(): ?bool
+    public function getIsPublished(): ?bool
     {
-        return $this->isHidden;
+        return $this->isPublished;
     }
 
-    public function setIsHidden(bool $isHidden): self
+    public function setIsPublished(bool $isPublished): self
     {
-        $this->isHidden = $isHidden;
+        $this->isPublished = $isPublished;
 
         return $this;
     }

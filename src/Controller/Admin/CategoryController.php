@@ -3,8 +3,11 @@
 namespace App\Controller\Admin;
 
 use App\Entity\Category;
-use App\Form\CategoryEditFormType;
+use App\Form\Admin\CategoryEditFormType;
+use App\Form\DTO\CategoryEditModel;
+use App\Form\Handler\CategoryFormHandler;
 use App\Repository\CategoryRepository;
+use App\Utils\Manager\CategoryManager;
 use Symfony\Bundle\FrameworkBundle\Controller\AbstractController;
 use Symfony\Component\HttpFoundation\Request;
 use Symfony\Component\HttpFoundation\Response;
@@ -17,10 +20,12 @@ class CategoryController extends AbstractController
 {
     /**
      * @Route("/list", name="list")
+     * @param CategoryRepository $categoryRepository
+     * @return Response
      */
     public function index(CategoryRepository $categoryRepository): Response
     {
-        $categoryList = $categoryRepository->findBy(['isDeleted' => false], ['id' => 'DESC']);
+        $categoryList = $categoryRepository->findBy([], ['id' => 'DESC']);
 
         return $this->render('admin/category/list.html.twig', [
             'categoryList' => $categoryList,
@@ -30,20 +35,20 @@ class CategoryController extends AbstractController
     /**
      * @Route("/edit/{id}", name="edit")
      * @Route("/add", name="add")
+     * @param Request $request
+     * @param CategoryFormHandler $categoryFormHandler
+     * @param Category|null $category
+     * @return Response
      */
-    public function edit(Request $request, Category $category = null): Response
+    public function edit(Request $request, CategoryFormHandler $categoryFormHandler, Category $category = null): Response
     {
-        if (!$category) {
-            $category = new Category();
-        }
+        $categoryEditModel = CategoryEditModel::makeFromCategory($category);
 
-        $form = $this->createForm(CategoryEditFormType::class, $category);
+        $form = $this->createForm(CategoryEditFormType::class, $categoryEditModel);
         $form->handleRequest($request);
 
         if ($form->isSubmitted() && $form->isValid()) {
-            $entityManager = $this->getDoctrine()->getManager();
-            $entityManager->persist($category);
-            $entityManager->flush();
+            $categoryFormHandler->processCategoryEditForm($categoryEditModel);
 
             return $this->redirectToRoute('admin_category_list');
         }
@@ -57,13 +62,9 @@ class CategoryController extends AbstractController
     /**
      * @Route("/delete/{id}", name="delete")
      */
-    public function delete(Category $category): Response
+    public function delete(Category $category, CategoryManager $categoryManager): Response
     {
-        if ($category) {
-            $entityManager = $this->getDoctrine()->getManager();
-            $entityManager->remove($category);
-            $entityManager->flush();
-        }
+        $categoryManager->remove($category);
 
         return $this->redirectToRoute('admin_category_list');
     }

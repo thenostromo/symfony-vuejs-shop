@@ -29,6 +29,11 @@ class User implements UserInterface
     private $email;
 
     /**
+     * @ORM\Column(type="string", length=255, unique=true)
+     */
+    private $username;
+
+    /**
      * @ORM\Column(type="json")
      */
     private $roles = [];
@@ -73,11 +78,6 @@ class User implements UserInterface
      * @ORM\Column(type="boolean")
      */
     private $isDeleted;
-
-    /**
-     * @ORM\Column(type="string", length=255, unique=true)
-     */
-    private $username;
 
     public function __construct()
     {

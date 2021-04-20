@@ -23,8 +23,7 @@
                             <th>Price</th>
                             <th>Quantity</th>
                             <th>Cover</th>
-                            <th>Rating</th>
-                            <th>Active</th>
+                            <th>Is published</th>
                             <th></th>
                         </tr>
                         </thead>
@@ -46,9 +45,8 @@
                                         >
                                     {% endif %}
                                 </td>
-                                <td>{{ product.rating }}</td>
                                 <td>
-                                    <i class="fas fa-check fa-sm" style="color: {% if product.getIsHidden() %}grey{% else %}green{% endif %};"></i></td>
+                                    <i class="fas fa-check fa-sm" style="color: {% if product.isPublished %}green{% else %}lightgray{% endif %};"></i></td>
                                 <td>
                                     <a href="{{ path('admin_product_edit', {'id': product.id}) }}" class="btn btn-outline-info">Edit</a>
                                 </td>

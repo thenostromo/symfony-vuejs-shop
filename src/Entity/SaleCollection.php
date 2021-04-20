@@ -47,12 +47,7 @@ class SaleCollection
     /**
      * @ORM\Column(type="boolean")
      */
-    private $isHidden;
-
-    /**
-     * @ORM\Column(type="boolean")
-     */
-    private $isDeleted;
+    private $isPublished;
 
     /**
      * @ORM\OneToMany(targetEntity=SaleCollectionProduct::class, mappedBy="saleCollection", orphanRemoval=true)
@@ -61,8 +56,7 @@ class SaleCollection
 
     public function __construct()
     {
-        $this->isHidden = false;
-        $this->isDeleted = false;
+        $this->isPublished = false;
         $this->saleCollectionProducts = new ArrayCollection();
     }
 
@@ -131,26 +125,14 @@ class SaleCollection
         return $this;
     }
 
-    public function getIsHidden(): ?bool
+    public function getIsPublished(): ?bool
     {
-        return $this->isHidden;
+        return $this->isPublished;
     }
 
-    public function setIsHidden(bool $isHidden): self
+    public function setIsPublished(bool $isPublished): self
     {
-        $this->isHidden = $isHidden;
-
-        return $this;
-    }
-
-    public function getIsDeleted(): ?bool
-    {
-        return $this->isDeleted;
-    }
-
-    public function setIsDeleted(bool $isDeleted): self
-    {
-        $this->isDeleted = $isDeleted;
+        $this->isPublished = $isPublished;
 
         return $this;
     }
