@@ -6,19 +6,18 @@ use App\Entity\Product;
 use App\Form\DTO\ProductEditModel;
 use App\Utils\File\FileSaver;
 use App\Utils\Manager\ProductManager;
-use Symfony\Component\HttpFoundation\File\UploadedFile;
 
 class ProductFormHandler
 {
     /**
      * @var ProductManager
      */
-    public $productManager;
+    private $productManager;
 
     /**
      * @var FileSaver
      */
-    public $fileSaver;
+    private $fileSaver;
 
     public function __construct(ProductManager $productManager, FileSaver $fileSaver)
     {
@@ -28,13 +27,15 @@ class ProductFormHandler
 
     /**
      * @param ProductEditModel $productEditModel
+     *
+     * @return Product
      */
-    public function processProductEditForm(ProductEditModel $productEditModel)
+    public function processEditForm(ProductEditModel $productEditModel): Product
     {
         $product = new Product();
 
         if ($productEditModel->id) {
-            $product = $this->productManager->findProduct($productEditModel->id);
+            $product = $this->productManager->find($productEditModel->id);
         }
 
         $product->setTitle($productEditModel->title);
@@ -47,7 +48,6 @@ class ProductFormHandler
 
         $this->productManager->save($product);
 
-        /** @var UploadedFile $newImageFile */
         $newImageFile = $productEditModel->newImage;
 
         $tempImageFileName = $productEditModel->newImage

@@ -3,44 +3,30 @@
 namespace App\Utils\Manager;
 
 use App\Entity\PromoCode;
-use Doctrine\ORM\EntityManagerInterface;
 
-class PromoCodeManager
+class PromoCodeManager extends AbstractBaseManager
 {
     /**
-     * @var EntityManagerInterface
-     */
-    public $entityManager;
-
-    public function __construct(EntityManagerInterface $entityManager)
-    {
-        $this->entityManager = $entityManager;
-    }
-
-    /**
      * @param string $id
+     *
      * @return PromoCode|null
      */
-    public function findPromoCode(string $id): PromoCode
+    public function find(string $id): ?PromoCode
     {
         return $this->entityManager->getRepository(PromoCode::class)->find($id);
     }
 
-    public function save($entity)
+    public function remove($entity): void
     {
-        $this->entityManager->persist($entity);
-        $this->entityManager->flush();
-    }
+        $entity->setIsDeleted(true);
 
-    public function remove($entity)
-    {
-        $this->entityManager->remove($entity);
-        $this->entityManager->flush();
+        $this->save($entity);
     }
 
     public function getFormattedValue(string $originalValue = null)
     {
-        $uniqueValue = $originalValue ? $originalValue : uniqid();
+        $uniqueValue = $originalValue ?: uniqid('', true);
+
         return strtoupper($uniqueValue);
     }
 }

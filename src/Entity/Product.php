@@ -14,8 +14,16 @@ use Symfony\Component\Serializer\Annotation\Groups;
 
 /**
  * @ApiResource(
- *     collectionOperations={"get"={"normalization_context"={"groups"="product:list"}}},
- *     itemOperations={"get"={"normalization_context"={"groups"="product:item"}}},
+ *     collectionOperations={
+ *          "get"={"normalization_context"={"groups"="product:list"}},
+ *          "post"={"normalization_context"={"groups"="product:list:write"}}
+ *     },
+ *     itemOperations={
+ *          "get"={"normalization_context"={"groups"="product:item"}},
+ *          "put"={
+ *              "normalization_context"={"groups"="product:item:write"}
+ *          },
+ *     },
  *     order={
  *         "id"="DESC",
  *         "price"="ASC"
@@ -40,28 +48,28 @@ class Product
      * @ORM\GeneratedValue
      * @ORM\Column(type="integer")
      *
-     * @Groups({"product:list", "product:item"})
+     * @Groups({"product:list", "product:item", "order:item"})
      */
     private $id;
 
     /**
      * @ORM\Column(type="string", length=255)
      *
-     * @Groups({"product:list", "product:item"})
+     * @Groups({"product:list", "product:item", "order:item"})
      */
     private $title;
 
     /**
      * @ORM\Column(type="decimal", precision=6, scale=2)
      *
-     * @Groups({"product:list", "product:item"})
+     * @Groups({"product:list", "product:item", "order:item"})
      */
     private $price;
 
     /**
      * @ORM\Column(type="integer")
      *
-     * @Groups({"product:list", "product:item"})
+     * @Groups({"product:list", "product:item", "order:item"})
      */
     private $quantity;
 
@@ -93,7 +101,7 @@ class Product
 
     /**
      * @ORM\ManyToOne(targetEntity=Category::class, inversedBy="products")
-     * @Groups({"product:list", "product:item"})
+     * @Groups({"product:list", "product:item", "order:item"})
      */
     private $category;
 

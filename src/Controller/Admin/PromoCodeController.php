@@ -3,7 +3,7 @@
 namespace App\Controller\Admin;
 
 use App\Entity\PromoCode;
-use App\Form\Admin\PromoCodeEditFormType;
+use App\Form\AdminType\PromoCodeEditFormType;
 use App\Form\DTO\PromoCodeEditModel;
 use App\Form\Handler\PromoCodeFormHandler;
 use App\Repository\PromoCodeRepository;
@@ -20,6 +20,8 @@ class PromoCodeController extends AbstractController
 {
     /**
      * @Route("/list", name="list")
+     * @param PromoCodeRepository $promoCodeRepository
+     * @return Response
      */
     public function index(PromoCodeRepository $promoCodeRepository): Response
     {
@@ -33,6 +35,12 @@ class PromoCodeController extends AbstractController
     /**
      * @Route("/edit/{id}", name="edit")
      * @Route("/add", name="add")
+     *
+     * @param Request              $request
+     * @param PromoCodeFormHandler $promoCodeFormHandler
+     * @param PromoCode|null       $promoCode
+     *
+     * @return Response
      */
     public function edit(Request $request, PromoCodeFormHandler $promoCodeFormHandler, PromoCode $promoCode = null): Response
     {
@@ -42,7 +50,7 @@ class PromoCodeController extends AbstractController
         $form->handleRequest($request);
 
         if ($form->isSubmitted() && $form->isValid()) {
-            $promoCode = $promoCodeFormHandler->processPromoCodeEditForm($promoCodeEditModel);
+            $promoCode = $promoCodeFormHandler->processEditForm($promoCodeEditModel);
 
             return $this->redirectToRoute('admin_promo_code_list', ['id' => $promoCode->getId()]);
         }
@@ -55,11 +63,15 @@ class PromoCodeController extends AbstractController
 
     /**
      * @Route("/delete/{id}", name="delete")
+     *
+     * @param PromoCode        $promoCode
+     * @param PromoCodeManager $promoCodeManager
+     *
+     * @return Response
      */
     public function delete(PromoCode $promoCode, PromoCodeManager $promoCodeManager): Response
     {
-        $promoCode->setIsDeleted(true);
-        $promoCodeManager->save($promoCode);
+        $promoCodeManager->remove($promoCode);
 
         return $this->redirectToRoute('admin_promo_code_list');
     }

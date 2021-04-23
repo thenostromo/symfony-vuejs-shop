@@ -1,6 +1,6 @@
 <?php
 
-namespace App\Form;
+namespace App\Form\AdminType;
 
 use App\DataProvider\ProductDataProvider;
 use App\Entity\Category;
@@ -61,16 +61,6 @@ class ProductEditFormType extends AbstractType
             ])
             ->add('isPublished', CheckboxType::class, [
                 'label' => 'Is published',
-                'required' => false,
-                'label_attr' => [
-                    'class' => 'form-check-label',
-                ],
-                'attr' => [
-                    'class' => 'form-check-input',
-                ],
-            ])
-            ->add('isDeleted', CheckboxType::class, [
-                'label' => 'Is deleted',
                 'required' => false,
                 'label_attr' => [
                     'class' => 'form-check-label',

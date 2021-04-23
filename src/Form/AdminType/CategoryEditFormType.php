@@ -1,6 +1,6 @@
 <?php
 
-namespace App\Form\Admin;
+namespace App\Form\AdminType;
 
 use App\Entity\Category;
 use App\Form\DTO\CategoryEditModel;

@@ -3,7 +3,7 @@
 namespace App\Controller\Admin;
 
 use App\Entity\Category;
-use App\Form\Admin\CategoryEditFormType;
+use App\Form\AdminType\CategoryEditFormType;
 use App\Form\DTO\CategoryEditModel;
 use App\Form\Handler\CategoryFormHandler;
 use App\Repository\CategoryRepository;
@@ -48,7 +48,7 @@ class CategoryController extends AbstractController
         $form->handleRequest($request);
 
         if ($form->isSubmitted() && $form->isValid()) {
-            $categoryFormHandler->processCategoryEditForm($categoryEditModel);
+            $categoryFormHandler->processEditForm($categoryEditModel);
 
             return $this->redirectToRoute('admin_category_list');
         }

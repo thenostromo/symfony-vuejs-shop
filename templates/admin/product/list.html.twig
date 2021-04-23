@@ -40,8 +40,9 @@
                                     {% if images|length %}
                                         {% set image = images[0] %}
                                         <img
-                                            src="{{ asset('uploads/images/products/' ~ product.id ~ '/' ~ image.filenameSmall) }}"
-                                            alt="{{ image.filenameSmall }}"
+                                            src="{{ asset('uploads/images/products/' ~ product.id ~ '/' ~ image.filenameMiddle) }}"
+                                            style="width: 250px"
+                                            alt="{{ image.filenameMiddle }}"
                                         >
                                     {% endif %}
                                 </td>

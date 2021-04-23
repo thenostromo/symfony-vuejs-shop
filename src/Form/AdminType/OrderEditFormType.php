@@ -1,6 +1,6 @@
 <?php
 
-namespace App\Form\Admin;
+namespace App\Form\AdminType;
 
 use App\DataProvider\OrderDataProvider;
 use App\Entity\Order;

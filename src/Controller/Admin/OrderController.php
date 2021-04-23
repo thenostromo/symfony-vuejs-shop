@@ -6,7 +6,7 @@ use App\DataProvider\OrderDataProvider;
 use App\Entity\Category;
 use App\Entity\Order;
 use App\Entity\OrderProduct;
-use App\Form\Admin\OrderEditFormType;
+use App\Form\AdminType\OrderEditFormType;
 use App\Form\DTO\OrderEditModel;
 use App\Form\Handler\OrderFormHandler;
 use App\Repository\CategoryRepository;

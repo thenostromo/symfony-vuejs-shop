@@ -7,7 +7,7 @@
       {{ category }}
     </div>
     <div class="col-md-3">
-      {{ product.title }}
+      {{ product.product.title }}
     </div>
     <div class="col-md-2">
       {{ product.quantity }}
@@ -39,7 +39,14 @@ const axios = require('axios');
 
 export default {
   name: "ProductItem",
-  props: ['product', 'index'],
+  props: {
+    product: {
+      type: Object
+    },
+    index: {
+      type: Number
+    }
+  },
   computed: {
     ...mapGetters('products', ['categories', 'urlProductView']),
     rowNumber() {
@@ -61,7 +68,7 @@ export default {
     viewDetails(event) {
       event.preventDefault();
 
-      const url = window.location.protocol + "//" + window.location.host + this.urlProductView + '/' + this.product.id;
+      const url = window.location.protocol + "//" + window.location.host + this.urlProductView + '/' + this.product.product.id;
       window.open(url, '_blank').focus();
     },
     remove(event) {

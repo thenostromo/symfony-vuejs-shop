@@ -1,57 +1,60 @@
 <?php
 
-namespace App\Form\Admin;
+namespace App\Form\AdminType;
 
-use App\Entity\User;
+use App\Entity\SaleCollection;
 use Symfony\Component\Form\AbstractType;
 use Symfony\Component\Form\Extension\Core\Type\CheckboxType;
+use Symfony\Component\Form\Extension\Core\Type\DateTimeType;
+use Symfony\Component\Form\Extension\Core\Type\TextareaType;
 use Symfony\Component\Form\Extension\Core\Type\TextType;
 use Symfony\Component\Form\FormBuilderInterface;
 use Symfony\Component\OptionsResolver\OptionsResolver;
+use Symfony\Component\Validator\Constraints\NotBlank;
 
-class UserEditFormType extends AbstractType
+class SaleCollectionEditFormType extends AbstractType
 {
     public function buildForm(FormBuilderInterface $builder, array $options)
     {
         $builder
-            ->add('plainPassword', TextType::class, [
-                'label' => 'New password',
-                'required' => false,
-                'mapped' => false,
+            ->add('title', TextType::class, [
+                'label' => 'Title',
+                'required' => true,
                 'attr' => [
                     'class' => 'form-control',
                 ],
-            ])
-            ->add('fullName', TextType::class, [
-                'label' => 'Full name',
-                'required' => false,
-                'attr' => [
-                    'class' => 'form-control',
+                'constraints' => [
+                    new NotBlank(),
                 ],
             ])
-            ->add('phone', TextType::class, [
-                'label' => 'Phone',
+            ->add('description', TextareaType::class, [
+                'label' => 'Description',
                 'required' => false,
                 'attr' => [
                     'class' => 'form-control',
                 ],
             ])
-            ->add('address', TextType::class, [
-                'label' => 'Address',
-                'required' => false,
+            ->add('validUntil', DateTimeType::class, [
+                'label' => 'Valid until',
+                'date_widget' => 'single_text',
+                'time_widget' => 'single_text',
+                'required' => true,
                 'attr' => [
                     'class' => 'form-control',
                 ],
             ])
-            ->add('zipCode', TextType::class, [
-                'label' => 'Zip code',
+            ->add('isHidden', CheckboxType::class, [
+                'label' => 'Is hidden',
                 'required' => false,
                 'attr' => [
-                    'class' => 'form-control',
+                    'class' => 'form-check-input',
+                ],
+                'label_attr' => [
+                    'class' => 'form-check-label',
                 ],
             ])
-            ->add('isVerified', CheckboxType::class, [
-                'label' => 'Is verified',
+            ->add('isDeleted', CheckboxType::class, [
+                'label' => 'Is deleted',
                 'required' => false,
                 'label_attr' => [
                     'class' => 'form-check-label',
@@ -66,7 +69,7 @@ class UserEditFormType extends AbstractType
     public function configureOptions(OptionsResolver $resolver)
     {
         $resolver->setDefaults([
-            'data_class' => User::class,
+            'data_class' => SaleCollection::class,
         ]);
     }
 }

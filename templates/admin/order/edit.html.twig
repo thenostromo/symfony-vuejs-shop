@@ -83,7 +83,7 @@
                 {% if order %}
                     <div class="form-group row">
                         <div class="col-md-1"></div>
-                        <div class="col-md-11 pl-5">
+                        <div class="col-md-11">
                             <div id="app">
                                 <app></app>
                             </div>
@@ -128,16 +128,13 @@
 
 {% block javascripts %}
     <script>
-        {% if order %}
-            window.staticStore = {}
-            window.staticStore.categories = JSON.parse('{{ categories|json_encode|raw }}')
-            window.staticStore.orderId = "{{ order.id }}"
-            window.staticStore.urlProductView = "{{ path('admin_product_edit_blank') }}"
-            window.staticStore.urlGetProductsByCategory = "{{ path('product_get_products_by_category') }}"
-            window.staticStore.urlGetProductsByOrder = "{{ path('admin_order_add_products_by_order') }}"
-            window.staticStore.urlAddProductToOrder = "{{ path('admin_order_add_product_to_order') }}"
-            window.staticStore.urlRemoveProductFromOrder = "{{ path('admin_order_remove_product_from_order') }}"
-        {% endif %}
+        window.staticStore = {}
+        window.staticStore.categories = JSON.parse('{{ categories|json_encode|raw }}')
+        window.staticStore.orderId = "{{ order ? order.id : '' }}"
+        window.staticStore.urlProductView = "{{ path('admin_product_edit_blank') }}"
+        window.staticStore.urlAPICategoryProducts = "{{ path('api_products_get_collection') }}"
+        window.staticStore.urlAPIOrder = "{{ path('api_orders_get_collection') }}"
+        window.staticStore.urlAPIOrderProducts = "{{ path('api_order_products_post_collection') }}"
     </script>
     {{ encore_entry_script_tags('appAdminOrder') }}
 {% endblock %}

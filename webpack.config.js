@@ -4,7 +4,9 @@ Encore
     .setOutputPath('public/build/')
     .setPublicPath('/build')
     // https://symfony.com/doc/current/frontend/encore/vuejs.html#runtime-compiler-build
-    .enableVueLoader(() => {}, { runtimeCompilerBuild: false })
+    .enableVueLoader(() => {}, {
+        runtimeCompilerBuild: false
+    })
 
     .addEntry('appAdminSaleCollection', './assets/js/section/admin/admin-sale-collection/app.js')
     .addEntry('appAdminOrder', './assets/js/section/admin/admin-order/app.js')

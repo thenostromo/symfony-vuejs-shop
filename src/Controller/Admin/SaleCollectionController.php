@@ -6,7 +6,7 @@ use App\Entity\Category;
 use App\Entity\Product;
 use App\Entity\SaleCollection;
 use App\Entity\SaleCollectionProduct;
-use App\Form\Admin\SaleCollectionEditFormType;
+use App\Form\AdminType\SaleCollectionEditFormType;
 use App\Repository\CategoryRepository;
 use App\Repository\ProductRepository;
 use App\Repository\SaleCollectionProductRepository;

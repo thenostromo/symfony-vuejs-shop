@@ -1,4 +1,12 @@
+import {StatusCodes} from "http-status-codes";
+
 const axios = require('axios');
+const apiConfig = {
+    headers: {
+        "accept": "application/hal+json",
+        "Content-Type": "application/json"
+    }
+}
 
 const state = () => ({
   selectedCategory: "",
@@ -10,11 +18,14 @@ const state = () => ({
   orderProducts: [],
   orderProductIds: [],
 
-  staticStore: window.staticStore
+  staticStore: window.staticStore,
+
+  viewProductsCountLimit: 25
 })
 
 const getters = {
     freeCategoryProducts(state) {
+        console.log(state.categoryProducts)
         return state.categoryProducts.filter(
             item => (state.orderProductIds.indexOf(item.id) === -1)
         )
@@ -28,61 +39,59 @@ const getters = {
     urlProductView(state) {
         return state.staticStore.urlProductView
     },
-    urlGetProductsByCategory(state) {
-        return state.staticStore.urlGetProductsByCategory
+    urlAPIOrder(state) {
+        return state.staticStore.urlAPIOrder
     },
-    urlGetProductsByOrder(state) {
-        return state.staticStore.urlGetProductsByOrder
+    urlAPICategoryProducts(state) {
+        return state.staticStore.urlAPICategoryProducts
     },
-    urlAddProductToOrder(state) {
-        return state.staticStore.urlAddProductToOrder
-    },
-    urlRemoveProductFromOrder(state) {
-        return state.staticStore.urlRemoveProductFromOrder
+    urlAPIOrderProducts(state) {
+        return state.staticStore.urlAPIOrderProducts
     }
 }
 
 const actions = {
-  async changedSelectedCategory({ commit, getters, state }) {
-    let data = new FormData();
-    data.append("categoryId", state.selectedCategory);
+  async getProductsByCategory({ commit, getters, state }) {
+      const url = getters.urlAPICategoryProducts
+          + "?category=api/products/"
+          + state.selectedCategory
+          + "&page=1"
+          + "&itemsPerPage=" + state.viewProductsCountLimit
+          + "&isHidden=0";
+      const result = await axios.get(url, apiConfig)
 
-    const result = await axios.post(getters.urlGetProductsByCategory, data)
-
-    if (result.data.success) {
-      commit('setCategoryProducts', result.data.data)
-      commit('setOrderProductIds')
-    }
+      if (result.data && result.status === StatusCodes.OK) {
+          commit('setCategoryProducts', result.data._embedded.item)
+          commit('setOrderProductIds')
+      }
   },
   async getProductsByOrder({ commit, getters }) {
-    let data = new FormData();
-    data.append("orderId", getters.orderId);
-    const result = await axios.post(getters.urlGetProductsByOrder, data)
+      const url = getters.urlAPIOrder + "/" + getters.orderId;
+      const result = await axios.get(url, apiConfig)
 
-    if (result.data.success) {
-      commit('setOrderProducts', result.data.data)
-      commit('setOrderProductIds')
-    }
+      if (result.data && result.status === StatusCodes.OK) {
+          commit('setOrderProducts', result.data._embedded.orderProducts)
+          commit('setOrderProductIds')
+      }
   },
   async addNewProduct({ getters, state }) {
-    let data = new FormData();
-    data.append("productId", state.selectedProduct);
-    data.append("orderId", getters.orderId);
-    data.append("pricePerOne", state.newProductPricePerOne);
-    data.append("quantity", state.newProductQuantity)
+      const url = getters.urlAPIOrderProducts
+      const data = {
+          pricePerOne: state.newProductPricePerOne,
+          quantity: parseInt(state.newProductQuantity),
+          product: "/api/products/" + state.selectedProduct,
+          appOrder: "/api/orders/" + getters.orderId,
+      }
 
-    const result = await axios.post(getters.urlAddProductToOrder, data)
+      const result = await axios.post(url, data, apiConfig)
   },
   async removeProduct({ getters, commit, state }, productId) {
-    let data = new FormData();
-    data.append("productId", productId);
-    data.append("orderId", getters.orderId);
+      const url = getters.urlAPIOrderProduct + "/" + productId;
+      const result = await axios.delete(url, apiConfig)
 
-    const result = await axios.post(getters.urlRemoveProductFromOrder, data)
-
-    if (result.data.success) {
-      commit('removeProductFromOrder', productId)
-    }
+      if (result.status === StatusCodes.NO_CONTENT) {
+          commit('removeProductFromOrder', productId)
+      }
   }
 }
 
@@ -99,8 +108,30 @@ const mutations = {
   setNewProductQuantity (state, newProductQuantity) {
     state.newProductQuantity = newProductQuantity
   },
-  setOrderProducts (state, products) {
-    state.orderProducts = products
+  setOrderProducts (state, orderProducts) {
+    const orderProductsFormatted = [];
+      orderProducts.forEach((orderProduct) => {
+          const originalProduct = orderProduct._embedded.product;
+          const category = (originalProduct._embedded && originalProduct._embedded.category)
+            ? originalProduct._embedded.category
+            : null
+          const viewTitle = '#' + originalProduct.id +
+              ' ' + originalProduct.title +
+              ' / P: ' + originalProduct.price + '$ ' +
+              '/ Q: ' + originalProduct.quantity
+
+          orderProductsFormatted.push({
+            category: category,
+            id: orderProduct.id,
+            pricePerOne: orderProduct.pricePerOne,
+            quantity: orderProduct.quantity,
+            product: {
+                id: originalProduct.id,
+                title: viewTitle
+            }
+          })
+      })
+    state.orderProducts = orderProductsFormatted
   },
   setOrderProductIds (state) {
     state.orderProductIds = state.orderProducts.map((item) => item.id)

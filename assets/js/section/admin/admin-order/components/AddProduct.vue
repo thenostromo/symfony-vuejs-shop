@@ -3,7 +3,7 @@
     <div class="col-md-2">
       <select
           v-model="category"
-          @change="changedSelectedCategory()"
+          @change="getProductsByCategory()"
           name="add_product_category_select"
           class="form-control"
       >
@@ -29,7 +29,7 @@
             :value="product.id"
             :key="product.id"
         >
-          {{ product.title }}
+          {{ productTitleFormatted(product) }}
         </option>
       </select>
     </div>
@@ -39,6 +39,8 @@
           class="form-control"
           placeholder="quantity"
           v-model="quantity"
+          min="0"
+          :max="productQuantityMax(product)"
       />
     </div>
     <div class="col-md-2" v-if="product">
@@ -47,6 +49,8 @@
         class="form-control"
         placeholder="price per one"
         step="0.01"
+        min="0"
+        :max="productPriceMax(product)"
         v-model="pricePerOne"
       />
     </div>
@@ -112,7 +116,7 @@ export default {
   },
   methods: {
     ...mapMutations('products', ['setSelectedCategory', 'setSelectedProduct', 'setNewProductQuantity', 'setNewProductPricePerOne']),
-    ...mapActions('products', ['changedSelectedCategory', 'addNewProduct', 'getProductsByOrder']),
+    ...mapActions('products', ['getProductsByCategory', 'addNewProduct', 'getProductsByOrder']),
     add(event) {
       event.preventDefault()
       this.addNewProduct()
@@ -124,6 +128,20 @@ export default {
       const url = window.location.protocol + "//" + window.location.host + this.urlProductView + '/' + this.selectedProduct;
       window.open(url, '_blank').focus();
     },
+    productTitleFormatted(product) {
+      return '#' + product.id +
+          ' ' + product.title +
+          ' / P: ' + product.price + '$ ' +
+          '/ Q: ' + product.quantity
+    },
+    productPriceMax(productId) {
+      const productData = this.freeCategoryProducts.find(product => product.id === productId)
+      return parseInt(productData.price)
+    },
+    productQuantityMax(productId) {
+      const productData = this.freeCategoryProducts.find(product => product.id === productId)
+      return parseInt(productData.quantity)
+    }
   }
 }
 </script>
