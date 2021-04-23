@@ -1,12 +1,10 @@
 import { StatusCodes } from "http-status-codes";
 import axios from "axios";
-
-const apiConfig = {
-  headers: {
-    accept: "application/ld+json",
-    "Content-Type": "application/json"
-  }
-};
+import { apiConfig } from "../../utils/settings";
+import {
+  getUrlProductsByCategory,
+  concatUrlByParams
+} from "../../utils/url-generator";
 
 const state = () => ({
   newOrderProduct: {
@@ -36,7 +34,7 @@ const state = () => ({
 
 const getters = {
   freeCategoryProducts(state) {
-    console.log(state)
+    console.log(state);
     return state.categoryProducts.filter(
       item => state.busyProductIds.indexOf(item.id) === -1
     );
@@ -45,24 +43,19 @@ const getters = {
 
 const actions = {
   async getCategories({ commit, state }) {
-    const result = await axios.get(
-      state.staticStore.url.apiCategories,
-      apiConfig
-    );
+    const url = state.staticStore.url.apiCategories;
+    const result = await axios.get(url, apiConfig);
 
     if (result.data && result.status === StatusCodes.OK) {
       commit("setCategories", result.data["hydra:member"]);
     }
   },
   async getProductsByCategory({ commit, state }) {
-    const url =
-      state.staticStore.url.apiCategoryProducts +
-      "?category=api/products/" +
-      state.newOrderProduct.category +
-      "&page=1" +
-      "&itemsPerPage=" +
-      state.viewProductsCountLimit +
-      "&isHidden=0";
+    const url = getUrlProductsByCategory(
+      state.staticStore.url.apiCategoryProducts,
+      state.newOrderProduct.category,
+      state.viewProductsCountLimit
+    );
     const result = await axios.get(url, apiConfig);
 
     if (result.data && result.status === StatusCodes.OK) {
@@ -70,8 +63,10 @@ const actions = {
     }
   },
   async getProductsByOrder({ commit, state }) {
-    const url =
-      state.staticStore.url.apiOrder + "/" + state.staticStore.orderId;
+    const url = concatUrlByParams(
+      state.staticStore.url.apiOrder,
+      state.staticStore.orderId
+    );
     const result = await axios.get(url, apiConfig);
 
     if (result.data && result.status === StatusCodes.OK) {
@@ -94,7 +89,10 @@ const actions = {
     }
   },
   async removeProduct({ state, dispatch }, productId) {
-    const url = state.staticStore.url.apiOrderProducts + "/" + productId;
+    const url = concatUrlByParams(
+      state.staticStore.url.apiOrderProducts,
+      productId
+    );
     const result = await axios.delete(url, apiConfig);
 
     if (result.status === StatusCodes.NO_CONTENT) {
@@ -121,7 +119,7 @@ const mutations = {
   },
   setCategoryProducts(state, products) {
     state.categoryProducts = products;
-  },
+  }
 };
 
 export default {
