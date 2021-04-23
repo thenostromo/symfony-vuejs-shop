@@ -129,9 +129,9 @@
 {% block javascripts %}
     <script>
         window.staticStore = {}
-        window.staticStore.categories = JSON.parse('{{ categories|json_encode|raw }}')
         window.staticStore.orderId = "{{ order ? order.id : '' }}"
         window.staticStore.urlProductView = "{{ path('admin_product_edit_blank') }}"
+        window.staticStore.urlAPICategories = "{{ path('api_categories_get_collection') }}"
         window.staticStore.urlAPICategoryProducts = "{{ path('api_products_get_collection') }}"
         window.staticStore.urlAPIOrder = "{{ path('api_orders_get_collection') }}"
         window.staticStore.urlAPIOrderProducts = "{{ path('api_order_products_post_collection') }}"

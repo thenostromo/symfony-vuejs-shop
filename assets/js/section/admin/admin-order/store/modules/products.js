@@ -1,150 +1,128 @@
-import {StatusCodes} from "http-status-codes";
+import { StatusCodes } from "http-status-codes";
+import axios from "axios";
 
-const axios = require('axios');
 const apiConfig = {
-    headers: {
-        "accept": "application/hal+json",
-        "Content-Type": "application/json"
-    }
-}
+  headers: {
+    accept: "application/ld+json",
+    "Content-Type": "application/json"
+  }
+};
 
 const state = () => ({
-  selectedCategory: "",
-  selectedProduct: "",
-  newProductQuantity: "",
-  newProductPricePerOne: "",
-  categoryProducts: [],
+  newOrderProduct: {
+    category: "",
+    productId: "",
+    quantity: "",
+    pricePerOne: ""
+  },
 
+  categories: [],
+  categoryProducts: [],
   orderProducts: [],
   orderProductIds: [],
 
-  staticStore: window.staticStore,
-
+  staticStore: {
+    orderId: window.staticStore.orderId,
+    url: {
+      apiCategories: window.staticStore.urlAPICategories,
+      apiOrder: window.staticStore.urlAPIOrder,
+      apiCategoryProducts: window.staticStore.urlAPICategoryProducts,
+      apiOrderProducts: window.staticStore.urlAPIOrderProducts,
+      viewProduct: window.staticStore.urlProductView
+    }
+  },
   viewProductsCountLimit: 25
-})
+});
 
 const getters = {
-    freeCategoryProducts(state) {
-        console.log(state.categoryProducts)
-        return state.categoryProducts.filter(
-            item => (state.orderProductIds.indexOf(item.id) === -1)
-        )
-    },
-    categories(state) {
-        return state.staticStore.categories
-    },
-    orderId(state) {
-        return state.staticStore.orderId
-    },
-    urlProductView(state) {
-        return state.staticStore.urlProductView
-    },
-    urlAPIOrder(state) {
-        return state.staticStore.urlAPIOrder
-    },
-    urlAPICategoryProducts(state) {
-        return state.staticStore.urlAPICategoryProducts
-    },
-    urlAPIOrderProducts(state) {
-        return state.staticStore.urlAPIOrderProducts
-    }
-}
+  freeCategoryProducts(state) {
+    console.log(state)
+    return state.categoryProducts.filter(
+      item => state.busyProductIds.indexOf(item.id) === -1
+    );
+  }
+};
 
 const actions = {
-  async getProductsByCategory({ commit, getters, state }) {
-      const url = getters.urlAPICategoryProducts
-          + "?category=api/products/"
-          + state.selectedCategory
-          + "&page=1"
-          + "&itemsPerPage=" + state.viewProductsCountLimit
-          + "&isHidden=0";
-      const result = await axios.get(url, apiConfig)
+  async getCategories({ commit, state }) {
+    const result = await axios.get(
+      state.staticStore.url.apiCategories,
+      apiConfig
+    );
 
-      if (result.data && result.status === StatusCodes.OK) {
-          commit('setCategoryProducts', result.data._embedded.item)
-          commit('setOrderProductIds')
-      }
+    if (result.data && result.status === StatusCodes.OK) {
+      commit("setCategories", result.data["hydra:member"]);
+    }
   },
-  async getProductsByOrder({ commit, getters }) {
-      const url = getters.urlAPIOrder + "/" + getters.orderId;
-      const result = await axios.get(url, apiConfig)
+  async getProductsByCategory({ commit, state }) {
+    const url =
+      state.staticStore.url.apiCategoryProducts +
+      "?category=api/products/" +
+      state.newOrderProduct.category +
+      "&page=1" +
+      "&itemsPerPage=" +
+      state.viewProductsCountLimit +
+      "&isHidden=0";
+    const result = await axios.get(url, apiConfig);
 
-      if (result.data && result.status === StatusCodes.OK) {
-          commit('setOrderProducts', result.data._embedded.orderProducts)
-          commit('setOrderProductIds')
-      }
+    if (result.data && result.status === StatusCodes.OK) {
+      commit("setCategoryProducts", result.data["hydra:member"]);
+    }
   },
-  async addNewProduct({ getters, state }) {
-      const url = getters.urlAPIOrderProducts
-      const data = {
-          pricePerOne: state.newProductPricePerOne,
-          quantity: parseInt(state.newProductQuantity),
-          product: "/api/products/" + state.selectedProduct,
-          appOrder: "/api/orders/" + getters.orderId,
-      }
+  async getProductsByOrder({ commit, state }) {
+    const url =
+      state.staticStore.url.apiOrder + "/" + state.staticStore.orderId;
+    const result = await axios.get(url, apiConfig);
 
-      const result = await axios.post(url, data, apiConfig)
+    if (result.data && result.status === StatusCodes.OK) {
+      commit("setOrderProducts", result.data.orderProducts);
+      commit("setBusyProductIds");
+    }
   },
-  async removeProduct({ getters, commit, state }, productId) {
-      const url = getters.urlAPIOrderProduct + "/" + productId;
-      const result = await axios.delete(url, apiConfig)
+  async addNewProduct({ state, dispatch }) {
+    const url = state.staticStore.url.apiOrderProducts;
+    const data = {
+      pricePerOne: state.newOrderProduct.pricePerOne,
+      quantity: parseInt(state.newOrderProduct.quantity),
+      product: "/api/products/" + state.newOrderProduct.productId,
+      appOrder: "/api/orders/" + state.staticStore.orderId
+    };
 
-      if (result.status === StatusCodes.NO_CONTENT) {
-          commit('removeProductFromOrder', productId)
-      }
+    const result = await axios.post(url, data, apiConfig);
+    if (result.data && result.status === StatusCodes.CREATED) {
+      dispatch("getProductsByOrder");
+    }
+  },
+  async removeProduct({ state, dispatch }, productId) {
+    const url = state.staticStore.url.apiOrderProducts + "/" + productId;
+    const result = await axios.delete(url, apiConfig);
+
+    if (result.status === StatusCodes.NO_CONTENT) {
+      dispatch("getProductsByOrder");
+    }
   }
-}
+};
 
 const mutations = {
-  setSelectedCategory (state, selectedCategory) {
-    state.selectedCategory = selectedCategory
+  setCategories(state, categories) {
+    state.categories = categories;
   },
-  setSelectedProduct (state, selectedProduct) {
-    state.selectedProduct = selectedProduct
+  setNewOrderProductInfo(state, formData) {
+    state.newOrderProduct.category = formData.category;
+    state.newOrderProduct.productId = formData.productId;
+    state.newOrderProduct.quantity = formData.quantity;
+    state.newOrderProduct.pricePerOne = formData.pricePerOne;
   },
-  setNewProductPricePerOne (state, newProductPricePerOne) {
-    state.newProductPricePerOne = newProductPricePerOne
+  setOrderProducts(state, orderProducts) {
+    state.orderProducts = orderProducts;
   },
-  setNewProductQuantity (state, newProductQuantity) {
-    state.newProductQuantity = newProductQuantity
+  setBusyProductIds(state) {
+    state.busyProductIds = state.orderProducts.map(item => item.product.id);
   },
-  setOrderProducts (state, orderProducts) {
-    const orderProductsFormatted = [];
-      orderProducts.forEach((orderProduct) => {
-          const originalProduct = orderProduct._embedded.product;
-          const category = (originalProduct._embedded && originalProduct._embedded.category)
-            ? originalProduct._embedded.category
-            : null
-          const viewTitle = '#' + originalProduct.id +
-              ' ' + originalProduct.title +
-              ' / P: ' + originalProduct.price + '$ ' +
-              '/ Q: ' + originalProduct.quantity
-
-          orderProductsFormatted.push({
-            category: category,
-            id: orderProduct.id,
-            pricePerOne: orderProduct.pricePerOne,
-            quantity: orderProduct.quantity,
-            product: {
-                id: originalProduct.id,
-                title: viewTitle
-            }
-          })
-      })
-    state.orderProducts = orderProductsFormatted
+  setCategoryProducts(state, products) {
+    state.categoryProducts = products;
   },
-  setOrderProductIds (state) {
-    state.orderProductIds = state.orderProducts.map((item) => item.id)
-  },
-  setCategoryProducts (state, products) {
-    state.categoryProducts = products
-  },
-  removeProductFromOrder (state, productId) {
-    state.orderProducts = state.orderProducts.filter((item, index) => {
-        return item.id !== productId
-    })
-  }
-}
+};
 
 export default {
   namespaced: true,
@@ -152,4 +130,4 @@ export default {
   getters,
   actions,
   mutations
-}
+};
