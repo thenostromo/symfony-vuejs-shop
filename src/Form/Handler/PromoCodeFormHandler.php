@@ -38,6 +38,7 @@ class PromoCodeFormHandler
         $promoCode->setDiscount($promoCodeEditModel->discount);
         $promoCode->setUses($promoCodeEditModel->uses);
         $promoCode->setValidUntil($promoCodeEditModel->validUntil);
+        $promoCode->setIsActive($promoCodeEditModel->isActive);
 
         $this->promoCodeManager->save($promoCode);
 

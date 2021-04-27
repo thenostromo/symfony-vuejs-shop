@@ -46,17 +46,6 @@ class OrderController extends AbstractController
     {
         $orderEditModel = OrderEditModel::makeFromOrder($order);
 
-        $categories = $categoryRepository->findBy([], ['title' => 'ASC']);
-        $categoryModels = [];
-
-        /** @var Category $category */
-        foreach ($categories as $category) {
-            $categoryModels[] = [
-                'id' => $category->getId(),
-                'title' => $category->getTitle(),
-            ];
-        }
-
         $form = $this->createForm(OrderEditFormType::class, $orderEditModel);
         $form->handleRequest($request);
 
@@ -69,7 +58,6 @@ class OrderController extends AbstractController
         return $this->render('admin/order/edit.html.twig', [
             'order' => $order,
             'form' => $form->createView(),
-            'categories' => $categoryModels,
         ]);
     }
 
@@ -81,94 +69,5 @@ class OrderController extends AbstractController
         $orderManager->remove($order);
 
         return $this->redirectToRoute('admin_order_list');
-    }
-
-    /**
-     * @Route("/add-product-to-order", name="add_product_to_order")
-     */
-    public function addProductToOrder(Request $request, ProductRepository $productRepository, OrderRepository $orderRepository)
-    {
-        $orderId = intval($request->request->get('orderId'));
-        $productId = intval($request->request->get('productId'));
-        $pricePerOne = floatval($request->request->get('pricePerOne'));
-        $quantity = intval($request->request->get('quantity'));
-
-        $product = $productRepository->find($productId);
-
-        $order = $orderRepository->find($orderId);
-        $orderProduct = new OrderProduct();
-        $orderProduct->setAppOrder($order);
-        $orderProduct->setPricePerOne($pricePerOne);
-        $orderProduct->setQuantity($quantity);
-        $orderProduct->setProduct($product);
-
-        $order->addOrderProduct($orderProduct);
-        $this->getDoctrine()->getManager()->persist($orderProduct);
-        $this->getDoctrine()->getManager()->persist($order);
-        $this->getDoctrine()->getManager()->flush();
-
-        return new JsonResponse([
-            'success' => true,
-            'data' => [],
-        ]);
-    }
-
-    /**
-     * @Route("/remove-product-from-order", name="remove_product_from_order")
-     */
-    public function removeProductFromOrder(Request $request, OrderProductRepository $orderProductRepository, OrderRepository $orderRepository)
-    {
-        $orderId = intval($request->request->get('orderId'));
-        $productId = intval($request->request->get('productId'));
-
-        $order = $orderRepository->find($orderId);
-        $orderProduct = $orderProductRepository->find($productId);
-
-        $order->removeOrderProduct($orderProduct);
-
-        $this->getDoctrine()->getManager()->persist($order);
-        $this->getDoctrine()->getManager()->flush();
-
-        return new JsonResponse([
-            'success' => true,
-            'data' => [],
-        ]);
-    }
-
-    /**
-     * @Route("/get-products-by-order", name="add_products_by_order")
-     */
-    public function getProductsOfOrder(Request $request, OrderRepository $orderRepository)
-    {
-        $orderId = intval($request->request->get('orderId'));
-
-        $order = $orderRepository->find($orderId);
-        $orderProducts = $order->getOrderProducts()->getValues();
-        $data = [];
-        /** @var OrderProduct $orderProduct */
-        foreach ($orderProducts as $orderProduct) {
-            $product = $orderProduct->getProduct();
-            $data[] = [
-                'id' => $orderProduct->getId(),
-                'category' => [
-                    'id' => $product->getCategory()->getId(),
-                    'title' => $product->getCategory()->getTitle(),
-                ],
-                'title' => sprintf(
-                    '#%s %s / P: %s$ / Q: %s',
-                    $product->getId(),
-                    $product->getTitle(),
-                    $product->getPrice(),
-                    $product->getQuantity()
-                ),
-                'pricePerOne' => $orderProduct->getPricePerOne(),
-                'quantity' => $orderProduct->getQuantity(),
-            ];
-        }
-
-        return new JsonResponse([
-            'success' => true,
-            'data' => $data,
-        ]);
     }
 }

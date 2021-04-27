@@ -18,14 +18,17 @@ const state = () => ({
   categoryProducts: [],
   orderProducts: [],
   orderProductIds: [],
+  promoCode: {},
 
   staticStore: {
     orderId: window.staticStore.orderId,
+    promoCodeId: window.staticStore.promoCodeId,
     url: {
       apiCategories: window.staticStore.urlAPICategories,
       apiOrder: window.staticStore.urlAPIOrder,
       apiCategoryProducts: window.staticStore.urlAPICategoryProducts,
       apiOrderProducts: window.staticStore.urlAPIOrderProducts,
+      apiPromoCode: window.staticStore.urlAPIPromoCode,
       viewProduct: window.staticStore.urlProductView
     }
   },
@@ -42,6 +45,17 @@ const getters = {
 };
 
 const actions = {
+  async getPromoCode({ commit, state }) {
+    const url = concatUrlByParams(
+      state.staticStore.url.apiPromoCode,
+      state.staticStore.promoCodeId
+    );
+    const result = await axios.get(url, apiConfig);
+
+    if (result.data && result.status === StatusCodes.OK) {
+      commit("setPromoCode", result.data);
+    }
+  },
   async getCategories({ commit, state }) {
     const url = state.staticStore.url.apiCategories;
     const result = await axios.get(url, apiConfig);
@@ -102,6 +116,9 @@ const actions = {
 };
 
 const mutations = {
+  setPromoCode(state, promoCode) {
+    state.promoCode = promoCode;
+  },
   setCategories(state, categories) {
     state.categories = categories;
   },

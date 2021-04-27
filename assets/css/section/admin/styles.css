@@ -78,3 +78,6 @@ option[selected] {
 img {
     width: 100%;
 }
+select.form-control[multiple], select.form-control[size] {
+    min-height: 6rem;
+}

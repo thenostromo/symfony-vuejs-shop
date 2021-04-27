@@ -62,7 +62,7 @@ class OrderEditFormType extends AbstractType
                         $promoCode->getValue()
                     );
                 },
-                'choices' => $this->promoCodeRepository->getActiveList(),
+                'choices' => $this->promoCodeRepository->getActiveListWithUses(),
                 'attr' => [
                     'class' => 'form-control',
                 ],

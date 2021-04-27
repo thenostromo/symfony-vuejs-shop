@@ -4,7 +4,10 @@ namespace App\Controller\Admin;
 
 use App\Entity\User;
 use App\Form\AdminType\UserEditFormType;
+use App\Form\DTO\UserEditModel;
+use App\Form\Handler\UserFormHandler;
 use App\Repository\UserRepository;
+use App\Utils\Manager\UserManager;
 use Symfony\Bundle\FrameworkBundle\Controller\AbstractController;
 use Symfony\Component\HttpFoundation\Request;
 use Symfony\Component\HttpFoundation\Response;
@@ -32,28 +35,17 @@ class UserController extends AbstractController
      * @Route("/edit/{id}", name="edit")
      * @Route("/add", name="add")
      */
-    public function edit(Request $request, UserPasswordEncoderInterface $passwordEncoder, User $user = null): Response
+    public function edit(Request $request, UserFormHandler $userFormHandler, UserPasswordEncoderInterface $passwordEncoder, User $user = null): Response
     {
-        if (!$user) {
-            $user = new User();
-        }
+        $userEditModel = UserEditModel::makeFromUser($user);
 
-        $form = $this->createForm(UserEditFormType::class, $user);
+        $form = $this->createForm(UserEditFormType::class, $userEditModel);
         $form->handleRequest($request);
 
         if ($form->isSubmitted() && $form->isValid()) {
-            $newPassword = $form->get('plainPassword')->getData();
-            if ($newPassword) {
-                $user->setPassword(
-                    $passwordEncoder->encodePassword($user, $newPassword)
-                );
-            }
+            $user = $userFormHandler->processUserEditForm($userEditModel);
 
-            $entityManager = $this->getDoctrine()->getManager();
-            $entityManager->persist($user);
-            $entityManager->flush();
-
-            return $this->redirectToRoute('admin_user_list');
+            return $this->redirectToRoute('admin_user_edit', ['id' => $user->getId()]);
         }
 
         return $this->render('admin/user/edit.html.twig', [
@@ -65,13 +57,9 @@ class UserController extends AbstractController
     /**
      * @Route("/delete/{id}", name="delete")
      */
-    public function delete(User $user): Response
+    public function delete(User $user, UserManager $userManager): Response
     {
-        if ($user) {
-            $entityManager = $this->getDoctrine()->getManager();
-            $entityManager->remove($user);
-            $entityManager->flush();
-        }
+        $userManager->remove($user);
 
         return $this->redirectToRoute('admin_user_list');
     }

@@ -2,9 +2,12 @@
 
 namespace App\Form\AdminType;
 
+use App\Entity\DataStorage\UserDataStorage;
 use App\Entity\User;
+use App\Form\DTO\UserEditModel;
 use Symfony\Component\Form\AbstractType;
 use Symfony\Component\Form\Extension\Core\Type\CheckboxType;
+use Symfony\Component\Form\Extension\Core\Type\ChoiceType;
 use Symfony\Component\Form\Extension\Core\Type\TextType;
 use Symfony\Component\Form\FormBuilderInterface;
 use Symfony\Component\OptionsResolver\OptionsResolver;
@@ -17,7 +20,6 @@ class UserEditFormType extends AbstractType
             ->add('plainPassword', TextType::class, [
                 'label' => 'New password',
                 'required' => false,
-                'mapped' => false,
                 'attr' => [
                     'class' => 'form-control',
                 ],
@@ -50,6 +52,15 @@ class UserEditFormType extends AbstractType
                     'class' => 'form-control',
                 ],
             ])
+            ->add('roles', ChoiceType::class, [
+                'label' => 'Roles',
+                'required' => false,
+                'choices' => array_flip(UserDataStorage::getUserRolesChoices()),
+                'multiple' => true,
+                'attr' => [
+                    'class' => 'form-control',
+                ],
+            ])
             ->add('isVerified', CheckboxType::class, [
                 'label' => 'Is verified',
                 'required' => false,
@@ -66,7 +77,7 @@ class UserEditFormType extends AbstractType
     public function configureOptions(OptionsResolver $resolver)
     {
         $resolver->setDefaults([
-            'data_class' => User::class,
+            'data_class' => UserEditModel::class,
         ]);
     }
 }
