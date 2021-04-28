@@ -13,20 +13,54 @@
                 } %}
             </div>
             <div class="card-body">
+                <form method="get" action="#" enctype="application/x-www-form-urlencoded">
+                    <div class="table-responsive">
+                        <table class="table table-bordered">
+                            <thead>
+                                <tr>
+                                    <th>Filter</th>
+                                    <th>Value</th>
+                                </tr>
+                            </thead>
+                            <tbody>
+                                <tr>
+                                    <td>Id:</td>
+                                    <td>{# knp_pagination_filter(pagination, {'o.id': 'Id'}) #}</td>
+                                </tr>
+                                <tr>
+                                    <td>Status:</td>
+                                    <td></td>
+                                </tr>
+                            </tbody>
+                            <tfoot>
+                                <tr>
+                                    <td colspan="2">
+                                        <button class="btn btn-outline-secondary">
+                                            Apply filters
+                                        </button>
+                                        <a href="{{ path(app.request.attributes.get('_route')) }}" class="btn btn-outline-secondary">
+                                            Reset filters
+                                        </a>
+                                    </td>
+                                </tr>
+                            </tfoot>
+                        </table>
+                    </div>
+                </form>
                 <div class="table-responsive">
                     <table class="table table-bordered">
                         <thead>
                         <tr>
-                            <th>Id</th>
-                            <th>Created At</th>
+                            <th>{{ knp_pagination_sortable(pagination, 'Id', 'o.id') }}</th>
+                            <th>{{ knp_pagination_sortable(pagination, 'Created At', 'o.createdAt') }}</th>
                             <th>Count of products</th>
                             <th>Total price</th>
-                            <th>Status</th>
+                            <th>{{ knp_pagination_sortable(pagination, 'Status', 'o.status') }}</th>
                             <th></th>
                         </tr>
                         </thead>
                         <tbody>
-                        {% for order in orderList %}
+                        {% for order in pagination %}
                             <tr>
                                 <td>{{ order.id }}</td>
                                 <td>{{ order.createdAt|date('H:i:s d/m/Y') }}</td>
@@ -40,6 +74,9 @@
                         {% endfor %}
                         </tbody>
                     </table>
+                </div>
+                <div class="navigation">
+                    {{ knp_pagination_render(pagination) }}
                 </div>
             </div>
         </div>

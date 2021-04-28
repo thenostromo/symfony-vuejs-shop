@@ -4,36 +4,22 @@ namespace App\Utils\Manager;
 
 use App\Entity\User;
 use Doctrine\ORM\EntityManagerInterface;
+use Doctrine\Persistence\ObjectRepository;
 
-class UserManager
+class UserManager extends AbstractBaseManager
 {
     /**
-     * @var EntityManagerInterface
+     * @return ObjectRepository
      */
-    public $entityManager;
-
-    public function __construct(EntityManagerInterface $entityManager)
+    public function getRepository(): ObjectRepository
     {
-        $this->entityManager = $entityManager;
+        return $this->entityManager->getRepository(User::class);
     }
 
     /**
-     * @param string $id
-     *
-     * @return User|null
+     * @param object $entity
      */
-    public function findUser(string $id): User
-    {
-        return $this->entityManager->getRepository(User::class)->find($id);
-    }
-
-    public function save($entity): void
-    {
-        $this->entityManager->persist($entity);
-        $this->entityManager->flush();
-    }
-
-    public function remove(User $entity)
+    public function remove(object $entity): void
     {
         $entity->setIsDeleted(true);
         $this->save($entity);

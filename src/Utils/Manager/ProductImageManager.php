@@ -38,12 +38,6 @@ class ProductImageManager
         $this->uploadsTempDir = $uploadsTempDir;
     }
 
-    public function remove($entity)
-    {
-        $this->entityManager->remove($entity);
-        $this->entityManager->flush();
-    }
-
     /**
      * @param string      $productDir
      * @param string|null $tempImageFileName
@@ -100,5 +94,11 @@ class ProductImageManager
         $this->fileSystemWorker->remove($filePageBig);
 
         $this->remove($productImage);
+    }
+
+    public function remove($entity)
+    {
+        $this->entityManager->remove($entity);
+        $this->entityManager->flush();
     }
 }

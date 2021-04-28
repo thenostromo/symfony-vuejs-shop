@@ -3,23 +3,24 @@
 namespace App\Utils\Manager;
 
 use App\Entity\PromoCode;
+use Doctrine\Persistence\ObjectRepository;
 
 class PromoCodeManager extends AbstractBaseManager
 {
     /**
-     * @param string $id
-     *
-     * @return PromoCode|null
+     * @return ObjectRepository
      */
-    public function find(string $id): ?PromoCode
+    public function getRepository(): ObjectRepository
     {
-        return $this->entityManager->getRepository(PromoCode::class)->find($id);
+        return $this->entityManager->getRepository(PromoCode::class);
     }
 
-    public function remove($entity): void
+    /**
+     * @param object $entity
+     */
+    public function remove(object $entity): void
     {
         $entity->setIsDeleted(true);
-
         $this->save($entity);
     }
 

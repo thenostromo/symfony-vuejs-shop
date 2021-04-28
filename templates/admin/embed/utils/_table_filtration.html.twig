@@ -1,0 +1,21 @@
+<div class="form-group row">
+    <div class="col-md-12">
+
+        {% if fields|length > 1 %}
+            <label>
+                <select name="{{ filterFieldName }}" class="form-control">
+                    {% for field, label in fields %}
+                        <option value="{{ field }}"{% if selectedField == field %} selected="selected"{% endif %}>{{ label }}</option>
+                    {% endfor %}
+                </select>
+            </label>
+        {% else %}
+            <input type="hidden" name="{{ filterFieldName }}" value="{{ fields|keys|first }}" />
+        {% endif %}
+
+        <label>
+            <input type="text" value="{{ selectedValue }}" name="{{ filterValueName }}" class="form-control">
+        </label>
+
+    </div>
+</div>

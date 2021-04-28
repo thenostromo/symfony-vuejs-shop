@@ -3,19 +3,13 @@
 namespace App\Controller\Admin;
 
 use App\DataProvider\OrderDataProvider;
-use App\Entity\Category;
 use App\Entity\Order;
-use App\Entity\OrderProduct;
 use App\Form\AdminType\OrderEditFormType;
 use App\Form\DTO\OrderEditModel;
 use App\Form\Handler\OrderFormHandler;
 use App\Repository\CategoryRepository;
-use App\Repository\OrderProductRepository;
-use App\Repository\OrderRepository;
-use App\Repository\ProductRepository;
 use App\Utils\Manager\OrderManager;
 use Symfony\Bundle\FrameworkBundle\Controller\AbstractController;
-use Symfony\Component\HttpFoundation\JsonResponse;
 use Symfony\Component\HttpFoundation\Request;
 use Symfony\Component\HttpFoundation\Response;
 use Symfony\Component\Routing\Annotation\Route;
@@ -27,14 +21,19 @@ class OrderController extends AbstractController
 {
     /**
      * @Route("/list", name="list")
+     *
+     * @param OrderManager $orderManager
+     * @param Request      $request
+     *
+     * @return Response
      */
-    public function index(OrderRepository $orderRepository): Response
+    public function index(OrderManager $orderManager, Request $request): Response
     {
-        $orderList = $orderRepository->findBy(['isDeleted' => false], ['id' => 'DESC']);
+        $pagination = $orderManager->paginateItems($request);
 
         return $this->render('admin/order/list.html.twig', [
-            'orderList' => $orderList,
             'statusList' => OrderDataProvider::getStatusList(),
+            'pagination' => $pagination,
         ]);
     }
 
@@ -42,7 +41,7 @@ class OrderController extends AbstractController
      * @Route("/edit/{id}", name="edit")
      * @Route("/add", name="add")
      */
-    public function edit(Request $request, CategoryRepository $categoryRepository, OrderFormHandler $orderFormHandler, Order $order = null): Response
+    public function edit(Request $request, OrderFormHandler $orderFormHandler, Order $order = null): Response
     {
         $orderEditModel = OrderEditModel::makeFromOrder($order);
 

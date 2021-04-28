@@ -3,15 +3,15 @@
 namespace App\Utils\Manager;
 
 use App\Entity\Category;
+use Doctrine\Persistence\ObjectRepository;
 
 class CategoryManager extends AbstractBaseManager
 {
     /**
-     * @param string $id
-     * @return ?Category
+     * @return ObjectRepository
      */
-    public function find(string $id): ?Category
+    public function getRepository(): ObjectRepository
     {
-        return $this->entityManager->getRepository(Category::class)->find($id);
+        return $this->entityManager->getRepository(Category::class);
     }
 }

@@ -3,36 +3,40 @@
 namespace App\Utils\Manager;
 
 use App\Entity\Order;
-use Doctrine\ORM\EntityManagerInterface;
+use Doctrine\Persistence\ObjectRepository;
+use Knp\Component\Pager\Pagination\PaginationInterface;
+use Symfony\Component\HttpFoundation\Request;
 
-class OrderManager
+class OrderManager extends AbstractBaseManager
 {
     /**
-     * @var EntityManagerInterface
+     * @return ObjectRepository
      */
-    public $entityManager;
-
-    public function __construct(EntityManagerInterface $entityManager)
+    public function getRepository(): ObjectRepository
     {
-        $this->entityManager = $entityManager;
+        return $this->entityManager->getRepository(Order::class);
     }
 
     /**
-     * @param string $id
-     * @return Order|null
+     * @param Request $request
+     *
+     * @return PaginationInterface
      */
-    public function findOrder(string $id): Order
+    public function paginateItems(Request $request): PaginationInterface
     {
-        return $this->entityManager->getRepository(Order::class)->find($id);
+        $query = $this->entityManager->getRepository(Order::class)
+            ->createQueryBuilder('o')
+            ->where('o.isDeleted = :isDeleted')
+            ->setParameter('isDeleted', false)
+            ->getQuery();
+
+        return $this->paginator->paginate($query, $request->query->getInt('page', 1));
     }
 
-    public function save($entity)
-    {
-        $this->entityManager->persist($entity);
-        $this->entityManager->flush();
-    }
-
-    public function remove(Order $entity)
+    /**
+     * @param object $entity
+     */
+    public function remove(object $entity): void
     {
         $entity->setIsDeleted(true);
         $this->save($entity);

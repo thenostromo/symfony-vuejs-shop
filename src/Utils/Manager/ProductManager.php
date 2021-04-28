@@ -2,9 +2,12 @@
 
 namespace App\Utils\Manager;
 
+use App\Entity\Order;
 use App\Entity\Product;
 use App\Entity\ProductImage;
 use Doctrine\ORM\EntityManagerInterface;
+use Doctrine\Persistence\ObjectRepository;
+use Knp\Component\Pager\PaginatorInterface;
 
 class ProductManager extends AbstractBaseManager
 {
@@ -18,32 +21,29 @@ class ProductManager extends AbstractBaseManager
      */
     private $imagesProductsDir;
 
-    public function __construct(EntityManagerInterface $entityManager, ProductImageManager $productImageManager, string $imagesProductsDir)
+    public function __construct(EntityManagerInterface $entityManager, PaginatorInterface $paginator, ProductImageManager $productImageManager, string $imagesProductsDir)
     {
-        parent::__construct($entityManager);
+        parent::__construct($entityManager, $paginator);
 
         $this->productImageManager = $productImageManager;
         $this->imagesProductsDir = $imagesProductsDir;
     }
 
     /**
-     * @param Product $entity
+     * @return ObjectRepository
      */
-    public function remove($entity): void
+    public function getRepository(): ObjectRepository
     {
-        $entity->setIsDeleted(true);
-
-        $this->save($entity);
+        return $this->entityManager->getRepository(Product::class);
     }
 
     /**
-     * @param string $id
-     *
-     * @return Product|null
+     * @param object $entity
      */
-    public function find(string $id): ?Product
+    public function remove(object $entity): void
     {
-        return $this->entityManager->getRepository(Product::class)->find($id);
+        $entity->setIsDeleted(true);
+        $this->save($entity);
     }
 
     /**

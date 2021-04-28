@@ -27,13 +27,14 @@ class UserFormHandler
 
     /**
      * @param UserEditModel $userEditModel
+     * @return User
      */
-    public function processUserEditForm(UserEditModel $userEditModel)
+    public function processUserEditForm(UserEditModel $userEditModel): User
     {
         $user = new User();
 
         if ($userEditModel->id) {
-            $user = $this->userManager->findUser($userEditModel->id);
+            $user = $this->userManager->find($userEditModel->id);
         }
 
         $user->setFullName($userEditModel->fullName);
