@@ -70,6 +70,11 @@ class OrderEditFormType extends AbstractType
         ;
     }
 
+    public function getBlockPrefix()
+    {
+        return 'order_filter';
+    }
+
     public function configureOptions(OptionsResolver $resolver)
     {
         $resolver->setDefaults([

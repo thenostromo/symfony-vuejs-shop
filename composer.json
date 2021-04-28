@@ -20,6 +20,7 @@
         "knpuniversity/oauth2-client-bundle": "^2.7",
         "league/oauth2-facebook": "^2.0",
         "league/oauth2-google": "^3.0",
+        "lexik/form-filter-bundle": "^6.1",
         "nelmio/cors-bundle": "^2.1",
         "php-http/guzzle6-adapter": "^2.0",
         "php-http/httplug-bundle": "^1.20",

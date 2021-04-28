@@ -3,6 +3,7 @@
 namespace App\Form\AdminType;
 
 use App\Entity\SaleCollection;
+use App\Form\DTO\SaleCollectionEditModel;
 use Symfony\Component\Form\AbstractType;
 use Symfony\Component\Form\Extension\Core\Type\CheckboxType;
 use Symfony\Component\Form\Extension\Core\Type\DateTimeType;
@@ -23,9 +24,6 @@ class SaleCollectionEditFormType extends AbstractType
                 'attr' => [
                     'class' => 'form-control',
                 ],
-                'constraints' => [
-                    new NotBlank(),
-                ],
             ])
             ->add('description', TextareaType::class, [
                 'label' => 'Description',
@@ -43,24 +41,14 @@ class SaleCollectionEditFormType extends AbstractType
                     'class' => 'form-control',
                 ],
             ])
-            ->add('isHidden', CheckboxType::class, [
-                'label' => 'Is hidden',
+            ->add('isPublished', CheckboxType::class, [
+                'label' => 'Is published',
                 'required' => false,
                 'attr' => [
                     'class' => 'form-check-input',
                 ],
                 'label_attr' => [
                     'class' => 'form-check-label',
-                ],
-            ])
-            ->add('isDeleted', CheckboxType::class, [
-                'label' => 'Is deleted',
-                'required' => false,
-                'label_attr' => [
-                    'class' => 'form-check-label',
-                ],
-                'attr' => [
-                    'class' => 'form-check-input',
                 ],
             ])
         ;
@@ -69,7 +57,7 @@ class SaleCollectionEditFormType extends AbstractType
     public function configureOptions(OptionsResolver $resolver)
     {
         $resolver->setDefaults([
-            'data_class' => SaleCollection::class,
+            'data_class' => SaleCollectionEditModel::class,
         ]);
     }
 }

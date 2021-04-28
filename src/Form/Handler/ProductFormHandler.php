@@ -6,6 +6,9 @@ use App\Entity\Product;
 use App\Form\DTO\ProductEditModel;
 use App\Utils\File\FileSaver;
 use App\Utils\Manager\ProductManager;
+use Knp\Component\Pager\Pagination\PaginationInterface;
+use Knp\Component\Pager\PaginatorInterface;
+use Symfony\Component\HttpFoundation\Request;
 
 class ProductFormHandler
 {
@@ -19,10 +22,35 @@ class ProductFormHandler
      */
     private $fileSaver;
 
-    public function __construct(ProductManager $productManager, FileSaver $fileSaver)
+    /**
+     * @var PaginatorInterface
+     */
+    private $paginator;
+
+    public function __construct(ProductManager $productManager, PaginatorInterface $paginator, FileSaver $fileSaver)
     {
         $this->productManager = $productManager;
+        $this->paginator = $paginator;
         $this->fileSaver = $fileSaver;
+    }
+
+    /**
+     * @param Request $request
+     *
+     * @return PaginationInterface
+     */
+    public function processProductFiltersForm(Request $request): PaginationInterface
+    {
+        $queryBuilder = $this->productManager->getRepository()
+            ->createQueryBuilder('p')
+            ->leftJoin('p.category', 'c')
+            ->where('p.isDeleted = :isDeleted')
+            ->setParameter('isDeleted', false);
+
+        return $this->paginator->paginate(
+            $queryBuilder->getQuery(),
+            $request->query->getInt('page', 1)
+        );
     }
 
     /**

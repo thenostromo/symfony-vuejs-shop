@@ -3,83 +3,68 @@
 {% block title_detailed %}All Orders{% endblock %}
 
 {% block body %}
-    <div class="container-fluid">
-
-        <div class="card shadow mb-4">
-            <div class="card-header py-3">
-                {% include 'admin/embed/card/_header_action.html.twig' with {
-                    'sectionTitle': 'Orders',
-                    'actionUrl': path('admin_order_add')
-                } %}
-            </div>
-            <div class="card-body">
-                <form method="get" action="#" enctype="application/x-www-form-urlencoded">
-                    <div class="table-responsive">
-                        <table class="table table-bordered">
-                            <thead>
-                                <tr>
-                                    <th>Filter</th>
-                                    <th>Value</th>
-                                </tr>
-                            </thead>
-                            <tbody>
-                                <tr>
-                                    <td>Id:</td>
-                                    <td>{# knp_pagination_filter(pagination, {'o.id': 'Id'}) #}</td>
-                                </tr>
-                                <tr>
-                                    <td>Status:</td>
-                                    <td></td>
-                                </tr>
-                            </tbody>
-                            <tfoot>
-                                <tr>
-                                    <td colspan="2">
-                                        <button class="btn btn-outline-secondary">
-                                            Apply filters
-                                        </button>
-                                        <a href="{{ path(app.request.attributes.get('_route')) }}" class="btn btn-outline-secondary">
-                                            Reset filters
-                                        </a>
-                                    </td>
-                                </tr>
-                            </tfoot>
-                        </table>
-                    </div>
-                </form>
-                <div class="table-responsive">
-                    <table class="table table-bordered">
-                        <thead>
+    <div class="card shadow mb-4">
+        <div class="card-header py-3">
+            {% include 'admin/embed/card/_header_action.html.twig' with {
+                'sectionTitle': 'Orders',
+                'actionUrl': path('admin_order_add')
+            } %}
+        </div>
+        <div class="card-body">
+            {% include 'admin/order/embed/_table_filtration.html.twig' with {
+                'form': form
+            } %}
+            <div class="table-responsive">
+                <table class="table table-bordered">
+                    <thead>
+                    <tr>
+                        <th>{{ knp_pagination_sortable(pagination, 'Id', 'o.id') }}</th>
+                        <th>{{ knp_pagination_sortable(pagination, 'Created At', 'o.createdAt') }}</th>
+                        <th>Count of products</th>
+                        <th>Total price</th>
+                        <th>{{ knp_pagination_sortable(pagination, 'User', 'u.id') }}</th>
+                        <th>{{ knp_pagination_sortable(pagination, 'Status', 'o.status') }}</th>
+                        <th></th>
+                    </tr>
+                    </thead>
+                    <tbody>
+                    {% for order in pagination %}
                         <tr>
-                            <th>{{ knp_pagination_sortable(pagination, 'Id', 'o.id') }}</th>
-                            <th>{{ knp_pagination_sortable(pagination, 'Created At', 'o.createdAt') }}</th>
-                            <th>Count of products</th>
-                            <th>Total price</th>
-                            <th>{{ knp_pagination_sortable(pagination, 'Status', 'o.status') }}</th>
-                            <th></th>
+                            <td>{{ order.id }}</td>
+                            <td>{{ order.createdAt|date('H:i:s d/m/Y') }}</td>
+                            <td>{{ order.getOrderProducts.getValues()|length }}</td>
+                            <td>{{ order.totalPrice|format_currency('USD') }}</td>
+                            <td>#{{ order.owner.id }} {{ order.owner.email }}</td>
+                            <td>{{ statusList[order.status] }}</td>
+                            <td>
+                                <a href="{{ path('admin_order_edit', {'id': order.id}) }}" class="btn btn-outline-info">Edit</a>
+                            </td>
                         </tr>
-                        </thead>
-                        <tbody>
-                        {% for order in pagination %}
-                            <tr>
-                                <td>{{ order.id }}</td>
-                                <td>{{ order.createdAt|date('H:i:s d/m/Y') }}</td>
-                                <td>{{ order.getOrderProducts.getValues()|length }}</td>
-                                <td>{{ order.totalPrice|format_currency('USD') }}</td>
-                                <td>{{ statusList[order.status] }}</td>
-                                <td>
-                                    <a href="{{ path('admin_order_edit', {'id': order.id}) }}" class="btn btn-outline-info">Edit</a>
-                                </td>
-                            </tr>
-                        {% endfor %}
-                        </tbody>
-                    </table>
-                </div>
-                <div class="navigation">
-                    {{ knp_pagination_render(pagination) }}
-                </div>
+                    {% endfor %}
+                    </tbody>
+                </table>
+            </div>
+            <div class="navigation">
+                {{ knp_pagination_render(pagination) }}
             </div>
         </div>
-
     </div>
+{% endblock %}
+
+{% block javascripts %}
+    {{ parent() }}
+    <script>
+      const filtersVisibilityBtnElement = document.getElementById('order_list_filters_btn');
+      const filtersVisibilityBlockElement = document.getElementById('order_list_filters_block');
+      const filtersSection = 'order_list';
+
+      document.addEventListener("DOMContentLoaded", () => {
+        filtersVisibilityBtnElement.addEventListener("click", () => {
+          toggleFiltersVisibility(filtersSection);
+          changeFiltersBlockVisibility(filtersSection, filtersVisibilityBlockElement);
+        })
+
+        changeFiltersBlockVisibility(filtersSection, filtersVisibilityBlockElement);
+      });
+    </script>
 {% endblock %}

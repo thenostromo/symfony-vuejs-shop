@@ -4,7 +4,6 @@ namespace App\Utils\Manager;
 
 use Doctrine\ORM\EntityManagerInterface;
 use Doctrine\Persistence\ObjectRepository;
-use Knp\Component\Pager\PaginatorInterface;
 
 abstract class AbstractBaseManager
 {
@@ -13,15 +12,9 @@ abstract class AbstractBaseManager
      */
     protected $entityManager;
 
-    /**
-     * @var PaginatorInterface
-     */
-    protected $paginator;
-
-    public function __construct(EntityManagerInterface $entityManager, PaginatorInterface $paginator)
+    public function __construct(EntityManagerInterface $entityManager)
     {
         $this->entityManager = $entityManager;
-        $this->paginator = $paginator;
     }
 
     /**
@@ -31,6 +24,7 @@ abstract class AbstractBaseManager
 
     /**
      * @param string $id
+     *
      * @return object|null
      */
     public function find(string $id): ?object

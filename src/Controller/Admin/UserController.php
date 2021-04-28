@@ -45,7 +45,13 @@ class UserController extends AbstractController
         if ($form->isSubmitted() && $form->isValid()) {
             $user = $userFormHandler->processUserEditForm($userEditModel);
 
+            $this->addFlash('success', 'Your changes were saved!');
+
             return $this->redirectToRoute('admin_user_edit', ['id' => $user->getId()]);
+        }
+
+        if ($form->isSubmitted() && !$form->isValid()) {
+            $this->addFlash('warning', 'Something went wrong. Please, check your form!');
         }
 
         return $this->render('admin/user/edit.html.twig', [

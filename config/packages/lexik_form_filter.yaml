@@ -1,0 +1,6 @@
+lexik_form_filter:
+  listeners:
+    doctrine_orm: true
+    doctrine_dbal: true
+  force_case_insensitivity: false
+  encoding: ~

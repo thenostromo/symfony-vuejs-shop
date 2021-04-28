@@ -20,7 +20,9 @@ class CategoryController extends AbstractController
 {
     /**
      * @Route("/list", name="list")
+     *
      * @param CategoryRepository $categoryRepository
+     *
      * @return Response
      */
     public function index(CategoryRepository $categoryRepository): Response
@@ -35,9 +37,11 @@ class CategoryController extends AbstractController
     /**
      * @Route("/edit/{id}", name="edit")
      * @Route("/add", name="add")
-     * @param Request $request
+     *
+     * @param Request             $request
      * @param CategoryFormHandler $categoryFormHandler
-     * @param Category|null $category
+     * @param Category|null       $category
+     *
      * @return Response
      */
     public function edit(Request $request, CategoryFormHandler $categoryFormHandler, Category $category = null): Response
@@ -50,7 +54,13 @@ class CategoryController extends AbstractController
         if ($form->isSubmitted() && $form->isValid()) {
             $categoryFormHandler->processEditForm($categoryEditModel);
 
+            $this->addFlash('success', 'Your changes were saved!');
+
             return $this->redirectToRoute('admin_category_list');
+        }
+
+        if ($form->isSubmitted() && !$form->isValid()) {
+            $this->addFlash('warning', 'Something went wrong. Please, check your form!');
         }
 
         return $this->render('admin/category/edit.html.twig', [

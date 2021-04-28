@@ -52,7 +52,13 @@ class PromoCodeController extends AbstractController
         if ($form->isSubmitted() && $form->isValid()) {
             $promoCode = $promoCodeFormHandler->processEditForm($promoCodeEditModel);
 
+            $this->addFlash('success', 'Your changes were saved!');
+
             return $this->redirectToRoute('admin_promo_code_list', ['id' => $promoCode->getId()]);
+        }
+
+        if ($form->isSubmitted() && !$form->isValid()) {
+            $this->addFlash('warning', 'Something went wrong. Please, check your form!');
         }
 
         return $this->render('admin/promo-code/edit.html.twig', [

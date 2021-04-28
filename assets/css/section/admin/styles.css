@@ -34,17 +34,17 @@
 form .form-control {
     font-size: 1rem;
     padding: 1.5rem .8rem;
-}
+}/*
 form button[type=submit] {
     font-size: .8rem;
     padding: 1.5rem 1rem;
 }
+form button[type=submit] {
+    padding: .75rem 1rem;
+}*/
 select {
     padding: .8rem !important;
     height: 50px !important;
-}
-form button[type=submit] {
-    padding: .75rem 1rem;
 }
 label {
     display: inline-block;

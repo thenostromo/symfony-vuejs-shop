@@ -6,9 +6,10 @@ global.$ = global.jQuery = $;
 
 require('jquery.easing');
 require('chart.js');
-require('./js/section/admin/sb-admin-2/sb-admin-2');
-require('./js/section/admin/sb-admin-2/chart-area-demo');
-require('./js/section/admin/sb-admin-2/chart-pie-demo');
+require('./js/section/admin/theme/filters-feature');
+require('./js/section/admin/theme/sb-admin-2');
+require('./js/section/admin/theme/chart-area-demo');
+require('./js/section/admin/theme/chart-pie-demo');
 
 import './css/section/admin/libs.scss';
 

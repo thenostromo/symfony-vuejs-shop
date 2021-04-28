@@ -3,10 +3,9 @@
 namespace App\Controller\Admin;
 
 use App\Entity\Product;
+use App\Form\AdminType\ProductEditFormType;
 use App\Form\DTO\ProductEditModel;
 use App\Form\Handler\ProductFormHandler;
-use App\Form\AdminType\ProductEditFormType;
-use App\Repository\ProductRepository;
 use App\Utils\Manager\ProductManager;
 use Symfony\Bundle\FrameworkBundle\Controller\AbstractController;
 use Symfony\Component\HttpFoundation\Request;
@@ -21,16 +20,17 @@ class ProductController extends AbstractController
     /**
      * @Route("/list", name="list")
      *
-     * @param ProductRepository $productRepository
+     * @param ProductFormHandler $productFormHandler
+     * @param Request            $request
      *
      * @return Response
      */
-    public function index(ProductRepository $productRepository): Response
+    public function index(ProductFormHandler $productFormHandler, Request $request): Response
     {
-        $productList = $productRepository->findBy(['isDeleted' => false], ['id' => 'DESC']);
+        $pagination = $productFormHandler->processProductFiltersForm($request);
 
         return $this->render('admin/product/list.html.twig', [
-            'productList' => $productList,
+            'pagination' => $pagination,
         ]);
     }
 
@@ -55,7 +55,13 @@ class ProductController extends AbstractController
         if ($form->isSubmitted() && $form->isValid()) {
             $product = $productFormHandler->processEditForm($productEditModel);
 
+            $this->addFlash('success', 'Your changes were saved!');
+
             return $this->redirectToRoute('admin_product_edit', ['id' => $product->getId()]);
+        }
+
+        if ($form->isSubmitted() && !$form->isValid()) {
+            $this->addFlash('warning', 'Something went wrong. Please, check your form!');
         }
 
         $images = $product ? $product->getProductImages()->getValues() : [];
