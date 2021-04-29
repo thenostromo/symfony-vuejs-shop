@@ -18,6 +18,7 @@ const state = () => ({
   categoryProducts: [],
   orderProducts: [],
   orderProductIds: [],
+  busyProductIds: [],
   promoCode: {},
 
   staticStore: {
@@ -25,8 +26,8 @@ const state = () => ({
     promoCodeId: window.staticStore.promoCodeId,
     url: {
       apiCategories: window.staticStore.urlAPICategories,
-      apiOrder: window.staticStore.urlAPIOrder,
       apiCategoryProducts: window.staticStore.urlAPICategoryProducts,
+      apiOrder: window.staticStore.urlAPIOrder,
       apiOrderProducts: window.staticStore.urlAPIOrderProducts,
       apiPromoCode: window.staticStore.urlAPIPromoCode,
       viewProduct: window.staticStore.urlProductView
@@ -37,7 +38,6 @@ const state = () => ({
 
 const getters = {
   freeCategoryProducts(state) {
-    console.log(state);
     return state.categoryProducts.filter(
       item => state.busyProductIds.indexOf(item.id) === -1
     );
@@ -122,7 +122,7 @@ const mutations = {
   setCategories(state, categories) {
     state.categories = categories;
   },
-  setNewOrderProductInfo(state, formData) {
+  setNewProductInfo(state, formData) {
     state.newOrderProduct.category = formData.category;
     state.newOrderProduct.productId = formData.productId;
     state.newOrderProduct.quantity = formData.quantity;

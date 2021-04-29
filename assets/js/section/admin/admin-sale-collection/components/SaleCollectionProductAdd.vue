@@ -1,6 +1,6 @@
 <template>
   <div class="row mb-2">
-    <div class="col-md-2">
+    <div class="col-md-3">
       <select
         v-model="form.category"
         name="add_product_category_select"
@@ -17,7 +17,7 @@
         </option>
       </select>
     </div>
-    <div v-if="form.category" class="col-md-3">
+    <div v-if="form.category" class="col-md-4">
       <select
         v-model="form.productId"
         name="add_product_product_select"
@@ -35,20 +35,10 @@
     </div>
     <div v-if="form.productId" class="col-md-2">
       <input
-        v-model="form.quantity"
-        type="number"
-        class="form-control"
-        placeholder="quantity"
-        min="0"
-        :max="productQuantityMax"
-      />
-    </div>
-    <div v-if="form.productId" class="col-md-2">
-      <input
         v-model="form.pricePerOne"
         type="number"
         class="form-control"
-        placeholder="price per one"
+        placeholder="price"
         step="0.01"
         min="0"
         :max="productPriceMax"
@@ -60,7 +50,7 @@
         class="btn btn-outline-info"
         @click="viewDetails"
       >
-        Details
+        Product Details
       </button>
       <button
         v-if="form.productId"
@@ -79,29 +69,28 @@ import { getUrlProductView } from "../utils/url-generator";
 import { getProductInformativeTitle } from "../utils/title-formatter";
 
 export default {
-  name: "OrderProductAddForm",
+  name: "SaleCollectionProductAdd",
   data() {
     return {
       form: {
         category: "",
         productId: "",
-        quantity: "",
         pricePerOne: ""
       },
     };
   },
   computed: {
-    ...mapState("products", ["categories", "staticStore", "newOrderProduct"]),
+    ...mapState("products", ["categories", "staticStore", "newProduct"]),
     ...mapGetters("products", ["freeCategoryProducts"]),
     productPriceMax() {
       const productData = this.freeCategoryProducts.find(
-        product => product.id === this.form.productId
+          product => product.id === this.form.productId
       );
       return parseInt(productData.price);
     },
     productQuantityMax() {
       const productData = this.freeCategoryProducts.find(
-        product => product.id === this.form.productId
+          product => product.id === this.form.productId
       );
       return parseInt(productData.quantity);
     }
@@ -111,13 +100,12 @@ export default {
     ...mapActions("products", [
       "getProductsByCategory",
       "addNewProduct",
-      "getProductsByOrder"
+      "getProductsBySaleCollection"
     ]),
     productTitle(product) {
       return getProductInformativeTitle(product);
     },
     getProducts() {
-      console.log(this.form);
       this.setNewProductInfo(this.form);
       this.getProductsByCategory();
     },
@@ -125,8 +113,8 @@ export default {
       event.preventDefault();
 
       const url = getUrlProductView(
-        this.staticStore.url.viewProduct,
-        this.form.productId
+          this.staticStore.url.viewProduct,
+          this.form.productId
       );
       window.open(url, "_blank").focus();
     },

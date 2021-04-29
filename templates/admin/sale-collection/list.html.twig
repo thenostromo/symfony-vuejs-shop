@@ -17,6 +17,8 @@
                     <tr>
                         <th>Id</th>
                         <th>Title and Discount</th>
+                        <th>Valid until</th>
+                        <th>Is published</th>
                         <th></th>
                     </tr>
                     </thead>
@@ -28,6 +30,12 @@
                                 <i class="fas fa-fw fa-fire"></i>
                                 {{ saleCollection.title }}<br/>
                                 <span style="color: red; font-weight: 700">Products: {{ saleCollection.saleCollectionProducts.getValues()|length }}</span>
+                            </td>
+                            <td>
+                                {{ saleCollection.validUntil|date('H:i:s d/m/Y') }}
+                            </td>
+                            <td>
+                                <i class="fas fa-check fa-sm" style="color: {% if saleCollection.isPublished %}green{% else %}lightgray{% endif %};"></i>
                             </td>
                             <td>
                                 <a href="{{ path('admin_sale_collection_edit', {'id': saleCollection.id}) }}" class="btn btn-outline-info">Edit</a>

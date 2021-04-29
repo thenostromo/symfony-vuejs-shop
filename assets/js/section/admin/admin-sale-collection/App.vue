@@ -1,12 +1,12 @@
 <template>
   <div class="table-additional-selection">
-    <AddProduct/>
+    <SaleCollectionProductAdd/>
 
     <hr/>
 
-    <ProductItem
+    <SaleCollectionProductItem
       v-for="(product, index) in saleCollectionProducts"
-      :product="product"
+      :sale-collection-product="product"
       :index="index"
       :key="product.id"
     />
@@ -14,20 +14,21 @@
 </template>
 
 <script>
-import ProductItem from "./components/ProductItem";
-import AddProduct from "./components/AddProduct";
+import SaleCollectionProductItem from "./components/SaleCollectionProductItem";
+import SaleCollectionProductAdd from "./components/SaleCollectionProductAdd";
 import {mapActions, mapGetters, mapState} from "vuex";
 
 export default {
-  components: {AddProduct, ProductItem},
-  mounted() {
-    this.getProductsBySaleCollection()
-  },
+  components: {SaleCollectionProductAdd, SaleCollectionProductItem},
   computed: {
     ...mapState('products', ['saleCollectionProducts'])
   },
+  mounted() {
+    this.getCategories();
+    this.getProductsBySaleCollection()
+  },
   methods: {
-    ...mapActions('products', ['getProductsBySaleCollection']),
+    ...mapActions('products', ['getCategories', 'getProductsBySaleCollection']),
   }
 };
 </script>

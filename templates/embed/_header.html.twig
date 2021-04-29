@@ -10,22 +10,51 @@
 
         <nav class="main-nav">
             <ul class="menu">
-                <li class="menu-item {% if ROUTE_NAME == "shop_index" %}active{% endif %}">
-                    <a href="{{ path('shop_index') }}">
-                        <div>Homepage</div>
-                    </a>
-                </li>
-                {{ render(controller('App\\Controller\\EmbedController::menuCategories', {
-                    'pageRoute': ROUTE_NAME,
-                    'pageSlug': app.request.attributes.get('slug')
-                })) }}
-                <li class="menu-item">
-                    {% if app.user %}
-                        <a href="{{ path('profile_index') }}">My profile</a>
-                    {% else %}
-                        <a href="{{ path('security_login') }}">Login</a>
-                    {% endif %}
-                </li>
+                {% include 'embed/_menu_item.html.twig' with {
+                    'targetRoute': 'shop_index',
+                    'label': 'Homepage',
+                    'isBold': 1
+                } %}
+                {% include 'embed/_menu_item.html.twig' with {
+                    'targetRoute': 'category_show',
+                    'slug': 'jeans',
+                    'label': 'Jeans'
+                } %}
+                {% include 'embed/_menu_item.html.twig' with {
+                    'targetRoute': 'category_show',
+                    'slug': 'hats',
+                    'label': 'Hats'
+                } %}
+                {% include 'embed/_menu_item.html.twig' with {
+                    'targetRoute': 'category_show',
+                    'slug': 'jackets',
+                    'label': 'Jackets'
+                } %}
+                {% include 'embed/_menu_item.html.twig' with {
+                    'targetRoute': 'category_show',
+                    'slug': 'dresses',
+                    'label': 'Dresses'
+                } %}
+                {% include 'embed/_menu_item.html.twig' with {
+                    'targetRoute': 'category_show',
+                    'slug': 'sneakers',
+                    'label': 'Sneakers'
+                } %}
+
+                {% if app.user %}
+                    <a href="{{ path('profile_index') }}">My profile</a>
+                    {% include 'embed/_menu_item.html.twig' with {
+                        'targetRoute': 'profile_index',
+                        'label': 'My profile',
+                        'isBold': 1
+                    } %}
+                {% else %}
+                    {% include 'embed/_menu_item.html.twig' with {
+                        'targetRoute': 'security_login',
+                        'label': 'Login',
+                        'isBold': 1
+                    } %}
+                {% endif %}
             </ul>
         </nav>
 

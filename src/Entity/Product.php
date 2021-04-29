@@ -48,28 +48,28 @@ class Product
      * @ORM\GeneratedValue
      * @ORM\Column(type="integer")
      *
-     * @Groups({"product:list", "product:item", "order:item"})
+     * @Groups({"product:list", "product:item", "order:item", "sale_collection:item"})
      */
     private $id;
 
     /**
      * @ORM\Column(type="string", length=255)
      *
-     * @Groups({"product:list", "product:item", "order:item"})
+     * @Groups({"product:list", "product:item", "order:item", "sale_collection:item"})
      */
     private $title;
 
     /**
      * @ORM\Column(type="decimal", precision=6, scale=2)
      *
-     * @Groups({"product:list", "product:item", "order:item"})
+     * @Groups({"product:list", "product:item", "order:item", "sale_collection:item"})
      */
     private $price;
 
     /**
      * @ORM\Column(type="integer")
      *
-     * @Groups({"product:list", "product:item", "order:item"})
+     * @Groups({"product:list", "product:item", "order:item", "sale_collection:item"})
      */
     private $quantity;
 
@@ -101,7 +101,7 @@ class Product
 
     /**
      * @ORM\ManyToOne(targetEntity=Category::class, inversedBy="products")
-     * @Groups({"product:list", "product:item", "order:item"})
+     * @Groups({"product:list", "product:item", "order:item", "sale_collection:item"})
      */
     private $category;
 

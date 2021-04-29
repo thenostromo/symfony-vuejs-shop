@@ -12,22 +12,6 @@ use Symfony\Component\HttpFoundation\Response;
 class EmbedController extends AbstractController
 {
     /**
-     * @param CategoryRepository $categoryRepository
-     *
-     * @return Response
-     */
-    public function menuCategories(CategoryRepository $categoryRepository, string $pageRoute = null, string $pageSlug = null): Response
-    {
-        $categories = $categoryRepository->findBy([], ['title' => 'ASC'], 5);
-
-        return $this->render('embed/_menu_categories.html.twig', [
-            'categories' => $categories,
-            'pageRoute' => $pageRoute,
-            'pageSlug' => $pageSlug,
-        ]);
-    }
-
-    /**
      * @param ProductRepository $productRepository
      *
      * @return Response

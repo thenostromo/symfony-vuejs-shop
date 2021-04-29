@@ -2,13 +2,35 @@
 
 namespace App\Entity;
 
+use ApiPlatform\Core\Annotation\ApiResource;
 use App\Repository\SaleCollectionRepository;
 use Gedmo\Mapping\Annotation as Gedmo;
 use Doctrine\Common\Collections\ArrayCollection;
 use Doctrine\Common\Collections\Collection;
 use Doctrine\ORM\Mapping as ORM;
+use Symfony\Component\Serializer\Annotation\Groups;
 
 /**
+ * @ApiResource(
+ *     denormalizationContext={"groups"={"sale_collection:write"}},
+ *     collectionOperations={
+ *          "get"={
+ *              "normalization_context"={"groups"="sale_collection:list"},
+ *          },
+ *     },
+ *     itemOperations={
+ *          "get"={
+ *              "normalization_context"={"groups"="sale_collection:item"},
+ *              "security"="is_granted('ROLE_ADMIN')"
+ *          },
+ *          "put"={
+ *              "security"="is_granted('ROLE_ADMIN')"
+ *          },
+ *     },
+ *     attributes={
+ *          "formats"={"jsonhal", "json", "jsonld"}
+ *     },
+ * )
  * @ORM\Entity(repositoryClass=SaleCollectionRepository::class)
  */
 class SaleCollection
@@ -17,6 +39,8 @@ class SaleCollection
      * @ORM\Id
      * @ORM\GeneratedValue
      * @ORM\Column(type="integer")
+     *
+     * @Groups({"sale_collection:item"})
      */
     private $id;
 
@@ -29,11 +53,6 @@ class SaleCollection
      * @ORM\Column(type="text", nullable=true)
      */
     private $description;
-
-    /**
-     * @ORM\Column(type="string", length=255, nullable=true)
-     */
-    private $cover;
 
     /**
      * @Gedmo\Slug(fields={"title"})
@@ -52,7 +71,9 @@ class SaleCollection
     private $isPublished;
 
     /**
-     * @ORM\OneToMany(targetEntity=SaleCollectionProduct::class, mappedBy="saleCollection", orphanRemoval=true)
+     * @ORM\OneToMany(targetEntity=SaleCollectionProduct::class, mappedBy="saleCollection", cascade={"persist"}, orphanRemoval=true)
+     *
+     * @Groups({"sale_collection:item", "sale_collection:write"})
      */
     private $saleCollectionProducts;
 
@@ -99,18 +120,6 @@ class SaleCollection
     public function setSlug(string $slug): self
     {
         $this->slug = $slug;
-
-        return $this;
-    }
-
-    public function getCover(): ?string
-    {
-        return $this->cover;
-    }
-
-    public function setCover(?string $cover): self
-    {
-        $this->cover = $cover;
 
         return $this;
     }

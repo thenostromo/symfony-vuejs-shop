@@ -40,7 +40,23 @@
     border-bottom: 3px solid #F13C76;
     color: #f13c76
 }
-
+/*
+@media screen and (max-width: 991px) {
+    .main-nav {
+        display: block;
+        position: absolute;
+        background: white;
+        z-index: 999;
+        width: 100%;
+        top: 0;
+        margin-left: 0;
+    }
+    .menu {
+        display: flex;
+        align-items: center;
+        flex-direction: column;
+    }
+}*/
 @media screen and (min-width: 992px) {
     .main-nav {
         display: block;
@@ -50,4 +66,8 @@
 .menu li:hover > a,
 .menu li.active > a {
     color: #dc143c;
+}
+
+.font-weight-bold > a {
+    font-weight: 700 !important;
 }

@@ -25,7 +25,7 @@ class PromoCodeController extends AbstractController
      */
     public function index(PromoCodeRepository $promoCodeRepository): Response
     {
-        $promoCodeList = $promoCodeRepository->findBy(['isDeleted' => false], ['id' => 'DESC']);
+        $promoCodeList = $promoCodeRepository->findBy(['isDeleted' => false], ['id' => 'DESC'], 50);
 
         return $this->render('admin/promo-code/list.html.twig', [
             'promoCodeList' => $promoCodeList,

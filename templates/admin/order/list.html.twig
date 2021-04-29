@@ -3,6 +3,11 @@
 {% block title_detailed %}All Orders{% endblock %}
 
 {% block body %}
+    {% include 'admin/order/embed/_table_filtration.html.twig' with {
+        'sectionTitle': 'Filters',
+        'form': form
+    } %}
+
     <div class="card shadow mb-4">
         <div class="card-header py-3">
             {% include 'admin/embed/card/_header_action.html.twig' with {
@@ -11,9 +16,6 @@
             } %}
         </div>
         <div class="card-body">
-            {% include 'admin/order/embed/_table_filtration.html.twig' with {
-                'form': form
-            } %}
             <div class="table-responsive">
                 <table class="table table-bordered">
                     <thead>

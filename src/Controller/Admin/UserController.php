@@ -24,7 +24,7 @@ class UserController extends AbstractController
      */
     public function index(UserRepository $userRepository): Response
     {
-        $userList = $userRepository->findBy(['isDeleted' => false], ['id' => 'DESC']);
+        $userList = $userRepository->findBy(['isDeleted' => false], ['id' => 'DESC'], 50);
 
         return $this->render('admin/user/list.html.twig', [
             'userList' => $userList,

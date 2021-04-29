@@ -105,12 +105,10 @@
         window.staticStore = {}
         window.staticStore.saleCollectionId = "{{ saleCollection ? saleCollection.id : '' }}"
         window.staticStore.urlProductView = "{{ path('admin_product_edit_blank') }}"
+        window.staticStore.urlAPICategories = "{{ path('api_categories_get_collection') }}"
         window.staticStore.urlAPICategoryProducts = "{{ path('api_products_get_collection') }}"
-        window.staticStore.urlGetProductsBySaleCollection = "{{ path('admin_sale_collection_add_products_by_sale_collection') }}"
-        window.staticStore.urlAddProductToSaleCollection = "{{ path('admin_sale_collection_add_product_to_sale_collection') }}"
-        window.staticStore.urlRemoveProductFromSaleCollection = "{{ path('admin_sale_collection_remove_product_from_sale_collection') }}"
-        window.staticStore.urlAPIOrder = "{{ path('api_orders_get_collection') }}"
-        window.staticStore.urlAPIOrderProducts = "{{ path('api_order_products_post_collection') }}"
+        window.staticStore.urlAPISaleCollection = "{{ path('api_sale_collections_get_collection') }}"
+        window.staticStore.urlAPISaleCollectionProducts = "{{ path('api_sale_collection_products_post_collection') }}"
     </script>
     {{ encore_entry_script_tags('appAdminSaleCollection') }}
 {% endblock %}

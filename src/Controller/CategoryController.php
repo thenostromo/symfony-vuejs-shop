@@ -18,7 +18,7 @@ class CategoryController extends AbstractController
      */
     public function show(Category $category = null, ProductRepository $productRepository): Response
     {
-        if (!$category || $category->getIsHidden() || $category->getIsDeleted()) {
+        if (!$category) {
             throw new NotFoundHttpException();
         }
 
