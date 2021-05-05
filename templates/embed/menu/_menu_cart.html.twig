@@ -6,6 +6,8 @@
     if (typeof window.staticStore === 'undefined') {
         window.staticStore = {}
     }
+    window.staticStore.urlCart = "{{ path('api_carts_post_collection') }}";
+    window.staticStore.urlCartProduct = "{{ path('api_cart_products_post_collection') }}";
     window.staticStore.urlCartIndex = "{{ path('cart_index') }}"
     window.staticStore.urlProductShow = "{{ path('product_show_blank') }}"
     window.staticStore.urlAssetImageProducts = "{{ asset('uploads/images/products') }}"

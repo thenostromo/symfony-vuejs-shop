@@ -1,6 +1,6 @@
 {% extends 'base.html.twig' %}
 
-{% block title %}{{ categoryModel.title }} - RankedChoice{% endblock %}
+{% block title %}{{ category.title }} - RankedChoice{% endblock %}
 {% block page_keywords %}Jeans, Ranked Choice Homepage, Jackets{% endblock %}
 {% block page_description %}Category page of RankedChoice shop!{% endblock %}
 
@@ -16,39 +16,22 @@
     <script>
         function addProductToCart(productData)
         {
-            let cartJSON = localStorage.getItem('cart');
-            let cart = cartJSON ? JSON.parse(cartJSON) : [];
-            cart = cart.filter(item => {
-                return item.id !== productData.id
+            window.vueMenuCartInstance.addCartProduct({
+              id: productData.id,
+              quantity: 1
             })
-            cart.push({
-                id: productData.id,
-                title: productData.title,
-                categoryName: productData.category.title,
-                price: productData.price,
-                image: productData.images.length
-                    ? productData.images[0].filenameSmall
-                    : null,
-                quantity: 1
-            })
-
-            localStorage.setItem('cart', JSON.stringify(cart));
-            window.vueMenuCartInstance.getProductsOfCart()
         }
-
-        console.log(localStorage.getItem('cart'))
     </script>
     <script>
         if (typeof window.staticStore === 'undefined') {
             window.staticStore = {}
         }
-        window.staticStore.page = 1
-        window.staticStore.limit = 4
-        window.staticStore.selectedCategory = JSON.parse('{{ categoryModel|json_encode|raw }}')
+        window.staticStore.categoryId = {{ category.id }}
         window.staticStore.urlProductShow = "{{ path('product_show_blank') }}"
         window.staticStore.urlAssetImageProducts = "{{ asset('uploads/images/products') }}"
-        window.staticStore.urlGetProductsByCategory = "{{ path('api_products_get_collection') }}.jsonhal";
-        window.staticStore.addProductToCart = addProductToCart
+        window.staticStore.urlAPICategory = "{{ path('api_categories_get_collection') }}"
+        window.staticStore.urlAPICategoryProducts = "{{ path('api_products_get_collection') }}"
+        window.addProductToCart = addProductToCart
     </script>
     {{ encore_entry_script_tags('appMainCategoryShow') }}
 {% endblock %}

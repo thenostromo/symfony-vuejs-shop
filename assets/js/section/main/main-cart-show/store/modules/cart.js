@@ -1,129 +1,207 @@
-const axios = require('axios');
+import { apiConfig } from "../../../../../utils/settings";
+import { StatusCodes } from "http-status-codes";
+import { concatUrlByParams } from "../../../../../utils/url-generator";
+
+const axios = require("axios");
+
+function getAlertStructure() {
+  return {
+    type: null,
+    message: null
+  };
+}
 
 const state = () => ({
-    cartProducts: [],
-    alertInfo: null,
-    promoCodeInfo: {
-        value: '',
-        discount: 0
-    },
-    isSentForm: false,
-    staticStore: window.staticStore
-})
+  alert: getAlertStructure(),
+  promoCode: {
+    searchValue: "",
+    content: {}
+  },
+  isSentForm: false,
+
+  cart: {},
+
+  staticStore: {
+    url: {
+      apiCart: window.staticStore.urlCart,
+      apiCartProduct: window.staticStore.urlCartProduct,
+      apiPromoCode: window.staticStore.urlPromoCode,
+      apiOrder: window.staticStore.urlOrder,
+      assetImageProducts: window.staticStore.urlAssetImageProducts,
+      viewProduct: window.staticStore.urlProductShow
+    }
+  }
+});
 
 const getters = {
-    cartProducts(state) {
-        return state.staticStore.cartProducts
-    },
-    urlCartIndex(state) {
-        return state.staticStore.urlCartIndex
-    },
-    urlProductShow(state) {
-        return state.staticStore.urlProductShow
-    },
-    urlApprovePromoCode(state) {
-        return state.staticStore.urlApprovePromoCode
-    },
-    urlMakeCartOrder(state) {
-        return state.staticStore.urlMakeCartOrder
-    },
-    getUrlAssetImageProducts(state) {
-        return state.staticStore.urlAssetImageProducts
-    },
-    totalPrice(state, getters) {
-        let totalPrice = getters.priceWithoutPromoCode
-        return totalPrice - ((totalPrice / 100)) * state.promoCodeInfo.discount
-    },
-    priceWithoutPromoCode(state) {
-        let totalPrice = 0
-        state.cartProducts.forEach((item) => {
-            totalPrice += item.price * item.quantity
-        })
-        return totalPrice
-    },
-    countCartProducts(state) {
-        return state.cartProducts.length
+  totalPrice(state, getters) {
+    let totalPrice = getters.priceWithoutPromoCode;
+    if (!state.promoCode.content.discount) {
+      return totalPrice;
     }
-}
+
+    return totalPrice - (totalPrice / 100) * state.promoCode.content.discount;
+  },
+  priceWithoutPromoCode(state) {
+    let totalPrice = 0;
+    if (!state.cart.cartProducts) {
+      return 0;
+    }
+    state.cart.cartProducts.forEach(cartProduct => {
+      totalPrice += cartProduct.product.price * cartProduct.quantity;
+    });
+    return totalPrice;
+  },
+  countCartProducts(state) {
+    return state.cart.cartProducts ? state.cart.cartProducts.length : 0;
+  }
+};
 
 const actions = {
-    getProductsOfCart({commit}) {
-        let cartJSON = localStorage.getItem('cart');
-        const cart = cartJSON ? JSON.parse(cartJSON) : [];
-        commit('setProductsOfCart', cart)
-    },
-    async approvePromoCode({commit, getters, state}) {
-        commit('cleanAlertInfo')
+  async getCart({ state, commit }) {
+    const url = state.staticStore.url.apiCart;
 
-        let data = new FormData();
-        data.append("promo_code", state.promoCodeInfo.value);
-        const result = await axios.post(getters.urlApprovePromoCode, data)
-
-        if (result.data.success) {
-            commit('setPromoCodeInfo', {discount: result.data.data.discount})
-            commit('setAlertInfo', {
-                type: 'success',
-                message: 'Your promo code has approved!'
-            })
-        } else {
-            commit('setAlertInfo', {
-                type: 'warning',
-                message: 'Entered promo code not found.'
-            })
-        }
-    },
-    async makeOrder({commit, getters, state}) {
-        let data = new FormData();
-        console.log(state)
-        data.append("cart", JSON.stringify(state.cartProducts));
-        data.append("promoCodeValue", state.promoCodeInfo.value);
-        const result = await axios.post(getters.urlMakeCartOrder, data)
-
-      //  if (result.data.success) {
-            commit('setAlertInfo', {
-                type: 'success',
-                message: 'Thank you for your purchase! Our manager will contact with you in 24 hours.'
-            })
-            state.isSentForm = true
-      //  }
+    const result = await axios.get(url, apiConfig);
+    if (
+      result.data &&
+      result.status === StatusCodes.OK &&
+      result.data["hydra:member"].length
+    ) {
+      commit("setCart", result.data["hydra:member"][0]);
     }
-}
+  },
+  async addCartProduct({ state, dispatch }, productDataRaw) {
+    if (state.cart.id) {
+      dispatch("addProductToExistCart", productDataRaw);
+    } else {
+      dispatch("createCartAndAddProduct", productDataRaw);
+    }
+  },
+  async createCartAndAddProduct({ state, dispatch }, productDataRaw) {
+    const url = state.staticStore.url.apiCart;
+    const data = {
+      cartProducts: [
+        {
+          product: "/api/products/" + productDataRaw.id,
+          quantity: productDataRaw.quantity
+        }
+      ]
+    };
+    const result = await axios.post(url, data, apiConfig);
+
+    if (result.data && result.status === StatusCodes.CREATED) {
+      dispatch("getCart");
+    }
+  },
+  async addProductToExistCart({ state, dispatch }, productDataRaw) {
+    const url = state.staticStore.url.apiCartProduct;
+    const data = {
+      cart: "/api/carts/" + state.cart.id,
+      product: "/api/products/" + productDataRaw.id,
+      quantity: productDataRaw.quantity
+    };
+    const result = await axios.post(url, data, apiConfig);
+
+    console.log(result);
+    if (result.data && result.status === StatusCodes.CREATED) {
+      dispatch("getCart");
+    }
+  },
+  async removeCartProduct({ state, dispatch }, productId) {
+    const url = concatUrlByParams(
+      state.staticStore.url.apiCartProduct,
+      productId
+    );
+    const result = await axios.delete(url, apiConfig);
+
+    if (result.status === StatusCodes.NO_CONTENT) {
+      dispatch("getCart");
+    }
+  },
+  async cleanCart({ state, commit }) {
+    const url = concatUrlByParams(state.staticStore.url.apiCart, state.cart.id);
+    const result = await axios.delete(url, apiConfig);
+
+    if (result.status === StatusCodes.NO_CONTENT) {
+      commit("setCart", {});
+    }
+  },
+  async getPromoCode({ commit, getters, state }) {
+    commit("cleanAlert");
+
+    const url = state.staticStore.url.apiPromoCode + "?value=" + state.promoCode.searchValue;
+    const result = await axios.get(url, apiConfig);
+
+    if (
+      result.data &&
+      result.status === StatusCodes.OK &&
+      result.data["hydra:member"].length
+    ) {
+      commit("setAlert", {
+        type: "success",
+        message: "Your promo code has approved!"
+      });
+      commit("setPromoCodeContent", result.data["hydra:member"][0]);
+    } else {
+      commit("setAlert", {
+        type: "warning",
+        message: "Entered promo code not found."
+      });
+    }
+  },
+  async makeOrder({ commit, state, dispatch }) {
+    const url = state.staticStore.url.apiOrder;
+    const data = {
+      cartId: state.cart.id,
+      promoCodeId: null
+    };
+
+    if (state.promoCode.content) {
+      data.promoCodeId = state.promoCode.content.id;
+    }
+    const result = await axios.post(url, data, apiConfig);
+
+    console.log(result);
+    if (result.data && result.status === StatusCodes.CREATED) {
+      commit("setAlert", {
+        type: "success",
+        message:
+          "Thank you for your purchase! Our manager will contact with you in 24 hours."
+      });
+      commit("setIsSentForm", true);
+      dispatch("cleanCart");
+    }
+  }
+};
 
 const mutations = {
-    setProductsOfCart (state, products) {
-        state.cartProducts = products
-    },
-    setPromoCodeInfo (state, model) {
-        for (let key in model) {
-            state.promoCodeInfo[key] = model[key]
-        }
-        console.log(model, state)
-    },
-    removeProductFromCart (state, productId) {
-        state.cartProducts = state.cartProducts.filter((item) => {
-            return item.id !== productId
-        })
-        sessionStorage.setItem('cart', JSON.stringify(state.cartProducts));
-    },
-    cleanCart (state) {
-        state.cartProducts = []
-        sessionStorage.setItem('cart', JSON.stringify([]))
-    },
-    cleanAlertInfo (state) {
-        state.alertInfo = null
-    },
-    setAlertInfo (state, model) {
-        state.alertInfo = {
-            type: model.type,
-            message: model.message
-        }
-    }
-}
+  setCart(state, cart) {
+    state.cart = cart;
+  },
+  setPromoCodeFormValue(state, formData) {
+    state.promoCode.searchValue = formData.promoCodeValue;
+  },
+  setPromoCodeContent(state, promoCode) {
+    state.promoCode.content = promoCode;
+  },
+  cleanAlert(state) {
+    state.alert = getAlertStructure();
+  },
+  setIsSentForm(state, value) {
+    state.isSentForm = value;
+  },
+  setAlert(state, model) {
+    state.alert = {
+      type: model.type,
+      message: model.message
+    };
+  }
+};
 
 export default {
-    namespaced: true,
-    state,
-    getters,
-    actions,
-    mutations
-}
+  namespaced: true,
+  state,
+  getters,
+  actions,
+  mutations
+};

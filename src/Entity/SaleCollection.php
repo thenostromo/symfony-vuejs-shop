@@ -17,11 +17,11 @@ use Symfony\Component\Serializer\Annotation\Groups;
  *          "get"={
  *              "normalization_context"={"groups"="sale_collection:list"},
  *          },
+ *          "post"={}
  *     },
  *     itemOperations={
  *          "get"={
  *              "normalization_context"={"groups"="sale_collection:item"},
- *              "security"="is_granted('ROLE_ADMIN')"
  *          },
  *          "put"={
  *              "security"="is_granted('ROLE_ADMIN')"
@@ -46,6 +46,8 @@ class SaleCollection
 
     /**
      * @ORM\Column(type="string", length=255)
+     *
+     * @Groups({"sale_collection:list", "sale_collection:item"})
      */
     private $title;
 
@@ -62,6 +64,8 @@ class SaleCollection
 
     /**
      * @ORM\Column(type="datetime")
+     *
+     * @Groups({"sale_collection:list", "sale_collection:item"})
      */
     private $validUntil;
 

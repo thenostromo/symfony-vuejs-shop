@@ -8,6 +8,7 @@
             {% include 'admin/embed/card/_breadcrumbs.html.twig' with {
                 'sectionTitle': 'Products',
                 'actionUrl': path('admin_product_list'),
+                'addActionUrl': path('admin_product_add'),
                 'entity': product
             } %}
         </div>

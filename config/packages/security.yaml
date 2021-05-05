@@ -71,4 +71,5 @@ security:
         - { path: ^/admin/login }
         - { path: ^/admin/user, roles: ROLE_SUPER_ADMIN }
         - { path: ^/admin, roles: ROLE_ADMIN }
+        - { path: ^/cart, roles: ROLE_USER }
         - { path: ^/profile, roles: ROLE_USER }

@@ -11,24 +11,24 @@
     </thead>
 
     <tbody>
-    <ProductItem
-        v-for="product in cartProducts"
-        :product="product"
-        :key="product.id"
+    <CartProductItem
+        v-for="cartProduct in cart.cartProducts"
+        :cart-product="cartProduct"
+        :key="cartProduct.id"
     />
     </tbody>
   </table>
 </template>
 
 <script>
-import ProductItem from "../../main-cart-show/components/ProductItem";
+import CartProductItem from "../../main-cart-show/components/CartProductItem";
 import {mapState} from "vuex";
 
 export default {
-  name: "ProductList.vue",
-  components: {ProductItem},
+  name: "CartProductList",
+  components: {CartProductItem},
   computed: {
-    ...mapState('cart', ['cartProducts']),
+    ...mapState('cart', ['cart']),
   }
 }
 </script>

@@ -20,6 +20,7 @@ use Symfony\Component\Serializer\Annotation\Groups;
  *          "get"={
  *              "normalization_context"={"groups"="order:list"},
  *          },
+ *          "post"={"normalization_context"={"groups"="order:write"}}
  *     },
  *     itemOperations={
  *          "get"={
@@ -76,7 +77,7 @@ class Order
     private $status;
 
     /**
-     * @ORM\Column(type="integer")
+     * @ORM\Column(type="float")
      */
     private $totalPrice;
 
@@ -130,12 +131,12 @@ class Order
         return $this;
     }
 
-    public function getOwner(): ?User
+    public function getOwner(): User
     {
         return $this->owner;
     }
 
-    public function setOwner(?User $owner): self
+    public function setOwner(User $owner): self
     {
         $this->owner = $owner;
 
@@ -154,12 +155,12 @@ class Order
         return $this;
     }
 
-    public function getTotalPrice(): ?int
+    public function getTotalPrice(): ?float
     {
         return $this->totalPrice;
     }
 
-    public function setTotalPrice(int $totalPrice): self
+    public function setTotalPrice(float $totalPrice): self
     {
         $this->totalPrice = $totalPrice;
 

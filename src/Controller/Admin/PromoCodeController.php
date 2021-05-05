@@ -54,7 +54,7 @@ class PromoCodeController extends AbstractController
 
             $this->addFlash('success', 'Your changes were saved!');
 
-            return $this->redirectToRoute('admin_promo_code_list', ['id' => $promoCode->getId()]);
+            return $this->redirectToRoute('admin_promo_code_edit', ['id' => $promoCode->getId()]);
         }
 
         if ($form->isSubmitted() && !$form->isValid()) {

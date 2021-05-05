@@ -1,10 +1,10 @@
 import { StatusCodes } from "http-status-codes";
 import axios from "axios";
-import { apiConfig } from "../../utils/settings";
+import { apiConfig } from "../../../../../utils/settings";
 import {
   getUrlProductsByCategory,
   concatUrlByParams
-} from "../../utils/url-generator";
+} from "../../../../../utils/url-generator";
 
 const state = () => ({
   newOrderProduct: {

@@ -4,27 +4,27 @@
       <div class="text-center">
         <figure>
           <a
-            :href="getUrlProductShow(product.id)"
+            :href="getUrlProductShow(cartProduct.product.id)"
             target="_blank"
           >
             <img
-              :src="getUrlProductImage(product, product.image)"
-              :alt="product.title"
+              :src="getUrlProductImage(cartProduct.product, productImage)"
+              :alt="cartProduct.product.title"
             >
           </a>
         </figure>
         <div class="product-title">
           <a
-            :href="getUrlProductShow(product.id)"
+            :href="getUrlProductShow(cartProduct.product.id)"
             target="_blank"
           >
-            {{ product.title }}
+            {{ cartProduct.product.title }}
           </a>
         </div>
       </div>
     </td>
     <td class="price-col">
-      ${{ product.price }}
+      ${{ cartProduct.product.price }}
     </td>
     <td class="quantity-col">
       <input
@@ -46,7 +46,7 @@
         href="#"
         class="btn-remove"
         title="Remove Product"
-        @click="removeProductFromCart(product.id)"
+        @click="removeCartProduct(cartProduct.id)"
       >
         X
       </a>
@@ -55,7 +55,7 @@
 </template>
 
 <script>
-import {mapGetters, mapMutations, mapState} from "vuex";
+import {mapActions, mapGetters, mapMutations, mapState} from "vuex";
 
 export default {
   data() {
@@ -64,20 +64,31 @@ export default {
     }
   },
   name: "ProductItem",
-  props: ['product'],
+  props: ['cartProduct'],
   computed: {
-    ...mapGetters('cart', ['urlProductShow', 'getUrlAssetImageProducts']),
+    ...mapState('cart', ['staticStore']),
+    productImage() {
+      return this.cartProduct.product.productImages.length
+          ? this.cartProduct.product.productImages[0]
+          : null;
+    },
     productPrice() {
-      return this.quantity * this.product.price
+      return this.quantity * this.cartProduct.product.price
     }
   },
   methods: {
-    ...mapMutations('cart', ['removeProductFromCart']),
-    getUrlProductImage(product, imageFilename) {
-return this.getUrlAssetImageProducts + "/" + product.id + "/" + imageFilename
-    },
+    ...mapActions('cart', ['removeCartProduct']),
     getUrlProductShow(productId) {
-return this.urlProductShow + "/" + productId
+      return this.staticStore.url.viewProduct + "/" + productId;
+    },
+    getUrlProductImage(product, image) {
+      return (
+          this.staticStore.url.assetImageProducts +
+          "/" +
+          product.id +
+          "/" +
+          image.filenameSmall
+      );
     },
   }
 }

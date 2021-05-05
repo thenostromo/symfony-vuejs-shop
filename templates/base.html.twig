@@ -24,7 +24,7 @@
                 {% endblock %}
             </main>
 
-            {{ include('embed/_footer.html.twig') }}
+            {{ render(controller('App\\Controller\\EmbedController::footer')) }}
         </div>
 
         {{ encore_entry_script_tags('section-main') }}

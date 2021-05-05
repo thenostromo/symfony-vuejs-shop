@@ -1,0 +1,37 @@
+{% extends 'base.html.twig' %}
+
+{% block title %}{{ saleCollection.title }} - RankedChoice{% endblock %}
+{% block page_keywords %}Jeans, Ranked Choice Homepage, Jackets{% endblock %}
+{% block page_description %}Sale collection page of RankedChoice shop!{% endblock %}
+
+{% block stylesheets %}
+    {{ encore_entry_link_tags('appMainSaleCollectionShow') }}
+{% endblock %}
+
+{% block body %}
+    <div id="app"></div>
+{% endblock %}
+
+{% block javascripts %}
+    <script>
+      function addProductToCart(productData)
+      {
+        window.vueMenuCartInstance.addCartProduct({
+          id: productData.id,
+          quantity: 1
+        })
+      }
+    </script>
+    <script>
+      if (typeof window.staticStore === 'undefined') {
+        window.staticStore = {}
+      }
+      window.staticStore.saleCollectionId = {{ saleCollection.id }}
+      window.staticStore.urlProductShow = "{{ path('product_show_blank') }}"
+      window.staticStore.urlAssetImageProducts = "{{ asset('uploads/images/products') }}"
+      window.staticStore.urlAPISaleCollection = "{{ path('api_sale_collections_post_collection') }}"
+      window.staticStore.urlAPISaleCollectionProducts = "{{ path('api_sale_collection_products_post_collection') }}"
+      window.addProductToCart = addProductToCart
+    </script>
+    {{ encore_entry_script_tags('appMainSaleCollectionShow') }}
+{% endblock %}

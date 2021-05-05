@@ -6,7 +6,9 @@ use App\Repository\PromoCodeRepository;
 use Doctrine\Common\Collections\ArrayCollection;
 use Doctrine\Common\Collections\Collection;
 use Doctrine\ORM\Mapping as ORM;
+use ApiPlatform\Core\Annotation\ApiFilter;
 use ApiPlatform\Core\Annotation\ApiResource;
+use ApiPlatform\Core\Bridge\Doctrine\Orm\Filter\SearchFilter;
 use Symfony\Component\Serializer\Annotation\Groups;
 
 /**
@@ -24,6 +26,9 @@ use Symfony\Component\Serializer\Annotation\Groups;
  *          "formats"={"jsonhal", "jsonld", "json", "html", "csv"={"text/csv"}}
  *     }
  * )
+ * @ApiFilter(SearchFilter::class, properties={
+ *     "value": "exact",
+ * })
  */
 class PromoCode
 {
@@ -31,13 +36,13 @@ class PromoCode
      * @ORM\Id
      * @ORM\GeneratedValue
      * @ORM\Column(type="integer")
-     * @Groups({"promo_code:item"})
+     * @Groups({"promo_code:list", "promo_code:item"})
      */
     private $id;
 
     /**
      * @ORM\Column(type="string", length=255)
-     * @Groups({"promo_code:item"})
+     * @Groups({"promo_code:list", "promo_code:item"})
      */
     private $title;
 
@@ -53,7 +58,7 @@ class PromoCode
 
     /**
      * @ORM\Column(type="integer")
-     * @Groups({"promo_code:item"})
+     * @Groups({"promo_code:list", "promo_code:item"})
      */
     private $discount;
 
@@ -64,13 +69,13 @@ class PromoCode
 
     /**
      * @ORM\Column(type="datetime", nullable=true)
-     * @Groups({"promo_code:item"})
+     * @Groups({"promo_code:list", "promo_code:item"})
      */
     private $validUntil;
 
     /**
      * @ORM\Column(type="string", length=255)
-     * @Groups({"promo_code:item"})
+     * @Groups({"promo_code:list", "promo_code:item"})
      */
     private $value;
 

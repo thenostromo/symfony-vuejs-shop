@@ -11,6 +11,7 @@ Encore
     .addEntry('appAdminSaleCollection', './assets/js/section/admin/admin-sale-collection/app.js')
     .addEntry('appAdminOrder', './assets/js/section/admin/admin-order/app.js')
     .addEntry('appMainCategoryShow', './assets/js/section/main/main-category-show/app.js')
+  .addEntry('appMainSaleCollectionShow', './assets/js/section/main/main-sale-collection-show/app.js')
     .addEntry('appMenuCart', './assets/js/section/main/menu-cart/app.js')
     .addEntry('appMainCartShow', './assets/js/section/main/main-cart-show/app.js')
 

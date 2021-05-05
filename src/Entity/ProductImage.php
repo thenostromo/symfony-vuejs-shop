@@ -31,19 +31,19 @@ class ProductImage
 
     /**
      * @ORM\Column(type="string", length=255)
-     * @Groups({"product:list", "product:item"})
+     * @Groups({"product:list", "product:item", "cart:list", "cart:item", "sale_collection_product:list", "sale_collection_product:item"})
      */
     private $filenameBig;
 
     /**
      * @ORM\Column(type="string", length=255)
-     * @Groups({"product:list", "product:item"})
+     * @Groups({"product:list", "product:item", "cart:list", "cart:item", "sale_collection_product:list", "sale_collection_product:item"})
      */
     private $filenameMiddle;
 
     /**
      * @ORM\Column(type="string", length=255)
-     * @Groups({"product:list", "product:item"})
+     * @Groups({"product:list", "product:item", "cart:list", "cart:item", "sale_collection_product:list", "sale_collection_product:item"})
      */
     private $filenameSmall;
 

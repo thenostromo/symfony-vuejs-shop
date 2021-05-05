@@ -3,70 +3,25 @@
     <div class="row">
       <div class="col-lg-12 order-block">
         <div class="order-content">
-          <div
-            v-if="alertInfo"
-            :class="getAlertClass(alertInfo.type)"
-          >
-            {{ alertInfo.message }}
-          </div>
-          <div v-if="!isSentForm">
+          <Alert />
+          <div v-if="showCartContent">
             <div
-                class="alert alert-info mt-5"
-                v-if="cartProducts.length === 0"
+              v-if="cart.cartProducts.length === 0"
+              class="alert alert-info mt-5"
             >
               Your cart is empty ...
             </div>
             <div v-else>
-              <ProductList/>
+              <CartProductList />
 
-              <div class="mb-2">
-                <div class="row">
-                  <div class="col-md-8">
-                    <input
-                        v-model="promoCodeEntered"
-                        type="text"
-                        class="form-control"
-                        placeholder="Promo code"
-                    >
-                    <a
-                        v-if="promoCodeEntered"
-                        @click="approvePromoCode"
-                        class="btn btn-primary mb-3"
-                        style="color: white;"
-                    >
-                      <span>APPROVE</span>
-                    </a>
-                  </div>
-                  <div class="col-md-2">
-                  </div>
-                </div>
-              </div>
+              <PromoCodeBlock />
 
-              <div class="mb-2" v-if="promoCodeInfo.discount">
-                <div class="row">
-                  <div class="col-md-8">
-                    <strong>- {{ promoCodeInfo.discount }}%</strong> by promo code
-                    <strong>"{{ promoCodeInfo.value }}"</strong>
-                  </div>
-                </div>
-              </div>
-
-              <div class="mb-2">
-              <span style="font-size: 20px">
-                Total: <strong>${{ totalPrice }}</strong>
-                <span
-                    v-if="discountAmount"
-                    style="color: red"
-                >
-                  (you saved ${{ discountAmount }})
-                </span>
-              </span>
-              </div>
+              <CartTotalPrice />
 
               <a
-                  @click="makeOrder"
-                  class="btn btn-success mb-3"
-                  style="color: white;"
+                class="btn btn-success mb-3"
+                style="color: white;"
+                @click="makeOrder"
               >
                 <span>MAKE ORDER</span>
               </a>
@@ -79,50 +34,35 @@
 </template>
 
 <script>
-import {mapActions, mapGetters, mapMutations, mapState} from "vuex";
-import ProductList from "./components/ProductList";
+import { mapActions, mapGetters, mapMutations, mapState } from "vuex";
+import CartProductList from "./components/CartProductList";
+import PromoCodeBlock from "./components/PromoCodeBlock";
+import CartTotalPrice from "./components/CartTotalPrice";
+import Alert from "./components/Alert";
 
 export default {
-  data() {
-    return {
-      promoCode: ''
+  components: { Alert, CartTotalPrice, PromoCodeBlock, CartProductList },
+  computed: {
+    ...mapState("cart", ["cart", "isSentForm"]),
+    showCartContent() {
+      return !this.isSentForm;
     }
   },
-  components: {ProductList},
   mounted() {
-    this.getProductsOfCart()
-  },
-  computed: {
-    ...mapState('cart', ['cartProducts', 'alertInfo', 'promoCodeInfo', 'isSentForm']),
-    ...mapGetters('cart', ['totalPrice', 'priceWithoutPromoCode']),
-    discountAmount() {
-      return Math.round((this.priceWithoutPromoCode - this.totalPrice) * 100) / 100
-    },
-    promoCodeEntered: {
-      get() {
-        return this.promoCodeInfo.value
-      },
-      set(value) {
-        this.setPromoCodeInfo({value})
-      }
-    },
+    this.getCart();
   },
   methods: {
-    ...mapActions('cart', ['getProductsOfCart', 'makeOrder', 'approvePromoCode']),
-    ...mapMutations('cart', ['cleanCart', 'setPromoCodeInfo']),
-    getAlertClass(type) {
-      return 'alert alert-' + type
-    }
+    ...mapActions("cart", ["getCart", "makeOrder"])
   }
 };
 </script>
 
 <style scoped>
-  .order-block {
-    display: flex;
-    justify-content: center;
-  }
-  .order-content {
-    max-width: 700px;
-  }
+.order-block {
+  display: flex;
+  justify-content: center;
+}
+.order-content {
+  max-width: 700px;
+}
 </style>

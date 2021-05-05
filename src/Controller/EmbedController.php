@@ -56,10 +56,24 @@ class EmbedController extends AbstractController
      */
     public function saleCollectionHeader(SaleCollectionRepository $saleCollectionRepository): Response
     {
-        $saleCollection = $saleCollectionRepository->findOneBy([], ['id' => 'ASC']);
+        $saleCollection = $saleCollectionRepository->findOneBy(['isPublished' => true], ['id' => 'ASC']);
 
         return $this->render('embed/_sale_collection_header.html.twig', [
             'saleCollection' => $saleCollection,
+        ]);
+    }
+
+    /**
+     * @param SaleCollectionRepository $saleCollectionRepository
+     *
+     * @return Response
+     */
+    public function footer(SaleCollectionRepository $saleCollectionRepository): Response
+    {
+        $saleCollectionList = $saleCollectionRepository->findBy(['isPublished' => true], ['id' => 'ASC']);
+
+        return $this->render('embed/_footer.html.twig', [
+            'saleCollectionList' => $saleCollectionList,
         ]);
     }
 }

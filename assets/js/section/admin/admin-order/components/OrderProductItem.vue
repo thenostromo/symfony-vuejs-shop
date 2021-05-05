@@ -26,8 +26,8 @@
 
 <script>
 import { mapActions, mapState } from "vuex";
-import { getUrlProductView } from "../utils/url-generator";
-import { getProductInformativeTitle } from "../utils/title-formatter";
+import { getProductInformativeTitle } from "../../../../utils/title-formatter";
+import { getUrlProductView } from "../../../../utils/url-generator";
 
 export default {
   name: "OrderProductItem",

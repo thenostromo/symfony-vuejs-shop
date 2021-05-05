@@ -48,21 +48,21 @@ class Product
      * @ORM\GeneratedValue
      * @ORM\Column(type="integer")
      *
-     * @Groups({"product:list", "product:item", "order:item", "sale_collection:item"})
+     * @Groups({"product:list", "product:item", "order:item", "sale_collection:item", "sale_collection_product:list", "sale_collection_product:item", "cart:list", "cart:item"})
      */
     private $id;
 
     /**
      * @ORM\Column(type="string", length=255)
      *
-     * @Groups({"product:list", "product:item", "order:item", "sale_collection:item"})
+     * @Groups({"product:list", "product:item", "order:item", "sale_collection:item", "sale_collection_product:list", "sale_collection_product:item", "cart:list", "cart:item"})
      */
     private $title;
 
     /**
      * @ORM\Column(type="decimal", precision=6, scale=2)
      *
-     * @Groups({"product:list", "product:item", "order:item", "sale_collection:item"})
+     * @Groups({"product:list", "product:item", "order:item", "sale_collection:item", "sale_collection_product:list", "sale_collection_product:item", "cart:list", "cart:item"})
      */
     private $price;
 
@@ -123,7 +123,7 @@ class Product
     /**
      * @ORM\OneToMany(targetEntity=ProductImage::class, mappedBy="product", orphanRemoval=true)
      *
-     * @Groups({"product:list", "product:item"})
+     * @Groups({"product:list", "product:item", "cart:list", "cart:item", "sale_collection_product:list", "sale_collection_product:item"})
      */
     private $productImages;
 

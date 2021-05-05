@@ -20,52 +20,12 @@ class SaleCollectionController extends AbstractController
     {
         $saleCollection = $saleCollectionRepository->findOneBy(['slug' => $slug]);
 
-        if (!$saleCollection || $saleCollection->getIsHidden() || $saleCollection->getIsDeleted()) {
+        if (!$saleCollection || !$saleCollection->getIsPublished()) {
             throw new NotFoundHttpException();
         }
 
-        $productsModel = [];
-
-        /** @var SaleCollectionProduct $saleCollectionProduct */
-        foreach ($saleCollection->getSaleCollectionProducts()->getValues() as $saleCollectionProduct) {
-            $product = $saleCollectionProduct->getProduct();
-            $images = $product->getProductImages()->getValues();
-
-            $productModel = [
-                'id' => $product->getId(),
-                'title' => str_replace("'", '', $product->getTitle()),
-                'price' => $product->getPrice(),
-                'quantity' => $product->getQuantity(),
-                'images' => [],
-                'category' => [
-                    'id' => $product->getCategory()->getId(),
-                    'title' => $product->getCategory()->getTitle(),
-                    'slug' => $product->getCategory()->getSlug(),
-                ],
-            ];
-
-            /** @var ProductImage $image */
-            foreach ($images as $image) {
-                $productModel['images'][] = [
-                    'id' => $image->getId(),
-                    'filenameBig' => $image->getFilenameBig(),
-                    'filenameMiddle' => $image->getFilenameMiddle(),
-                    'filenameSmall' => $image->getFilenameSmall(),
-                ];
-            }
-
-            $productsModel[] = $productModel;
-        }
-
-        $saleCollectionModel = [
-            'id' => $saleCollection->getId(),
-            'title' => $saleCollection->getTitle(),
-        ];
-
-        return $this->render('category/show.html.twig', [
-            'categoryModel' => $saleCollection,
-            'category' => $saleCollection,
-            'productsModel' => $productsModel,
+        return $this->render('sale-collection/show.html.twig', [
+            'saleCollection' => $saleCollection,
         ]);
     }
 }

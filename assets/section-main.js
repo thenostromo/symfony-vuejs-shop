@@ -23,3 +23,6 @@ import './css/section/main/_product.css';
 import './css/section/main/_product_list.css';
 import './css/section/main/_spinner.css';
 import './css/section/main/_typography.css';
+
+require('./js/section/main/utils/menu');
+require('./js/section/main/utils/header-banner');

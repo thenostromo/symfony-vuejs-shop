@@ -22,49 +22,8 @@ class CategoryController extends AbstractController
             throw new NotFoundHttpException();
         }
 
-        $products = $productRepository->findBy(['category' => $category]);
-        $productsModel = [];
-
-        /** @var Product $product */
-        foreach ($products as $product) {
-            $images = $product->getProductImages()->getValues();
-
-            $productModel = [
-                'id' => $product->getId(),
-                'title' => str_replace("'", '', $product->getTitle()),
-                'price' => $product->getPrice(),
-                'quantity' => $product->getQuantity(),
-                'images' => [],
-                'category' => [
-                    'id' => $product->getCategory()->getId(),
-                    'title' => $product->getCategory()->getTitle(),
-                    'slug' => $product->getCategory()->getSlug(),
-                ],
-            ];
-
-            /** @var ProductImage $image */
-            foreach ($images as $image) {
-                $productModel['images'][] = [
-                    'id' => $image->getId(),
-                    'filenameBig' => $image->getFilenameBig(),
-                    'filenameMiddle' => $image->getFilenameMiddle(),
-                    'filenameSmall' => $image->getFilenameSmall(),
-                ];
-            }
-
-            $productsModel[] = $productModel;
-        }
-
-        $categoryModel = [
-            'id' => $category->getId(),
-            'title' => $category->getTitle(),
-        ];
-
         return $this->render('category/show.html.twig', [
-            'categoryModel' => $categoryModel,
             'category' => $category,
-            'products' => $products,
-            'productsModel' => $productsModel,
         ]);
     }
 }

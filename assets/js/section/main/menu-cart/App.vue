@@ -6,7 +6,7 @@
     </a>
 
     <div class="dropdown-menu cart-dropdown-window">
-      <ProductList/>
+      <CartProductList/>
 
       <div class="total">
         <span>Total</span>
@@ -16,7 +16,7 @@
 
       <div class="actions" v-if="countCartProducts">
         <a
-          :href="urlCartIndex"
+          :href="staticStore.url.viewCart"
           class="btn btn-success"
         >
           View Cart
@@ -37,20 +37,20 @@
 </template>
 
 <script>
-import {mapActions, mapGetters, mapMutations} from "vuex";
-import ProductList from "./components/ProductList";
+import {mapState, mapActions, mapGetters, mapMutations} from "vuex";
+import CartProductList from "./components/CartProductList";
 
 export default {
-  components: {ProductList},
+  components: {CartProductList},
   computed: {
-    ...mapGetters('cart', ['totalPrice', 'countCartProducts', 'urlCartIndex']),
+    ...mapState("cart", ["staticStore"]),
+    ...mapGetters('cart', ['totalPrice', 'countCartProducts']),
   },
   mounted() {
-    this.getProductsOfCart()
+    this.getCart()
   },
   methods: {
-    ...mapActions('cart', ['getProductsOfCart']),
-    ...mapMutations('cart', ['cleanCart'])
+    ...mapActions('cart', ['getCart', 'cleanCart'])
   }
 };
 </script>

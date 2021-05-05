@@ -1,10 +1,10 @@
 import { StatusCodes } from "http-status-codes";
 import axios from "axios";
-import { apiConfig } from "../../utils/settings";
+import { apiConfig } from "../../../../../utils/settings";
 import {
   getUrlProductsByCategory,
   concatUrlByParams
-} from "../../utils/url-generator";
+} from "../../../../../utils/url-generator";
 
 const state = () => ({
   newProduct: {
@@ -33,7 +33,7 @@ const state = () => ({
 })
 
 const getters = {
-  freeCategoryProducts(state) {console.log(state.categoryProducts)
+  freeCategoryProducts(state) {
     return state.categoryProducts.filter(
       item => state.busyProductIds.indexOf(item.id) === -1
     );

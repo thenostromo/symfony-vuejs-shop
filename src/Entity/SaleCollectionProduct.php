@@ -11,6 +11,7 @@ use ApiPlatform\Core\Annotation\ApiResource;
  * @ORM\Entity(repositoryClass=SaleCollectionProductRepository::class)
  * @ApiResource(
  *     collectionOperations={
+ *     "get"={"normalization_context"={"groups"="sale_collection_product:list"}},
  *          "post"={"normalization_context"={"groups"="sale_collection_product:write"}}
  *     },
  *     itemOperations={
