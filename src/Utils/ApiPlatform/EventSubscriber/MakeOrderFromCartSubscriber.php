@@ -44,23 +44,25 @@ class MakeOrderFromCartSubscriber implements EventSubscriberInterface
             return;
         }
 
+        $order->setOwner($user);
+
         $contentJSON = $event->getRequest()->getContent();
         if (!$contentJSON) {
             return;
         }
 
         $content = json_decode($contentJSON, true);
-        if (!array_key_exists('cartId', $content) || !array_key_exists('promoCodeId', $content)) {
+        if (!array_key_exists('cartId', $content)) {
             return;
         }
 
         $cartId = (int) $content['cartId'];
-        $promoCodeId = (int) $content['promoCodeId'];
-
-        $order->setOwner($user);
-
         $this->orderManager->addOrderProductsByCartId($order, $cartId);
-        $this->orderManager->addPromoCodeByPromoCodeId($order, $promoCodeId);
+
+        if (array_key_exists('promoCodeId', $content)) {
+            $promoCodeId = (int) $content['promoCodeId'];
+            $this->orderManager->addPromoCodeByPromoCodeId($order, $promoCodeId);
+        }
 
         $this->orderManager->recalculateOrderTotalPrice($order);
     }

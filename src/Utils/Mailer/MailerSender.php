@@ -29,49 +29,59 @@ class MailerSender
 
     /**
      * @param MailerOptions $mailerOptions
+     *
+     * @return TemplatedEmail
      */
-    public function sendTemplatedEmail(MailerOptions $mailerOptions): void
+    public function sendTemplatedEmail(MailerOptions $mailerOptions): TemplatedEmail
     {
         $email = (new TemplatedEmail())
-            ->to($mailerOptions->recipient)
-            ->cc($mailerOptions->cc)
-            ->subject($mailerOptions->subject)
-            ->htmlTemplate($mailerOptions->htmlTemplate)
-            ->context($mailerOptions->context);
+            ->to($mailerOptions->getRecipient())
+            ->subject($mailerOptions->getSubject())
+            ->htmlTemplate($mailerOptions->getHtmlTemplate())
+            ->context($mailerOptions->getContext());
+        if ($mailerOptions->getCc()) {
+            $email->cc($mailerOptions->getCc());
+        }
 
         try {
             $this->mailer->send($email);
         } catch (TransportExceptionInterface $e) {
-            $this->logger->critical($mailerOptions->subject, [
+            $this->logger->critical($mailerOptions->getSubject(), [
                 'errorText' => $e->getTraceAsString(),
             ]);
 
             $systemMailerOptions = new MailerOptions();
-            $systemMailerOptions->text = $e->getTraceAsString();
+            $systemMailerOptions->setText($e->getTraceAsString());
 
             $this->sendSystemEmail($systemMailerOptions);
         }
+
+        return $email;
     }
 
     /**
      * @param MailerOptions $mailerOptions
+     *
+     * @return Email
      */
-    public function sendSystemEmail(MailerOptions $mailerOptions): void
+    public function sendSystemEmail(MailerOptions $mailerOptions): Email
     {
-        $mailerOptions->subject = '[Exception] An error occurred while sending the letter';
-        $mailerOptions->recipient = 'admin@ranked-choice.com';
+        $mailerOptions->setSubject('[Exception] An error occurred while sending the letter');
+        $mailerOptions->setRecipient('admin@ranked-choice.com');
 
         $email = (new Email())
-            ->to($mailerOptions->recipient)
-            ->subject($mailerOptions->subject)
-            ->text($mailerOptions->text);
+            ->to($mailerOptions->getRecipient())
+            ->subject($mailerOptions->getSubject())
+            ->text($mailerOptions->getText());
 
         try {
             $this->mailer->send($email);
         } catch (TransportExceptionInterface $e) {
-            $this->logger->critical($mailerOptions->subject, [
+            $this->logger->critical($mailerOptions->getSubject(), [
                 'errorText' => $e->getTraceAsString(),
             ]);
         }
+
+        return $email;
     }
 }

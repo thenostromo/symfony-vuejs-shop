@@ -95,6 +95,7 @@ class Order
 
     /**
      * @ORM\ManyToOne(targetEntity=PromoCode::class, inversedBy="orders")
+     * @ORM\JoinColumn(nullable=true)
      *
      * @Groups({"order:item", "order:item:update"})
      */

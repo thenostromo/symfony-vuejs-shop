@@ -8,6 +8,8 @@ parameters:
     uploads_temp_dir: '%uploads_dir%/temp'
     uploads_images_dir: '%uploads_dir%/images'
     images_products_dir: '%uploads_images_dir%/products'
+    router.request_context.scheme: '%env(SITE_BASE_SCHEME)%'
+    router.request_context.host: '%env(SITE_BASE_HOST)%'
 
 services:
     # default configuration for services in *this* file
@@ -34,10 +36,6 @@ services:
     App\Controller\:
         resource: '../src/Controller/'
         tags: ['controller.service_arguments']
-
-    Twig\Extra\Intl\:
-        resource: '../vendor/twig/intl-extra/*'
-        tags: [ 'twig.extension' ]
 
     my.oauth_aware.user_provider.service:
         class: HWI\Bundle\OAuthBundle\Security\Core\User\OAuthUserProvider
