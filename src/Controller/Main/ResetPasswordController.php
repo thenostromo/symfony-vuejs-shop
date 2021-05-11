@@ -3,10 +3,14 @@
 namespace App\Controller\Main;
 
 use App\Entity\User;
+use App\Event\ResetUserPasswordEvent;
 use App\Form\ChangePasswordFormType;
 use App\Form\ResetPasswordRequestFormType;
+use App\Utils\Manager\UserManager;
 use Symfony\Bridge\Twig\Mime\TemplatedEmail;
 use Symfony\Bundle\FrameworkBundle\Controller\AbstractController;
+use Symfony\Component\EventDispatcher\EventDispatcher;
+use Symfony\Component\EventDispatcher\EventDispatcherInterface;
 use Symfony\Component\HttpFoundation\RedirectResponse;
 use Symfony\Component\HttpFoundation\Request;
 use Symfony\Component\HttpFoundation\Response;
@@ -37,16 +41,17 @@ class ResetPasswordController extends AbstractController
      *
      * @Route("", name="app_forgot_password_request")
      */
-    public function request(Request $request, MailerInterface $mailer): Response
+    public function request(Request $request, EventDispatcherInterface $eventDispatcher, UserManager $userManager): Response
     {
         $form = $this->createForm(ResetPasswordRequestFormType::class);
         $form->handleRequest($request);
 
         if ($form->isSubmitted() && $form->isValid()) {
-            return $this->processSendingPasswordResetEmail(
-                $form->get('email')->getData(),
-                $mailer
-            );
+            $email = $form->get('email')->getData();
+
+            $eventDispatcher->dispatch(new ResetUserPasswordEvent($email));
+
+            return $this->redirectToRoute('app_check_email');
         }
 
         return $this->render('main/security/reset_password/request.html.twig', [
@@ -61,11 +66,6 @@ class ResetPasswordController extends AbstractController
      */
     public function checkEmail(): Response
     {
-        // We prevent users from directly accessing this page
-        if (!$this->canCheckEmail()) {
-            return $this->redirectToRoute('app_forgot_password_request');
-        }
-
         return $this->render('main/security/reset_password/check_email.html.twig', [
             'tokenLifetime' => $this->resetPasswordHelper->getTokenLifetime(),
         ]);
@@ -128,49 +128,5 @@ class ResetPasswordController extends AbstractController
         return $this->render('main/security/reset_password/reset.html.twig', [
             'resetForm' => $form->createView(),
         ]);
-    }
-
-    private function processSendingPasswordResetEmail(string $emailFormData, MailerInterface $mailer): RedirectResponse
-    {
-        $user = $this->getDoctrine()->getRepository(User::class)->findOneBy([
-            'email' => $emailFormData,
-        ]);
-
-        // Marks that you are allowed to see the app_check_email page.
-        $this->setCanCheckEmailInSession();
-
-        // Do not reveal whether a user account was found or not.
-        if (!$user) {
-            return $this->redirectToRoute('app_check_email');
-        }
-
-        try {
-            $resetToken = $this->resetPasswordHelper->generateResetToken($user);
-        } catch (ResetPasswordExceptionInterface $e) {
-            // If you want to tell the user why a reset email was not sent, uncomment
-            // the lines below and change the redirect to 'app_forgot_password_request'.
-            // Caution: This may reveal if a user is registered or not.
-            //
-            // $this->addFlash('reset_password_error', sprintf(
-            //     'There was a problem handling your password reset request - %s',
-            //     $e->getReason()
-            // ));
-
-            return $this->redirectToRoute('app_check_email');
-        }
-
-        $email = (new TemplatedEmail())
-            ->from(new Address('robot@ranked-choice.com', 'Robot'))
-            ->to($user->getEmail())
-            ->subject('Your password reset request')
-            ->htmlTemplate('reset_password/email.html.twig')
-            ->context([
-                'resetToken' => $resetToken,
-            ])
-        ;
-
-        $mailer->send($email);
-
-        return $this->redirectToRoute('app_check_email');
     }
 }
