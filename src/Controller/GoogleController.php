@@ -8,25 +8,25 @@ use Symfony\Bundle\FrameworkBundle\Controller\AbstractController;
 use Symfony\Component\HttpFoundation\Request;
 use Symfony\Component\Routing\Annotation\Route;
 
-class FacebookController extends AbstractController
+class GoogleController extends AbstractController
 {
     /**
      * Link to this controller to start the "connect" process.
      *
-     * @Route("/connect/facebook", name="connect_facebook_start")
+     * @Route("/connect/google", name="connect_google_start")
      */
     public function connectAction(ClientRegistry $clientRegistry)
     {
         return $clientRegistry
-            ->getClient('facebook_main')
+            ->getClient('google_main')
             ->redirect([], []);
     }
 
     /**
-     * @Route("/connect/facebook/check", name="connect_facebook_check")
+     * @Route("/connect/google/check", name="connect_google_check")
      */
     public function connectCheckAction(Request $request, ClientRegistry $clientRegistry)
     {
-       //
+        //
     }
 }

@@ -79,6 +79,16 @@ class User implements UserInterface
      */
     private $isDeleted;
 
+    /**
+     * @ORM\Column(type="string", length=22, nullable=true)
+     */
+    private $facebookId;
+
+    /**
+     * @ORM\Column(type="string", length=25, nullable=true)
+     */
+    private $googleId;
+
     public function __construct()
     {
         $this->orders = new ArrayCollection();
@@ -268,6 +278,30 @@ class User implements UserInterface
     public function setUsername(string $username): self
     {
         $this->username = $username;
+
+        return $this;
+    }
+
+    public function getFacebookId(): ?int
+    {
+        return $this->facebookId;
+    }
+
+    public function setFacebookId(?int $facebookId): self
+    {
+        $this->facebookId = $facebookId;
+
+        return $this;
+    }
+
+    public function getGoogleId(): ?string
+    {
+        return $this->googleId;
+    }
+
+    public function setGoogleId(?string $googleId): self
+    {
+        $this->googleId = $googleId;
 
         return $this;
     }
