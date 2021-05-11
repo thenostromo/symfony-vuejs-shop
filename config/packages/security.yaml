@@ -21,7 +21,7 @@ security:
             provider: app_user_provider
             guard:
                 authenticators:
-                    - App\Security\Admin\LoginFormAuthenticator
+                    - App\Security\Authenticator\Admin\LoginFormAuthenticator
             remember_me:
                 secret: '%kernel.secret%'
                 lifetime: 604800 # 1 week in seconds
@@ -35,10 +35,10 @@ security:
             provider: app_user_provider
             guard:
                 authenticators:
-                    - App\Security\LoginFormAuthenticator
-                    - App\Security\FacebookAuthenticator
-                    - App\Security\GoogleAuthenticator
-                entry_point: App\Security\LoginFormAuthenticator
+                    - App\Security\Authenticator\LoginFormAuthenticator
+                    - App\Security\Authenticator\FacebookAuthenticator
+                    - App\Security\Authenticator\GoogleAuthenticator
+                entry_point: App\Security\Authenticator\LoginFormAuthenticator
             remember_me:
                 secret: '%kernel.secret%'
                 lifetime: 604800 # 1 week in seconds
