@@ -1,9 +1,11 @@
-{% apply inky_to_html|inline_css(encore_entry_css_source('email')) %}
+{% apply inky_to_html|inline_css(source('@build/email.css')) %}
     <container>
         <row class="header">
             <columns>
                 <a href="{{ url('shop_index') }}">
-                    <img src="{{ email.image('@images/icons/logo_366x79.svg') }}" class="logo" alt="Ranked Choice">
+                    <center>
+                        <img src="{{ email.image('@images/icons/logo_366x79.svg') }}" class="logo" alt="Ranked Choice">
+                    </center>
                 </a>
             </columns>
         </row>
@@ -11,20 +13,14 @@
         {% block content %}
         {% endblock %}
 
+        <spacer size="20"></spacer>
         <row class="footer">
             <columns>
-                <p>Cheers,</p>
-                <p>Your friendly <em>Space Bar Team</em></p>
-            </columns>
-        </row>
-        <row class="bottom">
-            <columns>
-                <center>
-                    <spacer size="20"></spacer>
-                    <div>
-                        Sent with ❤️ from the friendly folks at The Space Bar
-                    </div>
-                </center>
+                <p>
+                    <center>
+                        By RankedChoice Team
+                    </center>
+                </p>
             </columns>
         </row>
     </container>

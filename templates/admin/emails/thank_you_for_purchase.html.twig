@@ -1,63 +1,95 @@
-<h1>Thank you for your purchase!</h1>
+{% extends 'main/emails/base.html.twig' %}
 
-<p>
-    Thank you for your purchase! Our manager will contact with you in 24 hours.
-</p>
-
-<h3>Order info:</h3>
-
-<table>
-    <thead>
-    <tr>
-        <td>#</td>
-        <td>title</td>
-        <td>quantity</td>
-        <td>price</td>
-    </tr>
-    </thead>
-    <tbody>
-    {% for orderProduct in order.orderProducts %}
-        <tr>
-            <td>{{ loop.index }}</td>
-            <td>{{ orderProduct.product.title }}</td>
-            <td>{{ orderProduct.quantity }}</td>
-            <td>{{ orderProduct.product.price }}</td>
-        </tr>
-    {% endfor %}
-    </tbody>
-</table>
-<p>
-    <strong>Promo code: {% if order.promoCode %}{{ order.promoCode.value }}{% else %}-{% endif %}</strong>
-</p>
-<p>
-    <strong>Total price: {{ order.totalPrice }}</strong>
-</p>
-
-<h3>User info:</h3>
-
-<table>
-    <thead>
-    <tr>
-        <td></td>
-        <td></td>
-    </tr>
-    </thead>
-    <tbody>
-        <tr>
-            <td>Id</td>
-            <td>{{ order.owner.id }}</td>
-        </tr>
-        <tr>
-            <td>Email</td>
-            <td>{{ order.owner.email }}</td>
-        </tr>
-        <tr>
-            <td>Full name</td>
-            <td>{{ order.owner.fullName }}</td>
-        </tr>
-        <tr>
-            <td>Phone</td>
-            <td>{{ order.owner.phone }}</td>
-        </tr>
-    </tbody>
-</table>
+{% block content %}
+    <row>
+        <columns>
+            <spacer size="35"></spacer>
+            <h1>
+                <center>
+                    Client created order
+                </center>
+            </h1>
+            <spacer size="10"></spacer>
+        </columns>
+    </row>
+    <spacer size="30"></spacer>
+    <row>
+        <columns>
+            <h2>
+                <center>
+                    Order info
+                </center>
+            </h2>
+        </columns>
+    </row>
+    <row>
+        <columns>
+            <table class="data-table">
+                <thead>
+                <tr>
+                    <td>#</td>
+                    <td>title</td>
+                    <td>quantity</td>
+                    <td>price</td>
+                </tr>
+                </thead>
+                <tbody>
+                {% for orderProduct in order.orderProducts %}
+                    <tr>
+                        <td>{{ loop.index }}</td>
+                        <td>{{ orderProduct.product.title }}</td>
+                        <td>{{ orderProduct.quantity }}</td>
+                        <td>{{ orderProduct.product.price }}</td>
+                    </tr>
+                {% endfor %}
+                </tbody>
+            </table>
+            <spacer size="30"></spacer>
+            <p>
+                <strong>Promo code: {% if order.promoCode %}{{ order.promoCode.value }}{% else %}-{% endif %}</strong>
+            </p>
+            <p>
+                <strong>Total price: {{ order.totalPrice }}</strong>
+            </p>
+        </columns>
+    </row>
+    <row>
+        <columns>
+            <h2>
+                <center>
+                    User info
+                </center>
+            </h2>
+        </columns>
+    </row>
+    <row>
+        <columns>
+            <table class="data-table">
+                <thead>
+                <tr>
+                    <td></td>
+                    <td></td>
+                </tr>
+                </thead>
+                <tbody>
+                <tr>
+                    <td>Id</td>
+                    <td>{{ order.owner.id }}</td>
+                </tr>
+                <tr>
+                    <td>Email</td>
+                    <td>{{ order.owner.email }}</td>
+                </tr>
+                <tr>
+                    <td>Full name</td>
+                    <td>{{ order.owner.fullName }}</td>
+                </tr>
+                <tr>
+                    <td>Phone</td>
+                    <td>{{ order.owner.phone }}</td>
+                </tr>
+                </tbody>
+            </table>
+        </columns>
+    </row>
+{% endblock %}

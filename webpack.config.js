@@ -17,6 +17,7 @@ Encore
 
     .addEntry('section-main', './assets/section-main.js')
     .addEntry('section-admin', './assets/section-admin.js')
+    .addStyleEntry('email', './assets/css/section/main/email.scss')
     .autoProvidejQuery()
     .splitEntryChunks()
 

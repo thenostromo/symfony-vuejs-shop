@@ -6,14 +6,21 @@ use App\Entity\Order;
 use App\Utils\Mailer\DTO\MailerOptions;
 use App\Utils\Mailer\MailerSender;
 use Symfony\Bridge\Twig\Mime\TemplatedEmail;
+use Symfony\Component\Routing\Generator\UrlGeneratorInterface;
 
 class OrderCreatedFromCartEmailSender
 {
     private $mailerSender;
 
-    public function __construct(MailerSender $mailerSender)
+    /**
+     * @var UrlGeneratorInterface
+     */
+    private $urlGenerator;
+
+    public function __construct(MailerSender $mailerSender, UrlGeneratorInterface $urlGenerator)
     {
         $this->mailerSender = $mailerSender;
+        $this->urlGenerator = $urlGenerator;
     }
 
     /**
@@ -30,6 +37,7 @@ class OrderCreatedFromCartEmailSender
             ->setHtmlTemplate('main/emails/thank_you_for_purchase.html.twig')
             ->setContext([
                 'order' => $order,
+                'homepageUrl' => $this->urlGenerator->generate('shop_index', [], UrlGeneratorInterface::ABSOLUTE_URL),
             ]);
 
         return $this->mailerSender->sendTemplatedEmail($mailerOptions);
