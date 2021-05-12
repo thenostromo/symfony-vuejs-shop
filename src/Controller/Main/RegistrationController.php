@@ -26,7 +26,7 @@ class RegistrationController extends AbstractController
     }
 
     /**
-     * @Route("/registration", name="app_registration")
+     * @Route({"en": "/registration", "fr": "/créer-un-compte"}, name="app_registration")
      */
     public function registration(Request $request, UserManager $userManager, MessageBusInterface $messageBus): Response
     {

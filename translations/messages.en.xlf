@@ -1,15 +1,22 @@
-<?xml version="1.0"?>
-<xliff version="1.2" xmlns="urn:oasis:names:tc:xliff:document:1.2">
-    <file source-language="en" target-language="en" datatype="plaintext" original="file.ext">
-        <body>
-            <trans-unit id="label.username_or_email">
-                <source>label.username_or_email</source>
-                <target>Username or email address</target>
-            </trans-unit>
-            <trans-unit id="title.registration_form">
-                <source>title.registration_form</source>
-                <target>Registration form</target>
-            </trans-unit>
-        </body>
-    </file>
+<?xml version="1.0" encoding="utf-8"?>
+<xliff xmlns="urn:oasis:names:tc:xliff:document:1.2" version="1.2">
+  <file source-language="en" target-language="en" datatype="plaintext" original="file.ext">
+    <header>
+      <tool tool-id="symfony" tool-name="Symfony"/>
+    </header>
+    <body>
+      <trans-unit id="cjdBkBI" resname="Registration form">
+        <source>Registration form</source>
+        <target>Registration form</target>
+      </trans-unit>
+      <trans-unit id="8Q6uQbq" resname="Login With Google">
+        <source>Login With Google</source>
+        <target>Login With Google</target>
+      </trans-unit>
+      <trans-unit id="6zlxM6M" resname="Login With Facebook">
+        <source>Login With Facebook</source>
+        <target>Login With Facebook</target>
+      </trans-unit>
+    </body>
+  </file>
 </xliff>
