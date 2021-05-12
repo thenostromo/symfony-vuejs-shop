@@ -1,31 +1,31 @@
 <?php
 
-namespace App\Event;
+namespace App\Messenger\Message\Command;
 
 use App\Entity\User;
 use Symfony\Contracts\EventDispatcher\Event;
 
-class UserNeedPasswordEvent extends Event
+class SendUserNewPassword
 {
     /**
-     * @var User
+     * @var string
      */
-    private $user;
+    private $userId;
 
     /**
      * @var string
      */
     private $plainPassword;
 
-    public function __construct(User $user, string $plainPassword)
+    public function __construct(string $userId, string $plainPassword)
     {
-        $this->user = $user;
+        $this->userId = $userId;
         $this->plainPassword = $plainPassword;
     }
 
-    public function getUser(): User
+    public function getUserId(): string
     {
-        return $this->user;
+        return $this->userId;
     }
 
     public function getPlainPassword(): string

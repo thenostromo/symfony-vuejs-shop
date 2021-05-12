@@ -1,0 +1,30 @@
+framework:
+    messenger:
+        # Uncomment this (and the failed transport below) to send failed messages to this transport for later handling.
+        # failure_transport: failed
+        default_bus: command.bus
+
+        buses:
+            command.bus: ~
+
+            event.bus: ~
+
+            query.bus: ~
+
+        # Uncomment this (and the failed transport below) to send failed messages to this transport for later handling.
+        failure_transport: failed
+
+        transports:
+            # https://symfony.com/doc/current/messenger.html#transports
+            async:
+                dsn: '%env(MESSENGER_TRANSPORT_DSN)%'
+                retry_strategy:
+                    delay: 500
+
+            failed: 'doctrine://default?queue_name=failed'
+            # sync: 'sync://'
+
+        routing:
+            # Route your messages to the transports
+            'App\Messenger\Message\Command\ResetUserPassword': async
+            'App\Messenger\Message\Event\UserRegisteredEvent': async

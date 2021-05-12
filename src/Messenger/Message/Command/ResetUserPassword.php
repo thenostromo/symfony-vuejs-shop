@@ -1,11 +1,11 @@
 <?php
 
-namespace App\Event;
+namespace App\Messenger\Message\Command;
 
 use App\Entity\User;
 use Symfony\Contracts\EventDispatcher\Event;
 
-class ResetUserPasswordEvent extends Event
+class ResetUserPassword
 {
     /**
      * @var string

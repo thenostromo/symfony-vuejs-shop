@@ -3,15 +3,16 @@
 namespace App\Controller\Main;
 
 use App\Entity\User;
-use App\Event\UserRegisteredEvent;
 use App\Exception\EmptyUserPlainPasswordException;
 use App\Form\RegistrationFormType;
+use App\Messenger\Message\Event\UserRegisteredEvent;
 use App\Security\Verifier\EmailVerifier;
 use App\Utils\Manager\UserManager;
 use Symfony\Bundle\FrameworkBundle\Controller\AbstractController;
 use Symfony\Component\EventDispatcher\EventDispatcherInterface;
 use Symfony\Component\HttpFoundation\Request;
 use Symfony\Component\HttpFoundation\Response;
+use Symfony\Component\Messenger\MessageBusInterface;
 use Symfony\Component\Routing\Annotation\Route;
 use SymfonyCasts\Bundle\VerifyEmail\Exception\VerifyEmailExceptionInterface;
 
@@ -27,7 +28,7 @@ class RegistrationController extends AbstractController
     /**
      * @Route("/registration", name="app_registration")
      */
-    public function registration(Request $request, UserManager $userManager, EventDispatcherInterface $eventDispatcher): Response
+    public function registration(Request $request, UserManager $userManager, MessageBusInterface $messageBus): Response
     {
         if ($this->getUser()) {
             return $this->redirectToRoute('profile_index');
@@ -43,7 +44,7 @@ class RegistrationController extends AbstractController
                 $userManager->encodePassword($user, $form->get('plainPassword')->getData());
                 $userManager->save($user);
 
-                $eventDispatcher->dispatch(new UserRegisteredEvent($user));
+                $messageBus->dispatch(new UserRegisteredEvent($user->getId()));
                 $this->addFlash('success', 'An email has been sent. Please check your inbox to complete registration.');
 
                 return $this->redirectToRoute('shop_index');

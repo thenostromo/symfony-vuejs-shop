@@ -3,19 +3,15 @@
 namespace App\Controller\Main;
 
 use App\Entity\User;
-use App\Event\ResetUserPasswordEvent;
 use App\Form\ChangePasswordFormType;
 use App\Form\ResetPasswordRequestFormType;
+use App\Messenger\Message\Command\ResetUserPassword;
 use App\Utils\Manager\UserManager;
-use Symfony\Bridge\Twig\Mime\TemplatedEmail;
 use Symfony\Bundle\FrameworkBundle\Controller\AbstractController;
-use Symfony\Component\EventDispatcher\EventDispatcher;
 use Symfony\Component\EventDispatcher\EventDispatcherInterface;
-use Symfony\Component\HttpFoundation\RedirectResponse;
 use Symfony\Component\HttpFoundation\Request;
 use Symfony\Component\HttpFoundation\Response;
-use Symfony\Component\Mailer\MailerInterface;
-use Symfony\Component\Mime\Address;
+use Symfony\Component\Messenger\MessageBusInterface;
 use Symfony\Component\Routing\Annotation\Route;
 use Symfony\Component\Security\Core\Encoder\UserPasswordEncoderInterface;
 use SymfonyCasts\Bundle\ResetPassword\Controller\ResetPasswordControllerTrait;
@@ -41,7 +37,7 @@ class ResetPasswordController extends AbstractController
      *
      * @Route("", name="app_forgot_password_request")
      */
-    public function request(Request $request, EventDispatcherInterface $eventDispatcher, UserManager $userManager): Response
+    public function request(Request $request, MessageBusInterface $messageBus, UserManager $userManager): Response
     {
         $form = $this->createForm(ResetPasswordRequestFormType::class);
         $form->handleRequest($request);
@@ -49,7 +45,7 @@ class ResetPasswordController extends AbstractController
         if ($form->isSubmitted() && $form->isValid()) {
             $email = $form->get('email')->getData();
 
-            $eventDispatcher->dispatch(new ResetUserPasswordEvent($email));
+            $messageBus->dispatch(new ResetUserPassword($email));
 
             return $this->redirectToRoute('app_check_email');
         }
@@ -66,9 +62,7 @@ class ResetPasswordController extends AbstractController
      */
     public function checkEmail(): Response
     {
-        return $this->render('main/security/reset_password/check_email.html.twig', [
-            'tokenLifetime' => $this->resetPasswordHelper->getTokenLifetime(),
-        ]);
+        return $this->render('main/security/reset_password/check_email.html.twig');
     }
 
     /**
@@ -76,7 +70,7 @@ class ResetPasswordController extends AbstractController
      *
      * @Route("/reset/{token}", name="app_reset_password")
      */
-    public function reset(Request $request, UserPasswordEncoderInterface $passwordEncoder, string $token = null): Response
+    public function reset(Request $request, UserPasswordEncoderInterface $passwordEncoder, UserManager $userManager, string $token = null): Response
     {
         if ($token) {
             // We store the token in session and remove it from the URL, to avoid the URL being
@@ -94,7 +88,7 @@ class ResetPasswordController extends AbstractController
         try {
             $user = $this->resetPasswordHelper->validateTokenAndFetchUser($token);
         } catch (ResetPasswordExceptionInterface $e) {
-            $this->addFlash('reset_password_error', sprintf(
+            $this->addFlash('warning', sprintf(
                 'There was a problem validating your reset request - %s',
                 $e->getReason()
             ));
@@ -110,17 +104,15 @@ class ResetPasswordController extends AbstractController
             // A password reset token should be used only once, remove it.
             $this->resetPasswordHelper->removeResetRequest($token);
 
-            // Encode the plain password, and set it.
-            $encodedPassword = $passwordEncoder->encodePassword(
-                $user,
-                $form->get('plainPassword')->getData()
-            );
+            $plainPassword = $form->get('plainPassword')->getData();
 
-            $user->setPassword($encodedPassword);
-            $this->getDoctrine()->getManager()->flush();
+            $userManager->encodePassword($user, $plainPassword);
+            $userManager->save($user);
 
             // The session is cleaned up after the password has been changed.
             $this->cleanSessionAfterReset();
+
+            $this->addFlash('success', 'Your password was changed. You can login now with your new credentials.');
 
             return $this->redirectToRoute('shop_index');
         }

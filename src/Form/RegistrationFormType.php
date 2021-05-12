@@ -20,6 +20,17 @@ class RegistrationFormType extends AbstractType
         $builder
             ->add('email', EmailType::class, [
                 'label' => 'Please enter your email',
+                'constraints' => [
+                    new NotBlank([
+                        'message' => 'Please enter an email',
+                    ]),
+                ],
+                'attr' => [
+                    'class' => 'form-control',
+                    'required' => 'required',
+                    'autofocus' => 'autofocus',
+                    'placeholder' => 'Enter your email',
+                ],
             ])
             ->add('agreeTerms', CheckboxType::class, [
                 'label' => 'I agree to the <a href="#">privacy policy</a> *',
@@ -29,6 +40,12 @@ class RegistrationFormType extends AbstractType
                     new IsTrue([
                         'message' => 'You should agree to our terms.',
                     ]),
+                ],
+                'label_attr' => [
+                    'class' => 'custom-control-label',
+                ],
+                'attr' => [
+                    'class' => 'custom-control-input',
                 ],
             ])
             ->add('plainPassword', PasswordType::class, [
@@ -44,6 +61,11 @@ class RegistrationFormType extends AbstractType
                         // max length allowed by Symfony for security reasons
                         'max' => 4096,
                     ]),
+                ],
+                'attr' => [
+                    'class' => 'form-control',
+                    'required' => 'required',
+                    'autofocus' => 'autofocus',
                 ],
             ])
         ;

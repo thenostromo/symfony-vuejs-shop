@@ -15,19 +15,14 @@
 
                         <div class="form-group">
                             {{ form_label(registrationForm.email) }}
-                            {{ form_widget(registrationForm.email, {'attr': {
-                                'class': 'form-control',
-                                'required': 'required',
-                                'autofocus': 'autofocus',
-                            'placeholder': 'Enter your email'}}) }}
+                            {{ form_widget(registrationForm.email) }}
+                            {{ form_errors(registrationForm.email) }}
                         </div>
 
                         <div class="form-group">
                             {{ form_label(registrationForm.plainPassword) }}
-                            {{ form_widget(registrationForm.plainPassword, {'attr': {
-                                'class': 'form-control',
-                                'required': 'required',
-                                'autofocus': 'autofocus'}}) }}
+                            {{ form_widget(registrationForm.plainPassword) }}
+                            {{ form_errors(registrationForm.plainPassword) }}
                         </div>
 
                         <div class="form-footer">
@@ -39,8 +34,9 @@
                                 </div>
                                 <div class="col-lg-8">
                                     <div class="custom-control custom-checkbox">
-                                        {{ form_widget(registrationForm.agreeTerms, {'attr': {'class': 'custom-control-input'}}) }}
-                                        {{ form_label(registrationForm.agreeTerms, null, {'label_attr': {'class': 'custom-control-label'}}) }}
+                                        {{ form_widget(registrationForm.agreeTerms) }}
+                                        {{ form_label(registrationForm.agreeTerms) }}
+                                        {{ form_errors(registrationForm.agreeTerms) }}
                                     </div>
                                 </div>
                             </div>

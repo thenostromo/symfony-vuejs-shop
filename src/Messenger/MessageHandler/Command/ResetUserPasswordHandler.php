@@ -1,17 +1,18 @@
 <?php
 
-namespace App\EventSubscriber;
+namespace App\Messenger\MessageHandler\Command;
 
 use App\Entity\User;
-use App\Event\ResetUserPasswordEvent;
+use App\Messenger\Message\Command\ResetUserPassword;
 use App\Utils\Mailer\Sender\ResetUserPasswordEmailSender;
 use App\Utils\Mailer\Sender\UserRegisteredEmailSender;
 use App\Utils\Manager\UserManager;
 use Symfony\Component\EventDispatcher\EventSubscriberInterface;
+use Symfony\Component\Messenger\Handler\MessageHandlerInterface;
 use SymfonyCasts\Bundle\ResetPassword\Exception\ResetPasswordExceptionInterface;
 use SymfonyCasts\Bundle\ResetPassword\ResetPasswordHelperInterface;
 
-class ResetUserPasswordNotificationSubscriber implements EventSubscriberInterface
+class ResetUserPasswordHandler implements MessageHandlerInterface
 {
     private $emailSender;
     /**
@@ -30,16 +31,9 @@ class ResetUserPasswordNotificationSubscriber implements EventSubscriberInterfac
         $this->userManager = $userManager;
     }
 
-    public static function getSubscribedEvents(): array
+    public function __invoke(ResetUserPassword $resetUserPassword): void
     {
-        return [
-            ResetUserPasswordEvent::class => 'onUserResetPassword',
-        ];
-    }
-
-    public function onUserResetPassword(ResetUserPasswordEvent $event): void
-    {
-        $email = $event->getEmail();
+        $email = $resetUserPassword->getEmail();
         $resetToken = null;
 
         /** @var User|null $user */
