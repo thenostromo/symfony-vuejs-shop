@@ -14,7 +14,7 @@ class RegistrationControllerTest extends WebTestCase
     {
         $client = static::createClient();
 
-        $newUserEmail = 'test_user_1@gmail.com';
+        $newUserEmail = 'new_test_user_1@gmail.com';
         $newUserPassword = 'test123';
 
         $client->request('GET', '/en/registration');
@@ -62,7 +62,7 @@ class RegistrationControllerTest extends WebTestCase
     {
         $client = static::createClient();
 
-        $newUserEmail = 'test_user_1@gmail.com';
+        $newUserEmail = 'new_test_user_1@gmail.com';
         $newUserPassword = 'test';
 
         $client->request('GET', '/en/registration');
