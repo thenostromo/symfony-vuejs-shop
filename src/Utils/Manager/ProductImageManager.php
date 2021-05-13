@@ -47,7 +47,7 @@ class ProductImageManager
     public function saveProductImage(string $productDir, string $tempImageFileName = null)
     {
         $this->fileSystemWorker->createFolderIfNotExist($productDir);
-
+dd($productDir, $tempImageFileName);
         $fileNameId = uniqid();
         $imageSmall = $this->imageResizer->resizeImageAndSave($this->uploadsTempDir, $tempImageFileName, [
             'width' => 60,

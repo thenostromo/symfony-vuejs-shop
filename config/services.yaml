@@ -12,6 +12,7 @@ parameters:
     router.request_context.host: '%env(SITE_BASE_HOST)%'
     locale: 'en'
     app_locales: en|fr|ru
+    app_locales.in_brackets: '(%app_locales%)'
 
 services:
     # default configuration for services in *this* file

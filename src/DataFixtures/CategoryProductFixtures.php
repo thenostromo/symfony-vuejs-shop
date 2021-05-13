@@ -6,6 +6,7 @@ use App\Entity\Category;
 use App\Entity\Product;
 use App\Exception\FileNotFoundException;
 use App\Utils\Extractor\JsonExtractor;
+use App\Utils\FileSystem\FileSystemWorker;
 use App\Utils\Manager\ProductManager;
 use Doctrine\Bundle\FixturesBundle\Fixture;
 use Doctrine\Persistence\ObjectManager;
@@ -18,19 +19,13 @@ class CategoryProductFixtures extends Fixture
     private $externalDefaultDir;
 
     /**
-     * @var ProductManager
-     */
-    private $productManager;
-
-    /**
      * @var JsonExtractor
      */
     private $jsonExtractor;
 
-    public function __construct(JsonExtractor $jsonExtractor, ProductManager $productManager, string $externalDir)
+    public function __construct(JsonExtractor $jsonExtractor, string $externalDir)
     {
         $this->jsonExtractor = $jsonExtractor;
-        $this->productManager = $productManager;
         $this->externalDefaultDir = sprintf('%s%s', $externalDir, 'default');
     }
 
@@ -38,32 +33,22 @@ class CategoryProductFixtures extends Fixture
     {
         $categoryJackets = new Category();
         $categoryJackets->setTitle('Jacket');
-        $categoryJackets->setTitlePlural('Jackets');
-        $categoryJackets->setSlug('jackets');
         $manager->persist($categoryJackets);
 
         $categoryHats = new Category();
         $categoryHats->setTitle('Hat');
-        $categoryHats->setTitlePlural('Hats');
-        $categoryHats->setSlug('hats');
         $manager->persist($categoryHats);
 
         $categoryJeans = new Category();
         $categoryJeans->setTitle('Jeans');
-        $categoryJeans->setTitlePlural('Jeans');
-        $categoryJeans->setSlug('jeans');
         $manager->persist($categoryJeans);
 
         $categoryDresses = new Category();
         $categoryDresses->setTitle('Dress');
-        $categoryDresses->setTitlePlural('Dresses');
-        $categoryDresses->setSlug('dresses');
         $manager->persist($categoryDresses);
 
         $categorySneakers = new Category();
         $categorySneakers->setTitle('Sneakers');
-        $categorySneakers->setTitlePlural('Sneakers');
-        $categorySneakers->setSlug('sneakers');
         $manager->persist($categorySneakers);
 
         $fileName = 'products_data.json';
@@ -106,8 +91,6 @@ class CategoryProductFixtures extends Fixture
             $product->setDescription($productRaw['description']);
             $product->setSize($productRaw['size']);
             $manager->persist($product);
-
-            $product = $this->productManager->updateProductImages($product, $productRaw['cover']);
         }
 
         $manager->flush();

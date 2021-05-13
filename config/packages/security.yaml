@@ -48,10 +48,10 @@ security:
             oauth:
                 resource_owners:
                     #facebook: "/login/check-facebook"
-                    google: "/login/check-google"
-                login_path: /login
+                    google: "/%locale%/login/check-google"
+                login_path: "/%locale%/login"
                 use_forward: false
-                failure_path: /login
+                failure_path: "/%locale%/login"
 
                 oauth_user_provider:
                     service: my.oauth_aware.user_provider.service
@@ -74,5 +74,6 @@ security:
         - { path: ^/admin/login }
         - { path: ^/admin/user, roles: ROLE_SUPER_ADMIN }
         - { path: ^/admin, roles: ROLE_ADMIN }
-        - { path: ^/cart, roles: ROLE_USER }
-        - { path: ^/profile, roles: ROLE_USER }
+        - { path: ^/%app_locales.in_brackets%/cart, roles: ROLE_USER }
+        - { path: ^/%app_locales.in_brackets%/profile, roles: ROLE_USER }
+

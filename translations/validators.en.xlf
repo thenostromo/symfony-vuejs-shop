@@ -122,7 +122,7 @@
       </notes>
       <segment>
         <source>There is already an account with this email</source>
-        <target></target>
+        <target>There is already exist an account with this email</target>
       </segment>
     </unit>
     <unit id="wCCtZ85" name="error.fill_the_field">
@@ -150,6 +150,12 @@
       <segment>
         <source>error.unchecked_box</source>
         <target>Please check the box</target>
+      </segment>
+    </unit>
+    <unit id="AHP9wuR" name="There is already exist an account with this email">
+      <segment>
+        <source>There is already exist an account with this email</source>
+        <target>There is already exist an account with this email</target>
       </segment>
     </unit>
   </file>
