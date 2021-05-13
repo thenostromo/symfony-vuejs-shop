@@ -1,49 +1,53 @@
 <?xml version="1.0" encoding="utf-8"?>
-<xliff xmlns="urn:oasis:names:tc:xliff:document:2.0" version="2.0" srcLang="en" trgLang="en">
-  <file id="messages.en">
+<xliff xmlns="urn:oasis:names:tc:xliff:document:2.0" version="2.0" srcLang="en" trgLang="ru">
+  <file id="messages.ru">
     <unit id="dDUw20Q" name="Please sign in">
       <notes>
         <note category="file-source" priority="1">ranked_choice/templates/main/security/login.html.twig:12</note>
       </notes>
       <segment>
         <source>Please sign in</source>
-        <target>Please sign in</target>
+        <target></target>
       </segment>
     </unit>
     <unit id="sMIMdUS" name="user_signup.heading">
       <notes>
         <note category="file-source" priority="1">ranked_choice/templates/main/security/registration.html.twig:14</note>
+        <note category="state" priority="1">new</note>
       </notes>
       <segment>
         <source>user_signup.heading</source>
-        <target>Registration form</target>
+        <target></target>
       </segment>
     </unit>
     <unit id="XCJxYQ0" name="button.sign_up">
       <notes>
         <note category="file-source" priority="1">ranked_choice/templates/main/security/registration.html.twig:34</note>
+        <note category="state" priority="1">new</note>
       </notes>
       <segment>
         <source>button.sign_up</source>
-        <target>SIGN UP</target>
+        <target></target>
       </segment>
     </unit>
     <unit id="InL.hr8" name="button.login_with_google">
       <notes>
         <note category="file-source" priority="1">ranked_choice/templates/main/security/registration.html.twig:53</note>
+        <note category="state" priority="1">new</note>
       </notes>
       <segment>
         <source>button.login_with_google</source>
-        <target>Login With Google</target>
+        <target></target>
       </segment>
     </unit>
     <unit id="Nwy6Amm" name="button.login_with_facebook">
       <notes>
         <note category="file-source" priority="1">ranked_choice/templates/main/security/registration.html.twig:60</note>
+        <note category="state" priority="1">new</note>
       </notes>
       <segment>
         <source>button.login_with_facebook</source>
-        <target>Login With Facebook</target>
+        <target></target>
       </segment>
     </unit>
     <unit id="vN4SXKk" name="An email has been sent. Please check your inbox to complete registration.">
@@ -62,7 +66,7 @@
       </notes>
       <segment>
         <source>label.enter_your_email</source>
-        <target>Please enter your email</target>
+        <target></target>
       </segment>
     </unit>
     <unit id="RWbwCeE" name="label.user_signup.agree_with_terms">
@@ -71,7 +75,7 @@
       </notes>
       <segment>
         <source>label.user_signup.agree_with_terms</source>
-        <target><![CDATA[I agree to the <a href="#">privacy policy</a> *]]></target>
+        <target></target>
       </segment>
     </unit>
     <unit id="CQGOHff" name="label.enter_your_password">
@@ -80,7 +84,7 @@
       </notes>
       <segment>
         <source>label.enter_your_password</source>
-        <target>Please enter your password</target>
+        <target></target>
       </segment>
     </unit>
     <unit id="U6L_pQV" name="placeholder.enter_your_email">
@@ -89,7 +93,7 @@
       </notes>
       <segment>
         <source>placeholder.enter_your_email</source>
-        <target>Enter your email</target>
+        <target></target>
       </segment>
     </unit>
     <unit id="GaDZufa" name="Your email:">
@@ -491,7 +495,7 @@
       </notes>
       <segment>
         <source>flash.user_signup.check_your_inbox</source>
-        <target>An email has been sent. Please check your inbox to complete registration.</target>
+        <target></target>
       </segment>
     </unit>
     <unit id="W3XR3fd" name="flash.user_signup.check_your_form">
@@ -500,7 +504,7 @@
       </notes>
       <segment>
         <source>flash.user_signup.check_your_form</source>
-        <target>Please, check your email/password</target>
+        <target></target>
       </segment>
     </unit>
     <unit id="yKkv2d_" name="flash.user_signup.your_email_verified">
@@ -509,7 +513,7 @@
       </notes>
       <segment>
         <source>flash.user_signup.your_email_verified</source>
-        <target>Your email address has been verified</target>
+        <target></target>
       </segment>
     </unit>
     <unit id="2hzPRs9" name="Please, check your email/password">
@@ -536,7 +540,7 @@
       </notes>
       <segment>
         <source>Registration form</source>
-        <target>Registration form</target>
+        <target></target>
       </segment>
     </unit>
     <unit id="8Q6uQbq" name="Login With Google">
@@ -545,7 +549,7 @@
       </notes>
       <segment>
         <source>Login With Google</source>
-        <target>Login With Google</target>
+        <target></target>
       </segment>
     </unit>
     <unit id="6zlxM6M" name="Login With Facebook">
@@ -554,7 +558,7 @@
       </notes>
       <segment>
         <source>Login With Facebook</source>
-        <target>Login With Facebook</target>
+        <target></target>
       </segment>
     </unit>
     <unit id="Fe2zEyl" name="Please enter your email">

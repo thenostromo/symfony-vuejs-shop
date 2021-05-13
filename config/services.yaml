@@ -21,6 +21,7 @@ services:
         bind:
             string $locales: '%app_locales%'
             string $defaultLocale: '%locale%'
+            string $projectDir: '%kernel.project_dir%'
             string $externalDir: '%kernel.project_dir%/external/'
             string $uploadsTempDir: '%uploads_temp_dir%'
             string $imagesProductsDir: '%images_products_dir%'

@@ -11,7 +11,7 @@
                 <div class="col-lg-12">
                     <div class="page-details page-login mt-4">
                         <h1 class="h3 mb-3 text-center font-weight-normal title-gradient-1">
-                            {{ 'Registration form'|trans }}
+                            {{ 'user_signup.heading'|trans }}
                         </h1>
                         {{ form_start(registrationForm) }}
 
@@ -31,7 +31,7 @@
                             <div class="row">
                                 <div class="col-lg-4">
                                     <button type="submit" class="btn btn btn-success">
-                                        SIGN UP
+                                        {{ 'button.sign_up'|trans }}
                                     </button>
                                 </div>
                                 <div class="col-lg-8">
@@ -50,14 +50,14 @@
                             <div class="row">
                                 <div class="col-sm-12 text-center">
                                     <a href="{{ path('hwi_oauth_service_redirect', {'service': 'google' }) }}" class="btn btn-link btn-dark">
-                                        {{ 'Login With Google'|trans }}
+                                        {{ 'button.login_with_google'|trans }}
                                     </a>
                                 </div>
                             </div>
                             <div class="row mt-2">
                                 <div class="col-sm-12 text-center">
                                     <a href="{{ path('hwi_oauth_service_redirect', {'service': 'facebook' }) }}" class="btn btn-link btn-dark">
-                                        {{ 'Login With Facebook'|trans }}
+                                        {{ 'button.login_with_facebook'|trans }}
                                     </a>
                                 </div>
                             </div>

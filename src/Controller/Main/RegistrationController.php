@@ -14,19 +14,30 @@ use Symfony\Component\HttpFoundation\Request;
 use Symfony\Component\HttpFoundation\Response;
 use Symfony\Component\Messenger\MessageBusInterface;
 use Symfony\Component\Routing\Annotation\Route;
+use Symfony\Contracts\Translation\TranslatorInterface;
 use SymfonyCasts\Bundle\VerifyEmail\Exception\VerifyEmailExceptionInterface;
 
 class RegistrationController extends AbstractController
 {
     private $emailVerifier;
 
-    public function __construct(EmailVerifier $emailVerifier)
+    /**
+     * @var TranslatorInterface
+     */
+    private $translator;
+
+    public function __construct(EmailVerifier $emailVerifier, TranslatorInterface $translator)
     {
         $this->emailVerifier = $emailVerifier;
+        $this->translator = $translator;
     }
 
     /**
-     * @Route({"en": "/registration", "fr": "/créer-un-compte"}, name="app_registration")
+     * @Route({
+     *     "en": "/registration",
+     *     "fr": "/créer-un-compte",
+     *     "ru": "/registration",
+     * }, name="app_registration")
      */
     public function registration(Request $request, UserManager $userManager, MessageBusInterface $messageBus): Response
     {
@@ -45,11 +56,11 @@ class RegistrationController extends AbstractController
                 $userManager->save($user);
 
                 $messageBus->dispatch(new UserRegisteredEvent($user->getId()));
-                $this->addFlash('success', 'An email has been sent. Please check your inbox to complete registration.');
+                $this->addFlash('success', $this->translator->trans('flash.user_signup.check_your_inbox'));
 
                 return $this->redirectToRoute('shop_index');
             } catch (EmptyUserPlainPasswordException $ex) {
-                $this->addFlash('warning', 'Please, check your email/password');
+                $this->addFlash('warning', $this->translator->trans('flash.user_signup.check_your_form'));
             }
         }
 
@@ -81,7 +92,7 @@ class RegistrationController extends AbstractController
             return $this->redirectToRoute('security_login');
         }
 
-        $this->addFlash('success', 'Your email address has been verified.');
+        $this->addFlash('success', $this->translator->trans('flash.user_signup.your_email_verified'));
 
         return $this->redirectToRoute('profile_index');
     }

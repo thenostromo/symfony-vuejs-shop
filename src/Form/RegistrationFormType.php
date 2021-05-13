@@ -9,6 +9,7 @@ use Symfony\Component\Form\Extension\Core\Type\EmailType;
 use Symfony\Component\Form\Extension\Core\Type\PasswordType;
 use Symfony\Component\Form\FormBuilderInterface;
 use Symfony\Component\OptionsResolver\OptionsResolver;
+use Symfony\Component\Validator\Constraints\Email;
 use Symfony\Component\Validator\Constraints\IsTrue;
 use Symfony\Component\Validator\Constraints\Length;
 use Symfony\Component\Validator\Constraints\NotBlank;
@@ -19,26 +20,30 @@ class RegistrationFormType extends AbstractType
     {
         $builder
             ->add('email', EmailType::class, [
-                'label' => 'Please enter your email',
+                'label' => 'label.enter_your_email',
+                'required' => true,
                 'constraints' => [
                     new NotBlank([
-                        'message' => 'Please enter an email',
+                        'message' => 'error.fill_the_field',
+                    ]),
+                    new Email([
+                        'message' => 'error.invalid_email',
                     ]),
                 ],
                 'attr' => [
                     'class' => 'form-control',
-                    'required' => 'required',
                     'autofocus' => 'autofocus',
-                    'placeholder' => 'Enter your email',
+                    'placeholder' => 'placeholder.enter_your_email',
                 ],
             ])
             ->add('agreeTerms', CheckboxType::class, [
-                'label' => 'I agree to the <a href="#">privacy policy</a> *',
+                'label' => 'label.user_signup.agree_with_terms',
+                'required' => true,
                 'label_html' => true,
                 'mapped' => false,
                 'constraints' => [
                     new IsTrue([
-                        'message' => 'You should agree to our terms.',
+                        'message' => 'error.unchecked_box',
                     ]),
                 ],
                 'label_attr' => [
@@ -49,22 +54,20 @@ class RegistrationFormType extends AbstractType
                 ],
             ])
             ->add('plainPassword', PasswordType::class, [
-                'label' => 'Please enter your password',
+                'label' => 'label.enter_your_password',
                 'mapped' => false,
+                'required' => true,
                 'constraints' => [
                     new NotBlank([
-                        'message' => 'Please enter a password',
+                        'message' => 'error.fill_the_field',
                     ]),
                     new Length([
                         'min' => 6,
-                        'minMessage' => 'Your password should be at least {{ limit }} characters',
-                        // max length allowed by Symfony for security reasons
                         'max' => 4096,
                     ]),
                 ],
                 'attr' => [
                     'class' => 'form-control',
-                    'required' => 'required',
                     'autofocus' => 'autofocus',
                 ],
             ])
