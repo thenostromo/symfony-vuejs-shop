@@ -2,37 +2,93 @@
 
 namespace App\Utils\Manager;
 
+use App\Entity\Cart;
+use App\Entity\CartProduct;
 use App\Entity\Order;
-use Doctrine\ORM\EntityManagerInterface;
+use App\Entity\OrderProduct;
+use App\Entity\PromoCode;
+use Doctrine\Persistence\ObjectRepository;
 
-class OrderManager
+class OrderManager extends AbstractBaseManager
 {
     /**
-     * @var EntityManagerInterface
+     * @return ObjectRepository
      */
-    public $entityManager;
-
-    public function __construct(EntityManagerInterface $entityManager)
+    public function getRepository(): ObjectRepository
     {
-        $this->entityManager = $entityManager;
+        return $this->entityManager->getRepository(Order::class);
     }
 
     /**
-     * @param string $id
-     * @return Order|null
+     * @param Order  $order
+     * @param string $cartId
      */
-    public function findOrder(string $id): Order
+    public function addOrderProductsByCartId(Order $order, string $cartId): void
     {
-        return $this->entityManager->getRepository(Order::class)->find($id);
+        /** @var Cart $cart */
+        $cart = $this->entityManager->getRepository(Cart::class)->find($cartId);
+
+        if ($cart) {
+            /** @var CartProduct $cartProduct */
+            foreach ($cart->getCartProducts()->getValues() as $cartProduct) {
+                $orderProduct = new OrderProduct();
+                $orderProduct->setAppOrder($order);
+                $orderProduct->setPricePerOne($cartProduct->getProduct()->getPrice());
+                $orderProduct->setQuantity($cartProduct->getQuantity());
+                $orderProduct->setProduct($cartProduct->getProduct());
+
+                $order->addOrderProduct($orderProduct);
+                $this->entityManager->persist($orderProduct);
+            }
+        }
     }
 
-    public function save($entity)
+    /**
+     * @param Order  $order
+     * @param string $promoCodeId
+     */
+    public function addPromoCodeByPromoCodeId(Order $order, string $promoCodeId): void
     {
-        $this->entityManager->persist($entity);
-        $this->entityManager->flush();
+        /** @var PromoCode $promoCode */
+        $promoCode = $this->entityManager->getRepository(PromoCode::class)->find($promoCodeId);
+
+        if ($promoCode) {
+            $order->setPromoCode($promoCode);
+        }
     }
 
-    public function remove(Order $entity)
+    /**
+     * @param Order $order
+     *
+     * @return Order
+     */
+    public function recalculateOrderTotalPrice(Order $order): Order
+    {
+        $totalPrice = 0;
+        $totalPriceWithDiscount = 0;
+
+        $orderProducts = $order->getOrderProducts()->getValues();
+
+        /** @var OrderProduct $orderProduct */
+        foreach ($orderProducts as $orderProduct) {
+            $totalPrice += $orderProduct->getQuantity() * $orderProduct->getPricePerOne();
+        }
+
+        $promoCode = $order->getPromoCode();
+        if ($promoCode) {
+            $promoCodeDiscount = $promoCode->getDiscount();
+            $totalPriceWithDiscount = $totalPrice - (($totalPrice / 100) * $promoCodeDiscount);
+        }
+
+        $order->setTotalPrice($totalPriceWithDiscount);
+
+        return $order;
+    }
+
+    /**
+     * @param object $entity
+     */
+    public function remove(object $entity): void
     {
         $entity->setIsDeleted(true);
         $this->save($entity);

@@ -8,6 +8,7 @@ use Doctrine\Common\Collections\ArrayCollection;
 use Doctrine\Common\Collections\Collection;
 use Doctrine\ORM\Mapping as ORM;
 use Gedmo\Mapping\Annotation as Gedmo;
+use Symfony\Component\Serializer\Annotation\Groups;
 
 /**
  * @ORM\Entity(repositoryClass=CategoryRepository::class)
@@ -17,7 +18,7 @@ use Gedmo\Mapping\Annotation as Gedmo;
  *     order={"id"="DESC"},
  *     attributes={
  *          "pagination_items_per_page"=2,
- *          "formats"={"jsonld", "json", "html", "jsonhal", "csv"={"text/csv"}}
+ *          "formats"={"jsonhal", "jsonld", "json", "html", "csv"={"text/csv"}}
  *     }
  * )
  */
@@ -27,17 +28,20 @@ class Category
      * @ORM\Id
      * @ORM\GeneratedValue
      * @ORM\Column(type="integer")
+     * @Groups({"order:item"})
      */
     private $id;
 
     /**
      * @ORM\Column(type="string", length=40)
+     * @Groups({"order:item"})
      */
     private $title;
 
     /**
      * @Gedmo\Slug(fields={"title"})
      * @ORM\Column(length=128, unique=true)
+     * @Groups({"order:item"})
      */
     private $slug;
 

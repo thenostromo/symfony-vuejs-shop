@@ -14,8 +14,16 @@ use Symfony\Component\Serializer\Annotation\Groups;
 
 /**
  * @ApiResource(
- *     collectionOperations={"get"={"normalization_context"={"groups"="product:list"}}},
- *     itemOperations={"get"={"normalization_context"={"groups"="product:item"}}},
+ *     collectionOperations={
+ *          "get"={"normalization_context"={"groups"="product:list"}},
+ *          "post"={"normalization_context"={"groups"="product:list:write"}}
+ *     },
+ *     itemOperations={
+ *          "get"={"normalization_context"={"groups"="product:item"}},
+ *          "put"={
+ *              "normalization_context"={"groups"="product:item:write"}
+ *          },
+ *     },
  *     order={
  *         "id"="DESC",
  *         "price"="ASC"
@@ -40,28 +48,28 @@ class Product
      * @ORM\GeneratedValue
      * @ORM\Column(type="integer")
      *
-     * @Groups({"product:list", "product:item"})
+     * @Groups({"product:list", "product:item", "order:item", "sale_collection:item", "sale_collection_product:list", "sale_collection_product:item", "cart:list", "cart:item"})
      */
     private $id;
 
     /**
      * @ORM\Column(type="string", length=255)
      *
-     * @Groups({"product:list", "product:item"})
+     * @Groups({"product:list", "product:item", "order:item", "sale_collection:item", "sale_collection_product:list", "sale_collection_product:item", "cart:list", "cart:item"})
      */
     private $title;
 
     /**
      * @ORM\Column(type="decimal", precision=6, scale=2)
      *
-     * @Groups({"product:list", "product:item"})
+     * @Groups({"product:list", "product:item", "order:item", "sale_collection:item", "sale_collection_product:list", "sale_collection_product:item", "cart:list", "cart:item"})
      */
     private $price;
 
     /**
      * @ORM\Column(type="integer")
      *
-     * @Groups({"product:list", "product:item"})
+     * @Groups({"product:list", "product:item", "order:item", "sale_collection:item"})
      */
     private $quantity;
 
@@ -93,7 +101,7 @@ class Product
 
     /**
      * @ORM\ManyToOne(targetEntity=Category::class, inversedBy="products")
-     * @Groups({"product:list", "product:item"})
+     * @Groups({"product:list", "product:item", "order:item", "sale_collection:item"})
      */
     private $category;
 
@@ -115,7 +123,7 @@ class Product
     /**
      * @ORM\OneToMany(targetEntity=ProductImage::class, mappedBy="product", orphanRemoval=true)
      *
-     * @Groups({"product:list", "product:item"})
+     * @Groups({"product:list", "product:item", "cart:list", "cart:item", "sale_collection_product:list", "sale_collection_product:item"})
      */
     private $productImages;
 

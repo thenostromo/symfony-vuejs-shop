@@ -6,35 +6,64 @@ use App\Entity\Product;
 use App\Form\DTO\ProductEditModel;
 use App\Utils\File\FileSaver;
 use App\Utils\Manager\ProductManager;
-use Symfony\Component\HttpFoundation\File\UploadedFile;
+use Knp\Component\Pager\Pagination\PaginationInterface;
+use Knp\Component\Pager\PaginatorInterface;
+use Symfony\Component\HttpFoundation\Request;
 
 class ProductFormHandler
 {
     /**
      * @var ProductManager
      */
-    public $productManager;
+    private $productManager;
 
     /**
      * @var FileSaver
      */
-    public $fileSaver;
+    private $fileSaver;
 
-    public function __construct(ProductManager $productManager, FileSaver $fileSaver)
+    /**
+     * @var PaginatorInterface
+     */
+    private $paginator;
+
+    public function __construct(ProductManager $productManager, PaginatorInterface $paginator, FileSaver $fileSaver)
     {
         $this->productManager = $productManager;
+        $this->paginator = $paginator;
         $this->fileSaver = $fileSaver;
     }
 
     /**
-     * @param ProductEditModel $productEditModel
+     * @param Request $request
+     *
+     * @return PaginationInterface
      */
-    public function processProductEditForm(ProductEditModel $productEditModel)
+    public function processProductFiltersForm(Request $request): PaginationInterface
+    {
+        $queryBuilder = $this->productManager->getRepository()
+            ->createQueryBuilder('p')
+            ->leftJoin('p.category', 'c')
+            ->where('p.isDeleted = :isDeleted')
+            ->setParameter('isDeleted', false);
+
+        return $this->paginator->paginate(
+            $queryBuilder->getQuery(),
+            $request->query->getInt('page', 1)
+        );
+    }
+
+    /**
+     * @param ProductEditModel $productEditModel
+     *
+     * @return Product
+     */
+    public function processEditForm(ProductEditModel $productEditModel): Product
     {
         $product = new Product();
 
         if ($productEditModel->id) {
-            $product = $this->productManager->findProduct($productEditModel->id);
+            $product = $this->productManager->find($productEditModel->id);
         }
 
         $product->setTitle($productEditModel->title);
@@ -47,7 +76,6 @@ class ProductFormHandler
 
         $this->productManager->save($product);
 
-        /** @var UploadedFile $newImageFile */
         $newImageFile = $productEditModel->newImage;
 
         $tempImageFileName = $productEditModel->newImage

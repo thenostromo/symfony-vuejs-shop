@@ -2,12 +2,35 @@
 
 namespace App\Entity;
 
+use ApiPlatform\Core\Annotation\ApiResource;
 use App\Repository\SaleCollectionRepository;
+use Gedmo\Mapping\Annotation as Gedmo;
 use Doctrine\Common\Collections\ArrayCollection;
 use Doctrine\Common\Collections\Collection;
 use Doctrine\ORM\Mapping as ORM;
+use Symfony\Component\Serializer\Annotation\Groups;
 
 /**
+ * @ApiResource(
+ *     denormalizationContext={"groups"={"sale_collection:write"}},
+ *     collectionOperations={
+ *          "get"={
+ *              "normalization_context"={"groups"="sale_collection:list"},
+ *          },
+ *          "post"={}
+ *     },
+ *     itemOperations={
+ *          "get"={
+ *              "normalization_context"={"groups"="sale_collection:item"},
+ *          },
+ *          "put"={
+ *              "security"="is_granted('ROLE_ADMIN')"
+ *          },
+ *     },
+ *     attributes={
+ *          "formats"={"jsonhal", "json", "jsonld"}
+ *     },
+ * )
  * @ORM\Entity(repositoryClass=SaleCollectionRepository::class)
  */
 class SaleCollection
@@ -16,11 +39,15 @@ class SaleCollection
      * @ORM\Id
      * @ORM\GeneratedValue
      * @ORM\Column(type="integer")
+     *
+     * @Groups({"sale_collection:item"})
      */
     private $id;
 
     /**
      * @ORM\Column(type="string", length=255)
+     *
+     * @Groups({"sale_collection:list", "sale_collection:item"})
      */
     private $title;
 
@@ -30,17 +57,15 @@ class SaleCollection
     private $description;
 
     /**
-     * @ORM\Column(type="string", length=255, nullable=true)
-     */
-    private $cover;
-
-    /**
-     * @ORM\Column(type="string", length=255)
+     * @Gedmo\Slug(fields={"title"})
+     * @ORM\Column(type="string", length=255, unique=true)
      */
     private $slug;
 
     /**
      * @ORM\Column(type="datetime")
+     *
+     * @Groups({"sale_collection:list", "sale_collection:item"})
      */
     private $validUntil;
 
@@ -50,7 +75,9 @@ class SaleCollection
     private $isPublished;
 
     /**
-     * @ORM\OneToMany(targetEntity=SaleCollectionProduct::class, mappedBy="saleCollection", orphanRemoval=true)
+     * @ORM\OneToMany(targetEntity=SaleCollectionProduct::class, mappedBy="saleCollection", cascade={"persist"}, orphanRemoval=true)
+     *
+     * @Groups({"sale_collection:item", "sale_collection:write"})
      */
     private $saleCollectionProducts;
 
@@ -97,18 +124,6 @@ class SaleCollection
     public function setSlug(string $slug): self
     {
         $this->slug = $slug;
-
-        return $this;
-    }
-
-    public function getCover(): ?string
-    {
-        return $this->cover;
-    }
-
-    public function setCover(?string $cover): self
-    {
-        $this->cover = $cover;
 
         return $this;
     }

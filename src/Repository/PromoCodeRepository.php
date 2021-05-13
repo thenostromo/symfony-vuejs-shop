@@ -22,12 +22,20 @@ class PromoCodeRepository extends ServiceEntityRepository
     /**
      * @return PromoCode[]
      */
-    public function getActiveList()
+    public function getActiveListWithUses()
     {
         return $this->createQueryBuilder('pc')
+            ->where('pc.validUntil > :validUntilDate')
+            ->andWhere('pc.uses > :usesMin')
+            ->andWhere('pc.isActive = :isActive')
             ->andWhere('pc.isDeleted = :isDeleted')
             ->orderBy('pc.id', 'ASC')
-            ->setParameter('isDeleted', false)
+            ->setParameters([
+                'validUntilDate' => new \DateTimeImmutable(),
+                'usesMin' => 0,
+                'isActive' => true,
+                'isDeleted' => false,
+            ])
             ->getQuery()
             ->execute()
             ;

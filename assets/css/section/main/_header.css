@@ -1,10 +1,9 @@
 .header {
     width: 100%;
     border-bottom: none;
-    position: fixed;
     height: auto;
     top: 0;
-    z-index: 999;
+    z-index: 99;
     background: #ffffff;
     -webkit-box-shadow: 0 10px 10px -10px rgba(0, 0, 0, 0.35);
     box-shadow: 0 10px 10px -10px rgba(0, 0, 0, 0.35);
@@ -13,6 +12,7 @@
 .header .container-fluid {
     display: flex;
     align-items: center;
+    justify-content: center;
 }
 
 .logotype {
@@ -41,7 +41,7 @@
     margin-right: 1rem;
 }
 
-@media screen and (min-width: 992px) {
+@media screen and (min-width: 1100px) {
     .header {
         height: 110px;
     }

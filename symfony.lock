@@ -167,6 +167,12 @@
     "imagine/imagine": {
         "version": "1.2.4"
     },
+    "knplabs/knp-components": {
+        "version": "v3.0.2"
+    },
+    "knplabs/knp-paginator-bundle": {
+        "version": "v5.4.2"
+    },
     "knpuniversity/oauth2-client-bundle": {
         "version": "1.20",
         "recipe": {
@@ -188,6 +194,9 @@
     "laminas/laminas-zendframework-bridge": {
         "version": "1.1.1"
     },
+    "league/html-to-markdown": {
+        "version": "5.0.0"
+    },
     "league/oauth2-client": {
         "version": "2.6.0"
     },
@@ -196,6 +205,12 @@
     },
     "league/oauth2-google": {
         "version": "3.0.3"
+    },
+    "lexik/form-filter-bundle": {
+        "version": "v6.1.0"
+    },
+    "lorenzo/pinky": {
+        "version": "1.0.5"
     },
     "monolog/monolog": {
         "version": "2.2.0"
@@ -214,6 +229,9 @@
     },
     "nikic/php-parser": {
         "version": "v4.10.4"
+    },
+    "nyholm/nsa": {
+        "version": "1.2.1"
     },
     "paragonie/random_compat": {
         "version": "v9.99.100"
@@ -262,6 +280,30 @@
     },
     "php-http/stopwatch-plugin": {
         "version": "1.4.0"
+    },
+    "php-translation/common": {
+        "version": "3.1.0"
+    },
+    "php-translation/extractor": {
+        "version": "2.0.3"
+    },
+    "php-translation/symfony-bundle": {
+        "version": "0.10",
+        "recipe": {
+            "repo": "github.com/symfony/recipes-contrib",
+            "branch": "master",
+            "version": "0.10",
+            "ref": "5c712c2758c3cccb964713f0061493b8ce2dd430"
+        },
+        "files": [
+            "config/packages/dev/php_translation.yaml",
+            "config/packages/php_translation.yaml",
+            "config/routes/dev/php_translation.yaml",
+            "config/routes/php_translation.yaml"
+        ]
+    },
+    "php-translation/symfony-storage": {
+        "version": "2.3.0"
     },
     "phpdocumentor/reflection-common": {
         "version": "2.2.0"
@@ -332,6 +374,9 @@
             "config/packages/stof_doctrine_extensions.yaml"
         ]
     },
+    "symfony/amqp-messenger": {
+        "version": "v5.2.7"
+    },
     "symfony/asset": {
         "version": "v5.2.1"
     },
@@ -356,6 +401,9 @@
             "bin/console"
         ]
     },
+    "symfony/css-selector": {
+        "version": "v5.2.7"
+    },
     "symfony/debug-bundle": {
         "version": "4.1",
         "recipe": {
@@ -379,6 +427,9 @@
     },
     "symfony/doctrine-bridge": {
         "version": "v5.2.1"
+    },
+    "symfony/doctrine-messenger": {
+        "version": "v5.2.7"
     },
     "symfony/dotenv": {
         "version": "v5.2.1"
@@ -469,6 +520,18 @@
             "ref": "fadbfe33303a76e25cb63401050439aa9b1a9c7f"
         }
     },
+    "symfony/messenger": {
+        "version": "4.3",
+        "recipe": {
+            "repo": "github.com/symfony/recipes",
+            "branch": "master",
+            "version": "4.3",
+            "ref": "e9a414b113ceadbf4e52abe37bf8f1b443f06ccb"
+        },
+        "files": [
+            "config/packages/messenger.yaml"
+        ]
+    },
     "symfony/mime": {
         "version": "v5.2.1"
     },
@@ -534,6 +597,9 @@
     },
     "symfony/proxy-manager-bridge": {
         "version": "v5.2.1"
+    },
+    "symfony/redis-messenger": {
+        "version": "v5.2.7"
     },
     "symfony/routing": {
         "version": "5.1",
@@ -685,11 +751,38 @@
     "symfony/yaml": {
         "version": "v5.2.1"
     },
+    "symfonycasts/reset-password-bundle": {
+        "version": "1.0",
+        "recipe": {
+            "repo": "github.com/symfony/recipes",
+            "branch": "master",
+            "version": "1.0",
+            "ref": "97c1627c0384534997ae1047b93be517ca16de43"
+        },
+        "files": [
+            "config/packages/reset_password.yaml"
+        ]
+    },
     "symfonycasts/verify-email-bundle": {
         "version": "v1.1.1"
     },
+    "tijsverkoyen/css-to-inline-styles": {
+        "version": "2.2.3"
+    },
+    "twig/cssinliner-extra": {
+        "version": "v3.3.0"
+    },
+    "twig/extra-bundle": {
+        "version": "v3.3.0"
+    },
+    "twig/inky-extra": {
+        "version": "v3.3.0"
+    },
     "twig/intl-extra": {
-        "version": "v3.2.1"
+        "version": "v3.3.0"
+    },
+    "twig/string-extra": {
+        "version": "v3.3.1"
     },
     "twig/twig": {
         "version": "v3.1.1"

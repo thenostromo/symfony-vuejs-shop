@@ -5,15 +5,15 @@
         <span class="product-sale-status sale-status-new">New</span>
         <a :href="getUrlProductShow(product.id)">
           <img
-              v-if="productImage"
-              :src="getUrlProductImage(product, productImage)"
-              :alt="product.title"
-              :class="'product-image'"
-          >
+            v-if="productImage"
+            :src="getUrlProductImage(product, productImage)"
+            :alt="product.title"
+            :class="'product-image'"
+          />
         </a>
 
         <div class="product-actions">
-          <a href="#" @click="addToCart(product)" class="btn-add-to-cart">
+          <a href="#" class="btn-add-to-cart" @click="addToCart(product)">
             add to cart
           </a>
         </div>
@@ -32,32 +32,39 @@
 </template>
 
 <script>
-import {mapGetters} from "vuex";
+import { mapState } from "vuex";
 
 export default {
+  props: {
+    product: {
+      type: Object,
+      default: () => {}
+    },
+  },
   computed: {
-    ...mapGetters('category', ['urlProductShow', 'getUrlAssetImageProducts']),
+    ...mapState("category", ["staticStore"]),
     productImage() {
-      let productImages = []
-
-      if (this.product._embedded && this.product._embedded.productImages) {
-        productImages = this.product._embedded.productImages
-      }
-
-      return productImages.length ? productImages[0] : null
+      return this.product.productImages.length
+        ? this.product.productImages[0]
+        : null;
     }
   },
-  props: ['product'],
   methods: {
     getUrlProductShow(productId) {
-      return this.urlProductShow + "/" + productId
+      return this.staticStore.url.viewProduct + "/" + productId;
     },
     getUrlProductImage(product, image) {
-      return this.getUrlAssetImageProducts + "/" + product.id + "/" + image.filenameMiddle
+      return (
+        this.staticStore.url.assetImageProducts +
+        "/" +
+        product.id +
+        "/" +
+        image.filenameMiddle
+      );
     },
-    addToCart (product) {
-      addProductToCart(product)
-    },
+    addToCart(product) {
+      window.addProductToCart(product);
+    }
   }
 };
 </script>

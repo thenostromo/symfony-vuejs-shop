@@ -3,7 +3,7 @@
 namespace App\Controller\Admin;
 
 use App\Entity\Category;
-use App\Form\Admin\CategoryEditFormType;
+use App\Form\AdminType\CategoryEditFormType;
 use App\Form\DTO\CategoryEditModel;
 use App\Form\Handler\CategoryFormHandler;
 use App\Repository\CategoryRepository;
@@ -20,12 +20,14 @@ class CategoryController extends AbstractController
 {
     /**
      * @Route("/list", name="list")
+     *
      * @param CategoryRepository $categoryRepository
+     *
      * @return Response
      */
     public function index(CategoryRepository $categoryRepository): Response
     {
-        $categoryList = $categoryRepository->findBy([], ['id' => 'DESC']);
+        $categoryList = $categoryRepository->findBy([], ['id' => 'DESC'], 50);
 
         return $this->render('admin/category/list.html.twig', [
             'categoryList' => $categoryList,
@@ -35,9 +37,11 @@ class CategoryController extends AbstractController
     /**
      * @Route("/edit/{id}", name="edit")
      * @Route("/add", name="add")
-     * @param Request $request
+     *
+     * @param Request             $request
      * @param CategoryFormHandler $categoryFormHandler
-     * @param Category|null $category
+     * @param Category|null       $category
+     *
      * @return Response
      */
     public function edit(Request $request, CategoryFormHandler $categoryFormHandler, Category $category = null): Response
@@ -48,9 +52,15 @@ class CategoryController extends AbstractController
         $form->handleRequest($request);
 
         if ($form->isSubmitted() && $form->isValid()) {
-            $categoryFormHandler->processCategoryEditForm($categoryEditModel);
+            $categoryFormHandler->processEditForm($categoryEditModel);
+
+            $this->addFlash('success', 'Your changes were saved!');
 
             return $this->redirectToRoute('admin_category_list');
+        }
+
+        if ($form->isSubmitted() && !$form->isValid()) {
+            $this->addFlash('warning', 'Something went wrong. Please, check your form!');
         }
 
         return $this->render('admin/category/edit.html.twig', [

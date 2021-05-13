@@ -1,0 +1,22 @@
+{% if saleCollection %}
+    <div class="header-banner hide" id="header_banner_block">
+        <div></div>
+        <div>
+            <a href="{{ path('sale_collection_show', {'slug': saleCollection.slug}) }}" class="link">
+                <i class="far fa-star"></i>
+                <i class="far fa-star"></i>
+                <i class="far fa-star"></i>
+                <span class="title">{{ saleCollection.title }}</span>
+                <i class="far fa-surprise"></i>
+                <i class="far fa-grin-hearts"></i>
+            </a>
+        </div>
+        <div>
+            <button id="header_banner_btn" class="btn">Close</button>
+        </div>
+    </div>
+{% endif %}
+
+<script>
+
+</script>

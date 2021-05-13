@@ -2,70 +2,67 @@
 
 namespace App\Utils\Manager;
 
+use App\Entity\Order;
 use App\Entity\Product;
 use App\Entity\ProductImage;
 use Doctrine\ORM\EntityManagerInterface;
+use Doctrine\Persistence\ObjectRepository;
+use Knp\Component\Pager\PaginatorInterface;
 
-class ProductManager
+class ProductManager extends AbstractBaseManager
 {
-    /**
-     * @var EntityManagerInterface
-     */
-    public $entityManager;
-
     /**
      * @var ProductImageManager
      */
-    public $productImageManager;
+    private $productImageManager;
 
     /**
      * @var string
      */
     private $imagesProductsDir;
 
-    public function __construct(EntityManagerInterface $entityManager, ProductImageManager $productImageManager, string $imagesProductsDir)
+    public function __construct(EntityManagerInterface $entityManager, PaginatorInterface $paginator, ProductImageManager $productImageManager, string $imagesProductsDir)
     {
-        $this->entityManager = $entityManager;
+        parent::__construct($entityManager, $paginator);
+
         $this->productImageManager = $productImageManager;
         $this->imagesProductsDir = $imagesProductsDir;
     }
 
     /**
-     * @param string $id
-     * @return Product|null
+     * @return ObjectRepository
      */
-    public function findProduct(string $id): Product
+    public function getRepository(): ObjectRepository
     {
-        return $this->entityManager->getRepository(Product::class)->find($id);
+        return $this->entityManager->getRepository(Product::class);
     }
 
-    public function save($entity)
+    /**
+     * @param object $entity
+     */
+    public function remove(object $entity): void
     {
-        $this->entityManager->persist($entity);
-        $this->entityManager->flush();
-    }
-
-    public function remove($entity)
-    {
-        $this->entityManager->remove($entity);
-        $this->entityManager->flush();
+        $entity->setIsDeleted(true);
+        $this->save($entity);
     }
 
     /**
      * @param Product $product
+     *
      * @return string
      */
-    public function getImagesProductDir(Product $product)
+    public function getImagesProductDir(Product $product): string
     {
         return sprintf('%s/%s', $this->imagesProductsDir, $product->getId());
     }
 
     /**
-     * @param Product $product
+     * @param Product     $product
      * @param string|null $tempImageFileName
+     *
      * @return Product
      */
-    public function updateProductImages(Product $product, string $tempImageFileName = null)
+    public function updateProductImages(Product $product, string $tempImageFileName = null): Product
     {
         if (!$tempImageFileName) {
             return $product;

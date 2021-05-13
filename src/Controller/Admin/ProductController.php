@@ -3,14 +3,11 @@
 namespace App\Controller\Admin;
 
 use App\Entity\Product;
+use App\Form\AdminType\ProductEditFormType;
 use App\Form\DTO\ProductEditModel;
 use App\Form\Handler\ProductFormHandler;
-use App\Form\ProductEditFormType;
-use App\Repository\ProductRepository;
-use App\Utils\File\FileSaver;
 use App\Utils\Manager\ProductManager;
 use Symfony\Bundle\FrameworkBundle\Controller\AbstractController;
-use Symfony\Component\HttpFoundation\File\UploadedFile;
 use Symfony\Component\HttpFoundation\Request;
 use Symfony\Component\HttpFoundation\Response;
 use Symfony\Component\Routing\Annotation\Route;
@@ -22,13 +19,18 @@ class ProductController extends AbstractController
 {
     /**
      * @Route("/list", name="list")
+     *
+     * @param ProductFormHandler $productFormHandler
+     * @param Request            $request
+     *
+     * @return Response
      */
-    public function index(ProductRepository $productRepository): Response
+    public function index(ProductFormHandler $productFormHandler, Request $request): Response
     {
-        $productList = $productRepository->findBy(['isDeleted' => false], ['id' => 'DESC']);
+        $pagination = $productFormHandler->processProductFiltersForm($request);
 
         return $this->render('admin/product/list.html.twig', [
-            'productList' => $productList,
+            'pagination' => $pagination,
         ]);
     }
 
@@ -36,6 +38,12 @@ class ProductController extends AbstractController
      * @Route("/edit/{id}", name="edit")
      * @Route("/edit", name="edit_blank")
      * @Route("/add", name="add")
+     *
+     * @param Request            $request
+     * @param ProductFormHandler $productFormHandler
+     * @param Product|null       $product
+     *
+     * @return Response
      */
     public function edit(Request $request, ProductFormHandler $productFormHandler, Product $product = null): Response
     {
@@ -45,9 +53,15 @@ class ProductController extends AbstractController
         $form->handleRequest($request);
 
         if ($form->isSubmitted() && $form->isValid()) {
-            $product = $productFormHandler->processProductEditForm($productEditModel);
+            $product = $productFormHandler->processEditForm($productEditModel);
+
+            $this->addFlash('success', 'Your changes were saved!');
 
             return $this->redirectToRoute('admin_product_edit', ['id' => $product->getId()]);
+        }
+
+        if ($form->isSubmitted() && !$form->isValid()) {
+            $this->addFlash('warning', 'Something went wrong. Please, check your form!');
         }
 
         $images = $product ? $product->getProductImages()->getValues() : [];
@@ -61,6 +75,11 @@ class ProductController extends AbstractController
 
     /**
      * @Route("/delete/{id}", name="delete")
+     *
+     * @param Product        $product
+     * @param ProductManager $productManager
+     *
+     * @return Response
      */
     public function delete(Product $product, ProductManager $productManager): Response
     {

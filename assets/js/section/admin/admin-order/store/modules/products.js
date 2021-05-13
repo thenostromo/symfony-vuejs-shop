@@ -1,119 +1,143 @@
-const axios = require('axios');
+import { StatusCodes } from "http-status-codes";
+import axios from "axios";
+import { apiConfig } from "../../../../../utils/settings";
+import {
+  getUrlProductsByCategory,
+  concatUrlByParams
+} from "../../../../../utils/url-generator";
 
 const state = () => ({
-  selectedCategory: "",
-  selectedProduct: "",
-  newProductQuantity: "",
-  newProductPricePerOne: "",
-  categoryProducts: [],
+  newOrderProduct: {
+    category: "",
+    productId: "",
+    quantity: "",
+    pricePerOne: ""
+  },
 
+  categories: [],
+  categoryProducts: [],
   orderProducts: [],
   orderProductIds: [],
+  busyProductIds: [],
+  promoCode: {},
 
-  staticStore: window.staticStore
-})
+  staticStore: {
+    orderId: window.staticStore.orderId,
+    promoCodeId: window.staticStore.promoCodeId,
+    url: {
+      apiCategories: window.staticStore.urlAPICategories,
+      apiCategoryProducts: window.staticStore.urlAPICategoryProducts,
+      apiOrder: window.staticStore.urlAPIOrder,
+      apiOrderProducts: window.staticStore.urlAPIOrderProducts,
+      apiPromoCode: window.staticStore.urlAPIPromoCode,
+      viewProduct: window.staticStore.urlProductView
+    }
+  },
+  viewProductsCountLimit: 25
+});
 
 const getters = {
-    freeCategoryProducts(state) {
-        return state.categoryProducts.filter(
-            item => (state.orderProductIds.indexOf(item.id) === -1)
-        )
-    },
-    categories(state) {
-        return state.staticStore.categories
-    },
-    orderId(state) {
-        return state.staticStore.orderId
-    },
-    urlProductView(state) {
-        return state.staticStore.urlProductView
-    },
-    urlGetProductsByCategory(state) {
-        return state.staticStore.urlGetProductsByCategory
-    },
-    urlGetProductsByOrder(state) {
-        return state.staticStore.urlGetProductsByOrder
-    },
-    urlAddProductToOrder(state) {
-        return state.staticStore.urlAddProductToOrder
-    },
-    urlRemoveProductFromOrder(state) {
-        return state.staticStore.urlRemoveProductFromOrder
-    }
-}
+  freeCategoryProducts(state) {
+    return state.categoryProducts.filter(
+      item => state.busyProductIds.indexOf(item.id) === -1
+    );
+  }
+};
 
 const actions = {
-  async changedSelectedCategory({ commit, getters, state }) {
-    let data = new FormData();
-    data.append("categoryId", state.selectedCategory);
+  async getPromoCode({ commit, state }) {
+    const url = concatUrlByParams(
+      state.staticStore.url.apiPromoCode,
+      state.staticStore.promoCodeId
+    );
+    const result = await axios.get(url, apiConfig);
 
-    const result = await axios.post(getters.urlGetProductsByCategory, data)
-
-    if (result.data.success) {
-      commit('setCategoryProducts', result.data.data)
-      commit('setOrderProductIds')
+    if (result.data && result.status === StatusCodes.OK) {
+      commit("setPromoCode", result.data);
     }
   },
-  async getProductsByOrder({ commit, getters }) {
-    let data = new FormData();
-    data.append("orderId", getters.orderId);
-    const result = await axios.post(getters.urlGetProductsByOrder, data)
+  async getCategories({ commit, state }) {
+    const url = state.staticStore.url.apiCategories;
+    const result = await axios.get(url, apiConfig);
 
-    if (result.data.success) {
-      commit('setOrderProducts', result.data.data)
-      commit('setOrderProductIds')
+    if (result.data && result.status === StatusCodes.OK) {
+      commit("setCategories", result.data["hydra:member"]);
     }
   },
-  async addNewProduct({ getters, state }) {
-    let data = new FormData();
-    data.append("productId", state.selectedProduct);
-    data.append("orderId", getters.orderId);
-    data.append("pricePerOne", state.newProductPricePerOne);
-    data.append("quantity", state.newProductQuantity)
+  async getProductsByCategory({ commit, state }) {
+    const url = getUrlProductsByCategory(
+      state.staticStore.url.apiCategoryProducts,
+      state.newOrderProduct.category,
+      state.viewProductsCountLimit
+    );
+    const result = await axios.get(url, apiConfig);
 
-    const result = await axios.post(getters.urlAddProductToOrder, data)
+    if (result.data && result.status === StatusCodes.OK) {
+      commit("setCategoryProducts", result.data["hydra:member"]);
+    }
   },
-  async removeProduct({ getters, commit, state }, productId) {
-    let data = new FormData();
-    data.append("productId", productId);
-    data.append("orderId", getters.orderId);
+  async getProductsByOrder({ commit, state }) {
+    const url = concatUrlByParams(
+      state.staticStore.url.apiOrder,
+      state.staticStore.orderId
+    );
+    const result = await axios.get(url, apiConfig);
 
-    const result = await axios.post(getters.urlRemoveProductFromOrder, data)
+    if (result.data && result.status === StatusCodes.OK) {
+      commit("setOrderProducts", result.data.orderProducts);
+      commit("setBusyProductIds");
+    }
+  },
+  async addNewProduct({ state, dispatch }) {
+    const url = state.staticStore.url.apiOrderProducts;
+    const data = {
+      pricePerOne: state.newOrderProduct.pricePerOne,
+      quantity: parseInt(state.newOrderProduct.quantity),
+      product: "/api/products/" + state.newOrderProduct.productId,
+      appOrder: "/api/orders/" + state.staticStore.orderId
+    };
 
-    if (result.data.success) {
-      commit('removeProductFromOrder', productId)
+    const result = await axios.post(url, data, apiConfig);
+    if (result.data && result.status === StatusCodes.CREATED) {
+      dispatch("getProductsByOrder");
+    }
+  },
+  async removeProduct({ state, dispatch }, productId) {
+    const url = concatUrlByParams(
+      state.staticStore.url.apiOrderProducts,
+      productId
+    );
+    const result = await axios.delete(url, apiConfig);
+
+    if (result.status === StatusCodes.NO_CONTENT) {
+      dispatch("getProductsByOrder");
     }
   }
-}
+};
 
 const mutations = {
-  setSelectedCategory (state, selectedCategory) {
-    state.selectedCategory = selectedCategory
+  setPromoCode(state, promoCode) {
+    state.promoCode = promoCode;
   },
-  setSelectedProduct (state, selectedProduct) {
-    state.selectedProduct = selectedProduct
+  setCategories(state, categories) {
+    state.categories = categories;
   },
-  setNewProductPricePerOne (state, newProductPricePerOne) {
-    state.newProductPricePerOne = newProductPricePerOne
+  setNewProductInfo(state, formData) {
+    state.newOrderProduct.category = formData.category;
+    state.newOrderProduct.productId = formData.productId;
+    state.newOrderProduct.quantity = formData.quantity;
+    state.newOrderProduct.pricePerOne = formData.pricePerOne;
   },
-  setNewProductQuantity (state, newProductQuantity) {
-    state.newProductQuantity = newProductQuantity
+  setOrderProducts(state, orderProducts) {
+    state.orderProducts = orderProducts;
   },
-  setOrderProducts (state, products) {
-    state.orderProducts = products
+  setBusyProductIds(state) {
+    state.busyProductIds = state.orderProducts.map(item => item.product.id);
   },
-  setOrderProductIds (state) {
-    state.orderProductIds = state.orderProducts.map((item) => item.id)
-  },
-  setCategoryProducts (state, products) {
-    state.categoryProducts = products
-  },
-  removeProductFromOrder (state, productId) {
-    state.orderProducts = state.orderProducts.filter((item, index) => {
-        return item.id !== productId
-    })
+  setCategoryProducts(state, products) {
+    state.categoryProducts = products;
   }
-}
+};
 
 export default {
   namespaced: true,
@@ -121,4 +145,4 @@ export default {
   getters,
   actions,
   mutations
-}
+};

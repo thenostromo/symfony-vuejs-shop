@@ -1,0 +1,54 @@
+<div class="mobile-menu-container" id="mobile_menu_container">
+    <button class="mobile-menu-close-btn" id="mobile_menu_close_btn">
+        <i class="fas fa-times"></i>
+    </button>
+    <nav class="mobile-nav">
+        <ul class="mobile-menu">
+            {% include 'main/_embed/_menu/_menu_item.html.twig' with {
+                'targetRoute': 'category_show',
+                'slug': 'jeans',
+                'label': 'Jeans'
+            } %}
+            {% include 'main/_embed/_menu/_menu_item.html.twig' with {
+                'targetRoute': 'category_show',
+                'slug': 'hats',
+                'label': 'Hats'
+            } %}
+            {% include 'main/_embed/_menu/_menu_item.html.twig' with {
+                'targetRoute': 'category_show',
+                'slug': 'jackets',
+                'label': 'Jackets'
+            } %}
+            {% include 'main/_embed/_menu/_menu_item.html.twig' with {
+                'targetRoute': 'category_show',
+                'slug': 'dresses',
+                'label': 'Dresses'
+            } %}
+            {% include 'main/_embed/_menu/_menu_item.html.twig' with {
+                'targetRoute': 'category_show',
+                'slug': 'sneakers',
+                'label': 'Sneakers'
+            } %}
+
+            {% if app.user %}
+                {% include 'main/_embed/_menu/_menu_item.html.twig' with {
+                    'targetRoute': 'profile_index',
+                    'label': 'My profile',
+                    'isBold': 1
+                } %}
+            {% else %}
+                {% include 'main/_embed/_menu/_menu_item.html.twig' with {
+                    'targetRoute': 'security_login',
+                    'label': 'Login',
+                    'isBold': 1
+                } %}
+            {% endif %}
+
+            {% include 'main/_embed/_menu/_menu_item.html.twig' with {
+                'targetRoute': 'cart_index',
+                'label': 'Cart',
+                'isBold': 1
+            } %}
+        </ul>
+    </nav>
+</div>

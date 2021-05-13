@@ -1,33 +1,46 @@
 <template>
   <div class="table-additional-selection">
-    <AddProduct/>
+    <OrderProductAdd />
 
-    <hr/>
+    <hr />
 
-    <ProductItem
-      v-for="(product, index) in orderProducts"
-      :product="product"
+    <OrderProductItem
+      v-for="(orderProduct, index) in orderProducts"
+      :key="orderProduct.id"
+      :order-product="orderProduct"
       :index="index"
-      :key="product.id"
     />
+
+    <hr />
+
+    <TotalPriceBlock />
   </div>
 </template>
 
 <script>
-import ProductItem from "./components/ProductItem";
-import AddProduct from "./components/AddProduct";
-import {mapActions, mapGetters, mapState} from "vuex";
+import OrderProductItem from "./components/OrderProductItem";
+import OrderProductAdd from "./components/OrderProductAdd";
+import { mapActions, mapState } from "vuex";
+import TotalPriceBlock from "./components/TotalPriceBlock";
 
 export default {
-  components: {AddProduct, ProductItem},
-  mounted() {
-    this.getProductsByOrder()
-  },
+  components: { TotalPriceBlock, OrderProductAdd, OrderProductItem },
   computed: {
-    ...mapState('products', ['orderProducts'])
+    ...mapState("products", ["staticStore", "orderProducts"])
+  },
+  mounted() {
+    if (this.staticStore.promoCodeId) {
+      this.getPromoCode();
+    }
+    this.getCategories();
+    this.getProductsByOrder();
   },
   methods: {
-    ...mapActions('products', ['getProductsByOrder']),
+    ...mapActions("products", [
+      "getPromoCode",
+      "getCategories",
+      "getProductsByOrder"
+    ])
   }
 };
 </script>

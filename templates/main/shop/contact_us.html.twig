@@ -1,0 +1,46 @@
+{% extends 'main/base.html.twig' %}
+
+{% block title %}Hello ShopController!{% endblock %}
+{% block page_keywords %}Jeans, Ranked Choice Homepage, Jackets{% endblock %}
+{% block page_description %}Main page of RankedChoice shop!{% endblock %}
+
+{% block body %}
+    <div class="page-content mt-3">
+        <div class="container">
+            <div class="product-details-top mb-2 m-5 p-5">
+                {{ form_start(form) }}
+                    <h1 class="product-title">Contact Us</h1>
+                    <div class="row">
+                        <div class="col-md-12">
+                            {{ form_label(form.email) }}
+                            {{ form_widget(form.email) }}
+                        </div>
+                    </div>
+                    <div class="row">
+                        <div class="col-md-12">
+                            {{ form_label(form.name) }}
+                            {{ form_widget(form.name) }}
+                        </div>
+                    </div>
+                    <div class="row">
+                        <div class="col-md-12">
+                            {{ form_label(form.letterTitle) }}
+                            {{ form_widget(form.letterTitle) }}
+                        </div>
+                    </div>
+                    <div class="row">
+                        <div class="col-md-12">
+                            {{ form_label(form.letterText) }}
+                            {{ form_widget(form.letterText) }}
+                        </div>
+                    </div>
+                    <div class="row">
+                        <div class="col-md-12">
+                            <input type="submit" class="btn btn-info">
+                        </div>
+                    </div>
+                {{ form_end(form) }}
+            </div><!-- End .product-details-top -->
+        </div><!-- End .container -->
+    </div><!-- End .container -->
+{% endblock %}

@@ -14,3 +14,5 @@ const vueMenuCartInstance = new Vue({
 window.vueMenuCartInstance = {}
 window.vueMenuCartInstance.getProductsOfCart =
     () => vueMenuCartInstance.$store.dispatch('cart/getProductsOfCart')
+window.vueMenuCartInstance.addCartProduct =
+  (productData) => vueMenuCartInstance.$store.dispatch('cart/addCartProduct', productData)

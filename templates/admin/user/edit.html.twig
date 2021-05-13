@@ -3,108 +3,107 @@
 {% block title_detailed %}Edit User{% endblock %}
 
 {% block body %}
-    <div class="container-fluid">
-
-        <div class="card shadow mb-4">
-            <div class="card-header py-3">
-                {% include 'admin/embed/card/_breadcrumbs.html.twig' with {
-                    'sectionTitle': 'Users',
-                    'actionUrl': path('admin_user_list'),
-                    'entity': user
-                } %}
-            </div>
-            <div class="card-body">
-                {{ form_start(form) }}
-                    <div class="form-group row">
-                        <div class="col-md-1">
-                            Email:
-                        </div>
-                        <div class="col-md-11">
-                            {{ user.email }}
-                        </div>
-                    </div>
-                    <div class="form-group row">
-                        <div class="col-md-1">
-                            {{ form_label(form.plainPassword) }}
-                        </div>
-                        <div class="col-md-11">
-                            {{ form_widget(form.plainPassword) }}
-                            <div class="form-error">
-                                {{ form_errors(form.plainPassword) }}
-                            </div>
-                        </div>
-                    </div>
-                    <div class="form-group row">
-                        <div class="col-md-1">
-                            {{ form_label(form.fullName) }}
-                        </div>
-                        <div class="col-md-11">
-                            {{ form_widget(form.fullName) }}
-                            <div class="form-error">
-                                {{ form_errors(form.fullName) }}
-                            </div>
-                        </div>
-                    </div>
-                    <div class="form-group row">
-                        <div class="col-md-1">
-                            {{ form_label(form.phone) }}
-                        </div>
-                        <div class="col-md-11">
-                            {{ form_widget(form.phone) }}
-                            <div class="form-error">
-                                {{ form_errors(form.phone) }}
-                            </div>
-                        </div>
-                    </div>
-                    <div class="form-group row">
-                        <div class="col-md-1">
-                            {{ form_label(form.address) }}
-                        </div>
-                        <div class="col-md-11">
-                            {{ form_widget(form.address) }}
-                            <div class="form-error">
-                                {{ form_errors(form.address) }}
-                            </div>
-                        </div>
-                    </div>
-                    <div class="form-group row">
-                        <div class="col-md-1">
-                            {{ form_label(form.zipCode) }}
-                        </div>
-                        <div class="col-md-11">
-                            {{ form_widget(form.zipCode) }}
-                            <div class="form-error">
-                                {{ form_errors(form.zipCode) }}
-                            </div>
-                        </div>
-                    </div>
-                    <div class="form-group row">
-                        <div class="col-md-1">
-                            Roles:
-                        </div>
-                        <div class="col-md-11">
-                            {{ user.roles|json_encode }}
-                        </div>
-                    </div>
-                    <div class="form-group row">
-                        <div class="col-md-1"></div>
-                        <div class="col-md-11 pl-5">
-                            {{ form_widget(form.isVerified) }}
-                            {{ form_label(form.isVerified) }}
-                            <div class="form-error">
-                                {{ form_errors(form.isVerified) }}
-                            </div>
-                        </div>
-                    </div>
-                    <hr/>
-                    {% include 'admin/embed/card/_form_buttons.html.twig' with {
-                        'entity': user,
-                        'catalogRoute': path('admin_user_list')
-                    }  %}
-                {{ form_end(form) }}
-            </div>
+    <div class="card shadow mb-4">
+        <div class="card-header py-3">
+            {% include 'admin/embed/card/_breadcrumbs.html.twig' with {
+                'sectionTitle': 'Users',
+                'actionUrl': path('admin_user_list'),
+                'entity': user
+            } %}
         </div>
-
+        <div class="card-body">
+            {{ form_start(form) }}
+            <div class="form-group row">
+                <div class="col-md-1">
+                    Email:
+                </div>
+                <div class="col-md-11">
+                    {{ user.email }}
+                </div>
+            </div>
+            <div class="form-group row">
+                <div class="col-md-1">
+                    {{ form_label(form.plainPassword) }}
+                </div>
+                <div class="col-md-11">
+                    {{ form_widget(form.plainPassword) }}
+                    <div class="form-error">
+                        {{ form_errors(form.plainPassword) }}
+                    </div>
+                </div>
+            </div>
+            <div class="form-group row">
+                <div class="col-md-1">
+                    {{ form_label(form.fullName) }}
+                </div>
+                <div class="col-md-11">
+                    {{ form_widget(form.fullName) }}
+                    <div class="form-error">
+                        {{ form_errors(form.fullName) }}
+                    </div>
+                </div>
+            </div>
+            <div class="form-group row">
+                <div class="col-md-1">
+                    {{ form_label(form.phone) }}
+                </div>
+                <div class="col-md-11">
+                    {{ form_widget(form.phone) }}
+                    <div class="form-error">
+                        {{ form_errors(form.phone) }}
+                    </div>
+                </div>
+            </div>
+            <div class="form-group row">
+                <div class="col-md-1">
+                    {{ form_label(form.address) }}
+                </div>
+                <div class="col-md-11">
+                    {{ form_widget(form.address) }}
+                    <div class="form-error">
+                        {{ form_errors(form.address) }}
+                    </div>
+                </div>
+            </div>
+            <div class="form-group row">
+                <div class="col-md-1">
+                    {{ form_label(form.zipCode) }}
+                </div>
+                <div class="col-md-11">
+                    {{ form_widget(form.zipCode) }}
+                    <div class="form-error">
+                        {{ form_errors(form.zipCode) }}
+                    </div>
+                </div>
+            </div>
+            <div class="form-group row">
+                <div class="col-md-1">
+                    {{ form_label(form.roles) }}
+                </div>
+                <div class="col-md-11">
+                    {{ form_widget(form.roles) }}
+                    <div class="form-error">
+                        {{ form_errors(form.roles) }}
+                    </div>
+                </div>
+            </div>
+            <div class="form-group row">
+                <div class="col-md-1"></div>
+                <div class="col-md-11 pl-5">
+                    {{ form_widget(form.isVerified) }}
+                    {{ form_label(form.isVerified) }}
+                    <div class="form-error">
+                        {{ form_errors(form.isVerified) }}
+                    </div>
+                </div>
+            </div>
+            <hr/>
+            {% include 'admin/embed/card/_form_buttons.html.twig' with {
+                'entity': user,
+                'catalogRoute': path('admin_user_list')
+            }  %}
+            {{ form_end(form) }}
+        </div>
     </div>
 
     {% if user.id %}

@@ -1,0 +1,610 @@
+<?xml version="1.0" encoding="utf-8"?>
+<xliff xmlns="urn:oasis:names:tc:xliff:document:2.0" version="2.0" srcLang="en" trgLang="ru">
+  <file id="messages.ru">
+    <unit id="dDUw20Q" name="Please sign in">
+      <notes>
+        <note category="file-source" priority="1">ranked_choice/templates/main/security/login.html.twig:12</note>
+      </notes>
+      <segment>
+        <source>Please sign in</source>
+        <target></target>
+      </segment>
+    </unit>
+    <unit id="sMIMdUS" name="user_signup.heading">
+      <notes>
+        <note category="file-source" priority="1">ranked_choice/templates/main/security/registration.html.twig:14</note>
+        <note category="state" priority="1">new</note>
+      </notes>
+      <segment>
+        <source>user_signup.heading</source>
+        <target></target>
+      </segment>
+    </unit>
+    <unit id="XCJxYQ0" name="button.sign_up">
+      <notes>
+        <note category="file-source" priority="1">ranked_choice/templates/main/security/registration.html.twig:34</note>
+        <note category="state" priority="1">new</note>
+      </notes>
+      <segment>
+        <source>button.sign_up</source>
+        <target></target>
+      </segment>
+    </unit>
+    <unit id="InL.hr8" name="button.login_with_google">
+      <notes>
+        <note category="file-source" priority="1">ranked_choice/templates/main/security/registration.html.twig:53</note>
+        <note category="state" priority="1">new</note>
+      </notes>
+      <segment>
+        <source>button.login_with_google</source>
+        <target></target>
+      </segment>
+    </unit>
+    <unit id="Nwy6Amm" name="button.login_with_facebook">
+      <notes>
+        <note category="file-source" priority="1">ranked_choice/templates/main/security/registration.html.twig:60</note>
+        <note category="state" priority="1">new</note>
+      </notes>
+      <segment>
+        <source>button.login_with_facebook</source>
+        <target></target>
+      </segment>
+    </unit>
+    <unit id="vN4SXKk" name="An email has been sent. Please check your inbox to complete registration.">
+      <notes>
+        <note category="file-source" priority="1">ranked_choice/src/Security/Authenticator/GoogleAuthenticator.php:91</note>
+        <note category="file-source" priority="1">ranked_choice/src/Security/Authenticator/FacebookAuthenticator.php:90</note>
+      </notes>
+      <segment>
+        <source>An email has been sent. Please check your inbox to complete registration.</source>
+        <target></target>
+      </segment>
+    </unit>
+    <unit id="Ffjdnsj" name="label.enter_your_email">
+      <notes>
+        <note category="file-source" priority="1">ranked_choice/src/Form/RegistrationFormType.php:22</note>
+      </notes>
+      <segment>
+        <source>label.enter_your_email</source>
+        <target></target>
+      </segment>
+    </unit>
+    <unit id="RWbwCeE" name="label.user_signup.agree_with_terms">
+      <notes>
+        <note category="file-source" priority="1">ranked_choice/src/Form/RegistrationFormType.php:39</note>
+      </notes>
+      <segment>
+        <source>label.user_signup.agree_with_terms</source>
+        <target></target>
+      </segment>
+    </unit>
+    <unit id="CQGOHff" name="label.enter_your_password">
+      <notes>
+        <note category="file-source" priority="1">ranked_choice/src/Form/RegistrationFormType.php:56</note>
+      </notes>
+      <segment>
+        <source>label.enter_your_password</source>
+        <target></target>
+      </segment>
+    </unit>
+    <unit id="U6L_pQV" name="placeholder.enter_your_email">
+      <notes>
+        <note category="file-source" priority="1">ranked_choice/src/Form/RegistrationFormType.php:36</note>
+      </notes>
+      <segment>
+        <source>placeholder.enter_your_email</source>
+        <target></target>
+      </segment>
+    </unit>
+    <unit id="GaDZufa" name="Your email:">
+      <notes>
+        <note category="file-source" priority="1">ranked_choice/src/Form/ContactUsFormType.php:17</note>
+      </notes>
+      <segment>
+        <source>Your email:</source>
+        <target></target>
+      </segment>
+    </unit>
+    <unit id="mfFEu4T" name="Your name:">
+      <notes>
+        <note category="file-source" priority="1">ranked_choice/src/Form/ContactUsFormType.php:23</note>
+      </notes>
+      <segment>
+        <source>Your name:</source>
+        <target></target>
+      </segment>
+    </unit>
+    <unit id="3vrvFTq" name="Letter title:">
+      <notes>
+        <note category="file-source" priority="1">ranked_choice/src/Form/ContactUsFormType.php:29</note>
+      </notes>
+      <segment>
+        <source>Letter title:</source>
+        <target></target>
+      </segment>
+    </unit>
+    <unit id="NoQsAds" name="Letter text:">
+      <notes>
+        <note category="file-source" priority="1">ranked_choice/src/Form/ContactUsFormType.php:35</note>
+      </notes>
+      <segment>
+        <source>Letter text:</source>
+        <target></target>
+      </segment>
+    </unit>
+    <unit id="Cilydb_" name="Please enter your full name">
+      <notes>
+        <note category="file-source" priority="1">ranked_choice/src/Form/ProfileEditFormType.php:17</note>
+      </notes>
+      <segment>
+        <source>Please enter your full name</source>
+        <target></target>
+      </segment>
+    </unit>
+    <unit id="Gh8lwdw" name="Please enter your phone">
+      <notes>
+        <note category="file-source" priority="1">ranked_choice/src/Form/ProfileEditFormType.php:20</note>
+      </notes>
+      <segment>
+        <source>Please enter your phone</source>
+        <target></target>
+      </segment>
+    </unit>
+    <unit id="CewQWe0" name="Please enter your address">
+      <notes>
+        <note category="file-source" priority="1">ranked_choice/src/Form/ProfileEditFormType.php:23</note>
+      </notes>
+      <segment>
+        <source>Please enter your address</source>
+        <target></target>
+      </segment>
+    </unit>
+    <unit id="Pe5Uloe" name="Please enter your zipcode">
+      <notes>
+        <note category="file-source" priority="1">ranked_choice/src/Form/ProfileEditFormType.php:26</note>
+      </notes>
+      <segment>
+        <source>Please enter your zipcode</source>
+        <target></target>
+      </segment>
+    </unit>
+    <unit id="XohImNo" name="password">
+      <notes>
+        <note category="file-source" priority="1">ranked_choice/src/Form/LoginFormType.php:16</note>
+      </notes>
+      <segment>
+        <source>password</source>
+        <target></target>
+      </segment>
+    </unit>
+    <unit id="giREF.l" name="email">
+      <notes>
+        <note category="file-source" priority="1">ranked_choice/src/Form/LoginFormType.php:16</note>
+        <note category="file-source" priority="1">ranked_choice/src/Form/ResetPasswordRequestFormType.php:15</note>
+      </notes>
+      <segment>
+        <source>email</source>
+        <target></target>
+      </segment>
+    </unit>
+    <unit id="PdnfREH" name="New password">
+      <notes>
+        <note category="file-source" priority="1">ranked_choice/src/Form/ChangePasswordFormType.php:20</note>
+        <note category="file-source" priority="1">ranked_choice/src/Form/AdminType/UserEditFormType.php:20</note>
+      </notes>
+      <segment>
+        <source>New password</source>
+        <target></target>
+      </segment>
+    </unit>
+    <unit id="Hkmh4Tp" name="Repeat Password">
+      <notes>
+        <note category="file-source" priority="1">ranked_choice/src/Form/ChangePasswordFormType.php:34</note>
+      </notes>
+      <segment>
+        <source>Repeat Password</source>
+        <target></target>
+      </segment>
+    </unit>
+    <unit id="Knrm5Px" name="plainPassword">
+      <notes>
+        <note category="file-source" priority="1">ranked_choice/src/Form/ChangePasswordFormType.php:17</note>
+      </notes>
+      <segment>
+        <source>plainPassword</source>
+        <target></target>
+      </segment>
+    </unit>
+    <unit id="fozSBW2" name="Title">
+      <notes>
+        <note category="file-source" priority="1">ranked_choice/src/Form/AdminType/ProductEditFormType.php:30</note>
+        <note category="file-source" priority="1">ranked_choice/src/Form/AdminType/SaleCollectionEditFormType.php:21</note>
+        <note category="file-source" priority="1">ranked_choice/src/Form/AdminType/PromoCodeEditFormType.php:21</note>
+        <note category="file-source" priority="1">ranked_choice/src/Form/AdminType/CategoryEditFormType.php:19</note>
+      </notes>
+      <segment>
+        <source>Title</source>
+        <target></target>
+      </segment>
+    </unit>
+    <unit id="k8kchR5" name="Price">
+      <notes>
+        <note category="file-source" priority="1">ranked_choice/src/Form/AdminType/ProductEditFormType.php:37</note>
+      </notes>
+      <segment>
+        <source>Price</source>
+        <target></target>
+      </segment>
+    </unit>
+    <unit id="ziRL3Ar" name="Choose new image">
+      <notes>
+        <note category="file-source" priority="1">ranked_choice/src/Form/AdminType/ProductEditFormType.php:48</note>
+      </notes>
+      <segment>
+        <source>Choose new image</source>
+        <target></target>
+      </segment>
+    </unit>
+    <unit id="giurjUG" name="Quantity">
+      <notes>
+        <note category="file-source" priority="1">ranked_choice/src/Form/AdminType/ProductEditFormType.php:55</note>
+      </notes>
+      <segment>
+        <source>Quantity</source>
+        <target></target>
+      </segment>
+    </unit>
+    <unit id="WX.GxT8" name="Is published">
+      <notes>
+        <note category="file-source" priority="1">ranked_choice/src/Form/AdminType/ProductEditFormType.php:62</note>
+        <note category="file-source" priority="1">ranked_choice/src/Form/AdminType/SaleCollectionEditFormType.php:44</note>
+      </notes>
+      <segment>
+        <source>Is published</source>
+        <target></target>
+      </segment>
+    </unit>
+    <unit id="Um4Ah8w" name="Description">
+      <notes>
+        <note category="file-source" priority="1">ranked_choice/src/Form/AdminType/ProductEditFormType.php:72</note>
+        <note category="file-source" priority="1">ranked_choice/src/Form/AdminType/SaleCollectionEditFormType.php:28</note>
+        <note category="file-source" priority="1">ranked_choice/src/Form/AdminType/PromoCodeEditFormType.php:28</note>
+      </notes>
+      <segment>
+        <source>Description</source>
+        <target></target>
+      </segment>
+    </unit>
+    <unit id="GvhRkHM" name="Size">
+      <notes>
+        <note category="file-source" priority="1">ranked_choice/src/Form/AdminType/ProductEditFormType.php:80</note>
+      </notes>
+      <segment>
+        <source>Size</source>
+        <target></target>
+      </segment>
+    </unit>
+    <unit id="KSwG8AR" name="Category">
+      <notes>
+        <note category="file-source" priority="1">ranked_choice/src/Form/AdminType/ProductEditFormType.php:88</note>
+      </notes>
+      <segment>
+        <source>Category</source>
+        <target></target>
+      </segment>
+    </unit>
+    <unit id="EhVukhv" name="Id">
+      <notes>
+        <note category="file-source" priority="1">ranked_choice/src/Form/AdminType/FilterType/OrderFilterFormType.php:19</note>
+      </notes>
+      <segment>
+        <source>Id</source>
+        <target></target>
+      </segment>
+    </unit>
+    <unit id="SxuKo2C" name="Owner">
+      <notes>
+        <note category="file-source" priority="1">ranked_choice/src/Form/AdminType/FilterType/OrderFilterFormType.php:25</note>
+        <note category="file-source" priority="1">ranked_choice/src/Form/AdminType/OrderEditFormType.php:35</note>
+      </notes>
+      <segment>
+        <source>Owner</source>
+        <target></target>
+      </segment>
+    </unit>
+    <unit id="kg5BPH1" name="Status">
+      <notes>
+        <note category="file-source" priority="1">ranked_choice/src/Form/AdminType/FilterType/OrderFilterFormType.php:35</note>
+        <note category="file-source" priority="1">ranked_choice/src/Form/AdminType/OrderEditFormType.php:44</note>
+      </notes>
+      <segment>
+        <source>Status</source>
+        <target></target>
+      </segment>
+    </unit>
+    <unit id="naepTwi" name="Total price">
+      <notes>
+        <note category="file-source" priority="1">ranked_choice/src/Form/AdminType/FilterType/OrderFilterFormType.php:42</note>
+      </notes>
+      <segment>
+        <source>Total price</source>
+        <target></target>
+      </segment>
+    </unit>
+    <unit id="IYGXaTQ" name="From">
+      <notes>
+        <note category="file-source" priority="1">ranked_choice/src/Form/AdminType/FilterType/OrderFilterFormType.php:44</note>
+        <note category="file-source" priority="1">ranked_choice/src/Form/AdminType/FilterType/OrderFilterFormType.php:61</note>
+      </notes>
+      <segment>
+        <source>From</source>
+        <target></target>
+      </segment>
+    </unit>
+    <unit id="9LBu9tP" name="To">
+      <notes>
+        <note category="file-source" priority="1">ranked_choice/src/Form/AdminType/FilterType/OrderFilterFormType.php:51</note>
+        <note category="file-source" priority="1">ranked_choice/src/Form/AdminType/FilterType/OrderFilterFormType.php:68</note>
+      </notes>
+      <segment>
+        <source>To</source>
+        <target></target>
+      </segment>
+    </unit>
+    <unit id="PUQzcBC" name="Created At">
+      <notes>
+        <note category="file-source" priority="1">ranked_choice/src/Form/AdminType/FilterType/OrderFilterFormType.php:59</note>
+      </notes>
+      <segment>
+        <source>Created At</source>
+        <target></target>
+      </segment>
+    </unit>
+    <unit id="ks0FTad" name="Valid until">
+      <notes>
+        <note category="file-source" priority="1">ranked_choice/src/Form/AdminType/SaleCollectionEditFormType.php:35</note>
+        <note category="file-source" priority="1">ranked_choice/src/Form/AdminType/PromoCodeEditFormType.php:56</note>
+      </notes>
+      <segment>
+        <source>Valid until</source>
+        <target></target>
+      </segment>
+    </unit>
+    <unit id="7AwhiF4" name="Promo code">
+      <notes>
+        <note category="file-source" priority="1">ranked_choice/src/Form/AdminType/OrderEditFormType.php:52</note>
+        <note category="file-source" priority="1">ranked_choice/src/Form/AdminType/PromoCodeEditFormType.php:42</note>
+      </notes>
+      <segment>
+        <source>Promo code</source>
+        <target></target>
+      </segment>
+    </unit>
+    <unit id="8Tpkui." name="Full name">
+      <notes>
+        <note category="file-source" priority="1">ranked_choice/src/Form/AdminType/UserEditFormType.php:27</note>
+      </notes>
+      <segment>
+        <source>Full name</source>
+        <target></target>
+      </segment>
+    </unit>
+    <unit id="Y9zriAC" name="Phone">
+      <notes>
+        <note category="file-source" priority="1">ranked_choice/src/Form/AdminType/UserEditFormType.php:34</note>
+      </notes>
+      <segment>
+        <source>Phone</source>
+        <target></target>
+      </segment>
+    </unit>
+    <unit id="Vu_PIJV" name="Address">
+      <notes>
+        <note category="file-source" priority="1">ranked_choice/src/Form/AdminType/UserEditFormType.php:41</note>
+      </notes>
+      <segment>
+        <source>Address</source>
+        <target></target>
+      </segment>
+    </unit>
+    <unit id=".GbXqym" name="Zip code">
+      <notes>
+        <note category="file-source" priority="1">ranked_choice/src/Form/AdminType/UserEditFormType.php:48</note>
+      </notes>
+      <segment>
+        <source>Zip code</source>
+        <target></target>
+      </segment>
+    </unit>
+    <unit id="wlM3BVR" name="Roles">
+      <notes>
+        <note category="file-source" priority="1">ranked_choice/src/Form/AdminType/UserEditFormType.php:55</note>
+      </notes>
+      <segment>
+        <source>Roles</source>
+        <target></target>
+      </segment>
+    </unit>
+    <unit id="PUtzLt4" name="Is verified">
+      <notes>
+        <note category="file-source" priority="1">ranked_choice/src/Form/AdminType/UserEditFormType.php:64</note>
+      </notes>
+      <segment>
+        <source>Is verified</source>
+        <target></target>
+      </segment>
+    </unit>
+    <unit id="nmFRrLB" name="Uses">
+      <notes>
+        <note category="file-source" priority="1">ranked_choice/src/Form/AdminType/PromoCodeEditFormType.php:35</note>
+      </notes>
+      <segment>
+        <source>Uses</source>
+        <target></target>
+      </segment>
+    </unit>
+    <unit id="SnPjV_M" name="Discount (%)">
+      <notes>
+        <note category="file-source" priority="1">ranked_choice/src/Form/AdminType/PromoCodeEditFormType.php:49</note>
+      </notes>
+      <segment>
+        <source>Discount (%)</source>
+        <target></target>
+      </segment>
+    </unit>
+    <unit id="6S3XAUJ" name="Is active">
+      <notes>
+        <note category="file-source" priority="1">ranked_choice/src/Form/AdminType/PromoCodeEditFormType.php:62</note>
+      </notes>
+      <segment>
+        <source>Is active</source>
+        <target></target>
+      </segment>
+    </unit>
+    <unit id="jbqF3b8" name="Your changes were saved!">
+      <notes>
+        <note category="file-source" priority="1">ranked_choice/src/Controller/Admin/SaleCollectionController.php:59</note>
+        <note category="file-source" priority="1">ranked_choice/src/Controller/Admin/CategoryController.php:57</note>
+        <note category="file-source" priority="1">ranked_choice/src/Controller/Admin/ProductController.php:58</note>
+        <note category="file-source" priority="1">ranked_choice/src/Controller/Admin/OrderController.php:67</note>
+        <note category="file-source" priority="1">ranked_choice/src/Controller/Admin/PromoCodeController.php:55</note>
+        <note category="file-source" priority="1">ranked_choice/src/Controller/Admin/UserController.php:48</note>
+      </notes>
+      <segment>
+        <source>Your changes were saved!</source>
+        <target></target>
+      </segment>
+    </unit>
+    <unit id="9taKzeA" name="Something went wrong. Please, check your form!">
+      <notes>
+        <note category="file-source" priority="1">ranked_choice/src/Controller/Admin/SaleCollectionController.php:65</note>
+        <note category="file-source" priority="1">ranked_choice/src/Controller/Admin/CategoryController.php:63</note>
+        <note category="file-source" priority="1">ranked_choice/src/Controller/Admin/ProductController.php:64</note>
+        <note category="file-source" priority="1">ranked_choice/src/Controller/Admin/OrderController.php:73</note>
+        <note category="file-source" priority="1">ranked_choice/src/Controller/Admin/PromoCodeController.php:61</note>
+        <note category="file-source" priority="1">ranked_choice/src/Controller/Admin/UserController.php:54</note>
+      </notes>
+      <segment>
+        <source>Something went wrong. Please, check your form!</source>
+        <target></target>
+      </segment>
+    </unit>
+    <unit id="CwUBnPR" name="flash.user_signup.check_your_inbox">
+      <notes>
+        <note category="file-source" priority="1">ranked_choice/src/Controller/Main/RegistrationController.php:59</note>
+      </notes>
+      <segment>
+        <source>flash.user_signup.check_your_inbox</source>
+        <target></target>
+      </segment>
+    </unit>
+    <unit id="W3XR3fd" name="flash.user_signup.check_your_form">
+      <notes>
+        <note category="file-source" priority="1">ranked_choice/src/Controller/Main/RegistrationController.php:63</note>
+      </notes>
+      <segment>
+        <source>flash.user_signup.check_your_form</source>
+        <target></target>
+      </segment>
+    </unit>
+    <unit id="yKkv2d_" name="flash.user_signup.your_email_verified">
+      <notes>
+        <note category="file-source" priority="1">ranked_choice/src/Controller/Main/RegistrationController.php:95</note>
+      </notes>
+      <segment>
+        <source>flash.user_signup.your_email_verified</source>
+        <target></target>
+      </segment>
+    </unit>
+    <unit id="2hzPRs9" name="Please, check your email/password">
+      <notes>
+        <note category="file-source" priority="1">ranked_choice/src/Controller/Main/AuthLoginController.php:26</note>
+      </notes>
+      <segment>
+        <source>Please, check your email/password</source>
+        <target></target>
+      </segment>
+    </unit>
+    <unit id="HWC6Tjx" name="Your password was changed. You can login now with your new credentials.">
+      <notes>
+        <note category="file-source" priority="1">ranked_choice/src/Controller/Main/ResetPasswordController.php:115</note>
+      </notes>
+      <segment>
+        <source>Your password was changed. You can login now with your new credentials.</source>
+        <target></target>
+      </segment>
+    </unit>
+    <unit id="cjdBkBI" name="Registration form">
+      <notes>
+        <note category="state" priority="1">obsolete</note>
+      </notes>
+      <segment>
+        <source>Registration form</source>
+        <target></target>
+      </segment>
+    </unit>
+    <unit id="8Q6uQbq" name="Login With Google">
+      <notes>
+        <note category="state" priority="1">obsolete</note>
+      </notes>
+      <segment>
+        <source>Login With Google</source>
+        <target></target>
+      </segment>
+    </unit>
+    <unit id="6zlxM6M" name="Login With Facebook">
+      <notes>
+        <note category="state" priority="1">obsolete</note>
+      </notes>
+      <segment>
+        <source>Login With Facebook</source>
+        <target></target>
+      </segment>
+    </unit>
+    <unit id="Fe2zEyl" name="Please enter your email">
+      <notes>
+        <note category="state" priority="1">obsolete</note>
+      </notes>
+      <segment>
+        <source>Please enter your email</source>
+        <target></target>
+      </segment>
+    </unit>
+    <unit id="qrkWoYx" name="I agree to the &lt;a href=&quot;#&quot;&gt;privacy policy&lt;/a&gt; *">
+      <notes>
+        <note category="state" priority="1">obsolete</note>
+      </notes>
+      <segment>
+        <source>I agree to the &lt;a href="#"&gt;privacy policy&lt;/a&gt; *</source>
+        <target></target>
+      </segment>
+    </unit>
+    <unit id="9_qxEQv" name="Please enter your password">
+      <notes>
+        <note category="state" priority="1">obsolete</note>
+      </notes>
+      <segment>
+        <source>Please enter your password</source>
+        <target></target>
+      </segment>
+    </unit>
+    <unit id="KDf2_hy" name="Enter your email">
+      <notes>
+        <note category="state" priority="1">obsolete</note>
+      </notes>
+      <segment>
+        <source>Enter your email</source>
+        <target></target>
+      </segment>
+    </unit>
+    <unit id="kQWnsB7" name="Your email address has been verified.">
+      <notes>
+        <note category="state" priority="1">obsolete</note>
+      </notes>
+      <segment>
+        <source>Your email address has been verified.</source>
+        <target></target>
+      </segment>
+    </unit>
+  </file>
+</xliff>

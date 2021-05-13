@@ -25,15 +25,16 @@ import ProductList from "./components/ProductList";
 import Header from "./components/Header";
 
 export default {
-  components: {Header, ProductList, Navigation},
+  components: { Header, ProductList, Navigation },
   computed: {
     ...mapState('category', ['isLoading'])
   },
   mounted() {
-    this.getProductsByCategory()
+    this.getCategory();
+    this.getProductsByCategory();
   },
   methods: {
-    ...mapActions('category', ['getProductsByCategory'])
+    ...mapActions('category', ['getCategory', 'getProductsByCategory'])
   }
 };
 </script>

@@ -1,9 +1,0 @@
-{% for category in categories %}
-    <li class="menu-item {% if pageRoute == 'category_show' and pageSlug == category.slug %}active{% endif %}">
-        <a href="{{ path('category_show', {slug: category.slug}) }}">
-            <div>
-                {{ category.title }}
-            </div>
-        </a>
-    </li>
-{% endfor %}

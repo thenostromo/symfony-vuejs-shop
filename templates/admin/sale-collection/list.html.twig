@@ -3,44 +3,48 @@
 {% block title_detailed %}All Sale Collections{% endblock %}
 
 {% block body %}
-    <div class="container-fluid">
-
-        <div class="card shadow mb-4">
-            <div class="card-header py-3">
-                {% include 'admin/embed/card/_header_action.html.twig' with {
-                    'sectionTitle': 'Sale Collections',
-                    'actionUrl': path('admin_sale_collection_add')
-                } %}
-            </div>
-            <div class="card-body">
-                <div class="table-responsive">
-                    <table class="table table-bordered">
-                        <thead>
+    <div class="card shadow mb-4">
+        <div class="card-header py-3">
+            {% include 'admin/embed/card/_header_action.html.twig' with {
+                'sectionTitle': 'Sale Collections',
+                'actionUrl': path('admin_sale_collection_add')
+            } %}
+        </div>
+        <div class="card-body">
+            <div class="table-responsive">
+                <table class="table table-bordered">
+                    <thead>
+                    <tr>
+                        <th>Id</th>
+                        <th>Title and Discount</th>
+                        <th>Valid until</th>
+                        <th>Is published</th>
+                        <th></th>
+                    </tr>
+                    </thead>
+                    <tbody>
+                    {% for saleCollection in saleCollectionList %}
                         <tr>
-                            <th>Id</th>
-                            <th>Title and Discount</th>
-                            <th></th>
+                            <td>{{ saleCollection.id }}</td>
+                            <td style="text-align: center; color: grey; font-size: 18px">
+                                <i class="fas fa-fw fa-fire"></i>
+                                {{ saleCollection.title }}<br/>
+                                <span style="color: red; font-weight: 700">Products: {{ saleCollection.saleCollectionProducts.getValues()|length }}</span>
+                            </td>
+                            <td>
+                                {{ saleCollection.validUntil|date('H:i:s d/m/Y') }}
+                            </td>
+                            <td>
+                                <i class="fas fa-check fa-sm" style="color: {% if saleCollection.isPublished %}green{% else %}lightgray{% endif %};"></i>
+                            </td>
+                            <td>
+                                <a href="{{ path('admin_sale_collection_edit', {'id': saleCollection.id}) }}" class="btn btn-outline-info">Edit</a>
+                            </td>
                         </tr>
-                        </thead>
-                        <tbody>
-                            {% for saleCollection in saleCollectionList %}
-                                <tr>
-                                    <td>{{ saleCollection.id }}</td>
-                                    <td style="text-align: center; color: grey; font-size: 18px">
-                                        <i class="fas fa-fw fa-fire"></i>
-                                        {{ saleCollection.title }}<br/>
-                                        <span style="color: red; font-weight: 700">Products: {{ saleCollection.saleCollectionProducts.getValues()|length }}</span>
-                                    </td>
-                                    <td>
-                                        <a href="{{ path('admin_sale_collection_edit', {'id': saleCollection.id}) }}" class="btn btn-outline-info">Edit</a>
-                                    </td>
-                                </tr>
-                            {% endfor %}
-                        </tbody>
-                    </table>
-                </div>
+                    {% endfor %}
+                    </tbody>
+                </table>
             </div>
         </div>
-
     </div>
 {% endblock %}

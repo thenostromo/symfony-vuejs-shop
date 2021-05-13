@@ -3,33 +3,25 @@
     <ul class="pagination align-items-center justify-content-center">
       <li class="page-item">
         <a
-            class="btn-nav btn-nav-prev"
-            href="#"
-            v-if="currentPage < countOfPages"
-            @click="prevPage"
+          v-if="showPrevPageBtn"
+          class="btn-nav btn-nav-prev"
+          href="#"
+          @click="prevPage"
         >
           <i class="fas fa-angle-left"></i> Prev
         </a>
       </li>
-      <li
-          v-for="page in countOfPages"
-          :class="getClassOfPageBlock(page)"
-      >
-        <a
-          class="btn-nav"
-          href="#"
-          @click="setPage(page)"
-        >
-          {{ page }}
+      <li v-for="existPage in pagesCount" :key="existPage" :class="getClassOfPageBlock(existPage)">
+        <a class="btn-nav" href="#" @click="changePage(existPage)">
+          {{ existPage }}
         </a>
       </li>
-      <li class="page-item-total">...</li>
       <li class="page-item">
         <a
-            class="btn-nav btn-nav-next"
-            href="#"
-            v-if="currentPage < countOfPages"
-            @click="nextPage"
+          v-if="page < pagesCount"
+          class="btn-nav btn-nav-next"
+          href="#"
+          @click="nextPage"
         >
           Next <i class="fas fa-angle-right"></i>
         </a>
@@ -39,36 +31,33 @@
 </template>
 
 <script>
-import {mapActions, mapGetters, mapState, mapMutations} from "vuex";
+import { mapActions, mapGetters, mapMutations, mapState } from "vuex";
 
 export default {
   computed: {
-    ...mapState('category', ['offset', 'limit', 'countOfProducts']),
-    ...mapGetters('category', ['currentCount', 'currentPage']),
-    countOfPages() {
-      return Math.floor(this.countOfProducts / this.limit)
+    ...mapState('category', ['page']),
+    ...mapGetters("category", ["pagesCount"]),
+    showPrevPageBtn() {
+      return this.page !== 1 && (this.page <= this.pagesCount);
     }
   },
   methods: {
-    ...mapActions('category', ['getProductsByCategory']),
-    ...mapMutations('category', ['setOffset']),
+    ...mapActions("category", ["getProductsByCategory"]),
+    ...mapMutations("category", ["setPage"]),
     getClassOfPageBlock(page) {
-      return page === this.currentPage ? "page-item active" : "page-item"
+      return page === this.page ? "page-item active" : "page-item";
     },
-    setPage(page) {
-      const newOffset = (page - 1) * this.limit
-      this.setOffset(newOffset)
-      this.getProductsByCategory()
+    changePage(newPage) {
+      this.setPage(newPage);
+      this.getProductsByCategory();
     },
     prevPage() {
-      const newOffset = this.offset - this.limit
-      this.setOffset(newOffset)
-      this.getProductsByCategory()
+      const newPage = this.page - 1;
+      this.changePage(newPage);
     },
     nextPage() {
-      const newOffset = this.offset + this.limit
-      this.setOffset(newOffset)
-      this.getProductsByCategory()
+      const newPage = this.page + 1;
+      this.changePage(newPage);
     }
   }
 };

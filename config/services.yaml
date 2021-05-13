@@ -8,6 +8,10 @@ parameters:
     uploads_temp_dir: '%uploads_dir%/temp'
     uploads_images_dir: '%uploads_dir%/images'
     images_products_dir: '%uploads_images_dir%/products'
+    router.request_context.scheme: '%env(SITE_BASE_SCHEME)%'
+    router.request_context.host: '%env(SITE_BASE_HOST)%'
+    locale: 'en'
+    app_locales: en|fr|ru
 
 services:
     # default configuration for services in *this* file
@@ -15,9 +19,12 @@ services:
         autowire: true      # Automatically injects dependencies in your services.
         autoconfigure: true # Automatically registers your services as commands, event subscribers, etc.
         bind:
-            $externalDir: '%kernel.project_dir%/external/'
-            $uploadsTempDir: '%uploads_temp_dir%'
-            $imagesProductsDir: '%images_products_dir%'
+            string $locales: '%app_locales%'
+            string $defaultLocale: '%locale%'
+            string $projectDir: '%kernel.project_dir%'
+            string $externalDir: '%kernel.project_dir%/external/'
+            string $uploadsTempDir: '%uploads_temp_dir%'
+            string $imagesProductsDir: '%images_products_dir%'
 
     # makes classes in src/ available to be used as services
     # this creates a service per class whose id is the fully-qualified class name
@@ -34,10 +41,6 @@ services:
     App\Controller\:
         resource: '../src/Controller/'
         tags: ['controller.service_arguments']
-
-    Twig\Extra\Intl\:
-        resource: '../vendor/twig/intl-extra/*'
-        tags: [ 'twig.extension' ]
 
     my.oauth_aware.user_provider.service:
         class: HWI\Bundle\OAuthBundle\Security\Core\User\OAuthUserProvider

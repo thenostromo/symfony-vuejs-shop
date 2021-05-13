@@ -3,60 +3,60 @@
 {% block title_detailed %}All Products{% endblock %}
 
 {% block body %}
-    <div class="container-fluid">
-
-        <div class="card shadow mb-4">
-            <div class="card-header py-3">
-                {% include 'admin/embed/card/_header_action.html.twig' with {
-                    'sectionTitle': 'Products',
-                    'actionUrl': path('admin_product_add')
-                } %}
-            </div>
-            <div class="card-body">
-                <div class="table-responsive">
-                    <table class="table table-bordered">
-                        <thead>
+    <div class="card shadow mb-4">
+        <div class="card-header py-3">
+            {% include 'admin/embed/card/_header_action.html.twig' with {
+                'sectionTitle': 'Products',
+                'actionUrl': path('admin_product_add')
+            } %}
+        </div>
+        <div class="card-body">
+            <div class="table-responsive">
+                <table class="table table-bordered">
+                    <thead>
+                    <tr>
+                        <th>{{ knp_pagination_sortable(pagination, 'Id', 'p.id') }}</th>
+                        <th>{{ knp_pagination_sortable(pagination, 'Category', 'c.title') }}</th>
+                        <th>Title</th>
+                        <th>{{ knp_pagination_sortable(pagination, 'Price', 'p.price') }}</th>
+                        <th>{{ knp_pagination_sortable(pagination, 'Quantity', 'p.quantity') }}</th>
+                        <th>Cover</th>
+                        <th>{{ knp_pagination_sortable(pagination, 'Is published', 'p.isPublished') }}</th>
+                        <th></th>
+                    </tr>
+                    </thead>
+                    <tbody>
+                    {% for product in pagination %}
                         <tr>
-                            <th>Id</th>
-                            <th>Category</th>
-                            <th>Title</th>
-                            <th>Price</th>
-                            <th>Quantity</th>
-                            <th>Cover</th>
-                            <th>Is published</th>
-                            <th></th>
+                            <td>{{ product.id }}</td>
+                            <td>{% if product.category %}{{ product.category.title }}{% endif %}</td>
+                            <td>{{ product.title }}</td>
+                            <td>{{ product.price }}</td>
+                            <td>{{ product.quantity }}</td>
+                            <td>
+                                {% set images = product.getProductImages().getValues() %}
+                                {% if images|length %}
+                                    {% set image = images[0] %}
+                                    <img
+                                            src="{{ asset('uploads/images/products/' ~ product.id ~ '/' ~ image.filenameMiddle) }}"
+                                            style="width: 250px"
+                                            alt="{{ image.filenameMiddle }}"
+                                    >
+                                {% endif %}
+                            </td>
+                            <td>
+                                <i class="fas fa-check fa-sm" style="color: {% if product.isPublished %}green{% else %}lightgray{% endif %};"></i></td>
+                            <td>
+                                <a href="{{ path('admin_product_edit', {'id': product.id}) }}" class="btn btn-outline-info">Edit</a>
+                            </td>
                         </tr>
-                        </thead>
-                        <tbody>
-                        {% for product in productList %}
-                            <tr>
-                                <td>{{ product.id }}</td>
-                                <td>{% if product.category %}{{ product.category.title }}{% endif %}</td>
-                                <td>{{ product.title }}</td>
-                                <td>{{ product.price }}</td>
-                                <td>{{ product.quantity }}</td>
-                                <td>
-                                    {% set images = product.getProductImages().getValues() %}
-                                    {% if images|length %}
-                                        {% set image = images[0] %}
-                                        <img
-                                            src="{{ asset('uploads/images/products/' ~ product.id ~ '/' ~ image.filenameSmall) }}"
-                                            alt="{{ image.filenameSmall }}"
-                                        >
-                                    {% endif %}
-                                </td>
-                                <td>
-                                    <i class="fas fa-check fa-sm" style="color: {% if product.isPublished %}green{% else %}lightgray{% endif %};"></i></td>
-                                <td>
-                                    <a href="{{ path('admin_product_edit', {'id': product.id}) }}" class="btn btn-outline-info">Edit</a>
-                                </td>
-                            </tr>
-                        {% endfor %}
-                        </tbody>
-                    </table>
-                </div>
+                    {% endfor %}
+                    </tbody>
+                </table>
+            </div>
+            <div class="navigation">
+                {{ knp_pagination_render(pagination) }}
             </div>
         </div>
-
     </div>
 {% endblock %}

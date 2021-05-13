@@ -3,38 +3,15 @@
 namespace App\Utils\Manager;
 
 use App\Entity\Category;
-use Doctrine\ORM\EntityManagerInterface;
+use Doctrine\Persistence\ObjectRepository;
 
-class CategoryManager
+class CategoryManager extends AbstractBaseManager
 {
     /**
-     * @var EntityManagerInterface
+     * @return ObjectRepository
      */
-    public $entityManager;
-
-    public function __construct(EntityManagerInterface $entityManager)
+    public function getRepository(): ObjectRepository
     {
-        $this->entityManager = $entityManager;
-    }
-
-    /**
-     * @param string $id
-     * @return Category|null
-     */
-    public function findCategory(string $id): Category
-    {
-        return $this->entityManager->getRepository(Category::class)->find($id);
-    }
-
-    public function save($entity)
-    {
-        $this->entityManager->persist($entity);
-        $this->entityManager->flush();
-    }
-
-    public function remove($entity)
-    {
-        $this->entityManager->remove($entity);
-        $this->entityManager->flush();
+        return $this->entityManager->getRepository(Category::class);
     }
 }

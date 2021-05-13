@@ -8,7 +8,7 @@
         :key="product.id"
       />
 
-      <div class="alert" v-if="!countOfProducts">
+      <div class="alert" v-if="!categoryProductsTotalCount">
         There are no products in this category yet ...
       </div>
 
@@ -23,7 +23,7 @@ import ProductItem from "./ProductItem";
 export default {
   components: {ProductItem},
   computed: {
-    ...mapState('category', ['categoryProducts', 'countOfProducts'])
+    ...mapState('category', ['categoryProducts', 'categoryProductsTotalCount'])
   }
 };
 </script>

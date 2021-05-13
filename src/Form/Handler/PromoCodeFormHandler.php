@@ -20,13 +20,14 @@ class PromoCodeFormHandler
 
     /**
      * @param PromoCodeEditModel $promoCodeEditModel
+     * @return PromoCode
      */
-    public function processPromoCodeEditForm(PromoCodeEditModel $promoCodeEditModel)
+    public function processEditForm(PromoCodeEditModel $promoCodeEditModel): PromoCode
     {
         $promoCode = new PromoCode();
 
         if ($promoCodeEditModel->id) {
-            $promoCode = $this->promoCodeManager->findPromoCode($promoCodeEditModel->id);
+            $promoCode = $this->promoCodeManager->find($promoCodeEditModel->id);
         }
 
         $value = $this->promoCodeManager->getFormattedValue($promoCodeEditModel->value);
@@ -37,6 +38,7 @@ class PromoCodeFormHandler
         $promoCode->setDiscount($promoCodeEditModel->discount);
         $promoCode->setUses($promoCodeEditModel->uses);
         $promoCode->setValidUntil($promoCodeEditModel->validUntil);
+        $promoCode->setIsActive($promoCodeEditModel->isActive);
 
         $this->promoCodeManager->save($promoCode);
 

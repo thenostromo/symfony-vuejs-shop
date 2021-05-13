@@ -21,12 +21,12 @@ class CategoryFormHandler
     /**
      * @param CategoryEditModel $categoryEditModel
      */
-    public function processCategoryEditForm(CategoryEditModel $categoryEditModel): void
+    public function processEditForm(CategoryEditModel $categoryEditModel): void
     {
         $category = new Category();
 
         if ($categoryEditModel->id) {
-            $category = $this->categoryManager->findCategory($categoryEditModel->id);
+            $category = $this->categoryManager->find($categoryEditModel->id);
         }
 
         $title = ucfirst(strtolower($categoryEditModel->title));

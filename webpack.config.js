@@ -4,16 +4,20 @@ Encore
     .setOutputPath('public/build/')
     .setPublicPath('/build')
     // https://symfony.com/doc/current/frontend/encore/vuejs.html#runtime-compiler-build
-    .enableVueLoader(() => {}, { runtimeCompilerBuild: false })
+    .enableVueLoader(() => {}, {
+        runtimeCompilerBuild: false
+    })
 
     .addEntry('appAdminSaleCollection', './assets/js/section/admin/admin-sale-collection/app.js')
     .addEntry('appAdminOrder', './assets/js/section/admin/admin-order/app.js')
     .addEntry('appMainCategoryShow', './assets/js/section/main/main-category-show/app.js')
+  .addEntry('appMainSaleCollectionShow', './assets/js/section/main/main-sale-collection-show/app.js')
     .addEntry('appMenuCart', './assets/js/section/main/menu-cart/app.js')
     .addEntry('appMainCartShow', './assets/js/section/main/main-cart-show/app.js')
 
     .addEntry('section-main', './assets/section-main.js')
     .addEntry('section-admin', './assets/section-admin.js')
+    .addStyleEntry('email', './assets/css/section/main/email.scss')
     .autoProvidejQuery()
     .splitEntryChunks()
 

@@ -3,114 +3,111 @@
 {% block title_detailed %}Edit Promo Code{% endblock %}
 
 {% block body %}
-    <div class="container-fluid">
-
-        <div class="card shadow mb-4">
-            <div class="card-header py-3">
-                {% include 'admin/embed/card/_breadcrumbs.html.twig' with {
-                    'sectionTitle': 'Promotional Codes',
-                    'actionUrl': path('admin_promo_code_list'),
-                    'entity': promoCode
-                } %}
-            </div>
-            <div class="card-body">
-                {{ form_start(form) }}
-                    <div class="form-group row">
-                        <div class="col-md-1">
-                            {{ form_label(form.title) }}
-                        </div>
-                        <div class="col-md-11">
-                            {{ form_widget(form.title) }}
-                            <div class="form-error">
-                                {{ form_errors(form.title) }}
-                            </div>
-                        </div>
-                    </div>
-                    <div class="form-group row">
-                        <div class="col-md-1">
-                            {{ form_label(form.description) }}
-                        </div>
-                        <div class="col-md-11">
-                            {{ form_widget(form.description) }}
-                            <div class="form-error">
-                                {{ form_errors(form.description) }}
-                            </div>
-                        </div>
-                    </div>
-                    <div class="form-group row">
-                        <div class="col-md-1">
-                            {{ form_label(form.uses) }}
-                        </div>
-                        <div class="col-md-11">
-                            {{ form_widget(form.uses) }}
-                            <div class="form-error">
-                                {{ form_errors(form.uses) }}
-                            </div>
-                        </div>
-                    </div>
-                    <div class="form-group row">
-                        <div class="col-md-1">
-                            {{ form_label(form.value) }}
-                        </div>
-                        <div class="col-md-11">
-                            {{ form_widget(form.value) }}
-                            <div class="form-error">
-                                {{ form_errors(form.value) }}
-                            </div>
-                        </div>
-                    </div>
-                    <div class="form-group row">
-                        <div class="col-md-1">
-                            {{ form_label(form.discount) }}
-                        </div>
-                        <div class="col-md-11">
-                            {{ form_widget(form.discount) }}
-                            <div class="form-error">
-                                {{ form_errors(form.discount) }}
-                            </div>
-                        </div>
-                    </div>
-                    <div class="form-group row">
-                        <div class="col-md-1">
-                            {{ form_label(form.validUntil) }}
-                        </div>
-                        <div class="col-md-11">
-                            <div style="display: flex; align-items: center;">
-                                {{ form_widget(form.validUntil.date, { attr: { class: 'form-control' } }) }}
-                                {{ form_widget(form.validUntil.time, { attr: { class: 'form-control' } }) }}
-                            </div>
-                            <div class="form-error">
-                                {{ form_errors(form.validUntil) }}
-                            </div>
-                        </div>
-                    </div>
-                    <div class="form-group row">
-                        <div class="col-md-1"></div>
-                        <div class="col-md-11 pl-5">
-                            {{ form_widget(form.isActive) }}
-                            {{ form_label(form.isActive) }}
-                            <div class="form-error">
-                                {{ form_errors(form.isActive) }}
-                            </div>
-                        </div>
-                    </div>
-                    <hr/>
-                    {% include 'admin/embed/card/_form_buttons.html.twig' with {
-                        'entity': promoCode,
-                        'catalogRoute': path('admin_promo_code_list')
-                    }  %}
-                {{ form_rest(form) }}
-                {{ form_end(form) }}
-            </div>
+    <div class="card shadow mb-4">
+        <div class="card-header py-3">
+            {% include 'admin/embed/card/_breadcrumbs.html.twig' with {
+                'sectionTitle': 'Promotional Codes',
+                'actionUrl': path('admin_promo_code_list'),
+                'addActionUrl': path('admin_promo_code_add'),
+                'entity': promoCode
+            } %}
         </div>
-
+        <div class="card-body">
+            {{ form_start(form) }}
+            <div class="form-group row">
+                <div class="col-md-1">
+                    {{ form_label(form.title) }}
+                </div>
+                <div class="col-md-11">
+                    {{ form_widget(form.title) }}
+                    <div class="form-error">
+                        {{ form_errors(form.title) }}
+                    </div>
+                </div>
+            </div>
+            <div class="form-group row">
+                <div class="col-md-1">
+                    {{ form_label(form.description) }}
+                </div>
+                <div class="col-md-11">
+                    {{ form_widget(form.description) }}
+                    <div class="form-error">
+                        {{ form_errors(form.description) }}
+                    </div>
+                </div>
+            </div>
+            <div class="form-group row">
+                <div class="col-md-1">
+                    {{ form_label(form.uses) }}
+                </div>
+                <div class="col-md-11">
+                    {{ form_widget(form.uses) }}
+                    <div class="form-error">
+                        {{ form_errors(form.uses) }}
+                    </div>
+                </div>
+            </div>
+            <div class="form-group row">
+                <div class="col-md-1">
+                    {{ form_label(form.value) }}
+                </div>
+                <div class="col-md-11">
+                    {{ form_widget(form.value) }}
+                    <div class="form-error">
+                        {{ form_errors(form.value) }}
+                    </div>
+                </div>
+            </div>
+            <div class="form-group row">
+                <div class="col-md-1">
+                    {{ form_label(form.discount) }}
+                </div>
+                <div class="col-md-11">
+                    {{ form_widget(form.discount) }}
+                    <div class="form-error">
+                        {{ form_errors(form.discount) }}
+                    </div>
+                </div>
+            </div>
+            <div class="form-group row">
+                <div class="col-md-1">
+                    {{ form_label(form.validUntil) }}
+                </div>
+                <div class="col-md-11">
+                    <div class="d-flex align-items-center">
+                        {{ form_widget(form.validUntil.date, { attr: { class: 'form-control' } }) }}
+                        {{ form_widget(form.validUntil.time, { attr: { class: 'form-control' } }) }}
+                    </div>
+                    <div class="form-error">
+                        {{ form_errors(form.validUntil) }}
+                    </div>
+                </div>
+            </div>
+            <div class="form-group row">
+                <div class="col-md-1"></div>
+                <div class="col-md-11 pl-5">
+                    {{ form_widget(form.isActive) }}
+                    {{ form_label(form.isActive) }}
+                    <div class="form-error">
+                        {{ form_errors(form.isActive) }}
+                    </div>
+                </div>
+            </div>
+            <hr/>
+            {% include 'admin/embed/card/_form_buttons.html.twig' with {
+                'entity': promoCode,
+                'catalogRoute': path('admin_promo_code_list')
+            }  %}
+            {{ form_rest(form) }}
+            {{ form_end(form) }}
+        </div>
     </div>
 
     {% if promoCode %}
         {% include 'admin/embed/utils/_modal.html.twig' with {
             'id': 'approveDeleteModal',
             'title': 'Are you sure?',
-            'text': 'Entity will be deleted.',
+            'text': 'Promo code will be deleted.',
             'actionUrl': path('admin_promo_code_delete', {'id': promoCode.id}),
             'btnText': 'Delete row'
         } %}
