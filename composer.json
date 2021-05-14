@@ -9,6 +9,7 @@
         "ext-iconv": "*",
         "ext-json": "*",
         "api-platform/core": "^2.5",
+        "behat/mink-selenium2-driver": "^1.4",
         "composer/package-versions-deprecated": "1.11.99.1",
         "doctrine/annotations": "^1.0",
         "doctrine/doctrine-bundle": "^2.2",
@@ -60,6 +61,10 @@
     "require-dev": {
         "dama/doctrine-test-bundle": "^6.5",
         "doctrine/doctrine-fixtures-bundle": "^3.4",
+        "friends-of-behat/mink": "^1.9",
+        "friends-of-behat/mink-browserkit-driver": "^1.5",
+        "friends-of-behat/mink-extension": "^2.5",
+        "friends-of-behat/symfony-extension": "^2.2",
         "hautelook/alice-bundle": "^2.9",
         "phpstan/extension-installer": "^1.1",
         "phpstan/phpstan": "^0.12.83",
