@@ -1,0 +1,11 @@
+App\Entity\Category:
+  category_jeans:
+    title: jeans
+  category_jacket:
+    title: jacket
+  category_hat:
+    title: hat
+  category_dress:
+    title: dress
+  category_sneakers:
+    title: sneakers

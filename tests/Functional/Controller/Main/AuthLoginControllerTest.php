@@ -3,6 +3,8 @@
 namespace App\Tests\Functional\Controller\Main;
 
 use App\DataFixtures\UserFixtures;
+use App\Repository\ProductRepository;
+use App\Repository\UserRepository;
 use Symfony\Bundle\FrameworkBundle\Test\WebTestCase;
 use Symfony\Component\HttpFoundation\Response;
 

@@ -26,6 +26,7 @@ security:
                 secret: '%kernel.secret%'
                 lifetime: 604800 # 1 week in seconds
                 path: /admin/
+
             logout:
                 path: admin_security_logout
         user_secured_area:
