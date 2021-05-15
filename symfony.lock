@@ -58,6 +58,9 @@
             "config/packages/test/dama_doctrine_test_bundle.yaml"
         ]
     },
+    "dbrekelmans/bdi": {
+        "version": "0.3"
+    },
     "doctrine/annotations": {
         "version": "1.0",
         "recipe": {
@@ -398,6 +401,9 @@
     "php-translation/symfony-storage": {
         "version": "2.3.0"
     },
+    "php-webdriver/webdriver": {
+        "version": "1.11.0"
+    },
     "phpdocumentor/reflection-common": {
         "version": "2.2.0"
     },
@@ -666,6 +672,9 @@
             "src/Kernel.php"
         ]
     },
+    "symfony/http-client": {
+        "version": "v5.2.8"
+    },
     "symfony/http-client-contracts": {
         "version": "v2.3.1"
     },
@@ -737,6 +746,15 @@
     },
     "symfony/orm-pack": {
         "version": "v2.1.0"
+    },
+    "symfony/panther": {
+        "version": "1.0",
+        "recipe": {
+            "repo": "github.com/symfony/recipes",
+            "branch": "master",
+            "version": "1.0",
+            "ref": "93d9baa582d0a755cc9ef81bc38a921d5fa16973"
+        }
     },
     "symfony/phpunit-bridge": {
         "version": "5.1",
