@@ -59,6 +59,7 @@
         "twig/string-extra": "^3.3"
     },
     "require-dev": {
+        "bex/behat-screenshot": "^2.1",
         "dama/doctrine-test-bundle": "^6.5",
         "doctrine/doctrine-fixtures-bundle": "^3.4",
         "friends-of-behat/mink": "^1.9",

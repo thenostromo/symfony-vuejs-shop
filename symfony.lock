@@ -28,6 +28,12 @@
     "behat/transliterator": {
         "version": "v1.3.0"
     },
+    "bex/behat-extension-driver-locator": {
+        "version": "2.0.1"
+    },
+    "bex/behat-screenshot": {
+        "version": "2.1.0"
+    },
     "clue/stream-filter": {
         "version": "v1.5.0"
     },

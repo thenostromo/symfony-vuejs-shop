@@ -5,6 +5,7 @@ declare(strict_types=1);
 namespace App\Tests\Behat\Context;
 
 use Behat\Behat\Context\Context;
+use Behat\Mink\Driver\Selenium2Driver;
 use Behat\MinkExtension\Context\MinkContext;
 use Symfony\Component\HttpFoundation\Request;
 use Symfony\Component\HttpFoundation\Response;
@@ -30,12 +31,18 @@ final class MainContext extends MinkContext implements Context
     }
 
     /**
-     * Without this, PhantomJs will fail if responsive design is in use.
      * @BeforeStep
      */
-    public function resizeWindow()
+    public function resizeWindowStep()
     {
-        //$this->getSession()->resizeWindow(1000, 600, 'current');
+        $isSession = $this->getMink()->isSessionStarted();
+        if (!$isSession) {
+            $this->getMink()->getSession()->start();
+        }
+
+        if ($this->getSession()->getDriver() instanceof Selenium2Driver) {
+            $this->getSession()->resizeWindow(1400, 1200, 'current');
+        }
     }
 
     /**
