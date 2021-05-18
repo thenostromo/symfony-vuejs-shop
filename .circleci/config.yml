@@ -8,7 +8,7 @@ jobs:
       - checkout
 
       - run: sudo apt update
-      - run: sudo docker-php-ext-install zip intl sodium xdebug
+      - run: sudo docker-php-ext-install zip intl sodium
 
       - restore_cache:
           keys:
