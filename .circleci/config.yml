@@ -8,6 +8,7 @@ jobs:
       - checkout
 
       - run: sudo apt update
+      - run: sudo apt install libpng-dev libxslt1.1 libxslt1-dev
       - run: sudo docker-php-ext-install zip gd pgsql xsl
 
       - restore_cache:
