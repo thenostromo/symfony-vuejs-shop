@@ -36,12 +36,12 @@ jobs:
           keys:
             - node-v1-{{ checksum "package.json" }}
             - node-v1-
-      - run: yarn install
+      - run: npm install
       - save_cache:
           key: node-v1-{{ checksum "package.json" }}
           paths:
             - node_modules
-      - run: yarn run build
+      - run: npm run build
 
       - run:
         name: Download Selenium
