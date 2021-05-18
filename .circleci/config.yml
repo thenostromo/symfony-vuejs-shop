@@ -42,10 +42,6 @@ jobs:
           paths:
             - node_modules
       - run: yarn run build
-      - run:
-          name: Run web server
-          command: php bin/console server:run
-          background: true
 
       - run: php bin/console doctrine:database:drop --force || true
       - run: php bin/console doctrine:database:create
