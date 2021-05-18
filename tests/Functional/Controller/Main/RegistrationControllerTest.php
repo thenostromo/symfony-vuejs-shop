@@ -8,6 +8,9 @@ use Symfony\Bundle\FrameworkBundle\Test\WebTestCase;
 use Symfony\Component\HttpFoundation\Response;
 use Symfony\Component\Messenger\Transport\InMemoryTransport;
 
+/**
+ * @group functional
+ */
 class RegistrationControllerTest extends WebTestCase
 {
     public function testRegistration(): void

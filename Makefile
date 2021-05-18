@@ -63,5 +63,5 @@ tests:
 	symfony console doctrine:schema:update --force
 	#symfony console doctrine:fixtures:load -n
 	symfony console hautelook:fixtures:load -n
-	symfony php ./vendor/bin/phpunit $@
+	symfony php ./vendor/bin/phpunit --group functional,integration,unit $@
 .PHONY: tests

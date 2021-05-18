@@ -6,6 +6,9 @@ use App\DataFixtures\UserFixtures;
 use App\Repository\ProductRepository;
 use App\Repository\UserRepository;
 
+/**
+ * @group functional
+ */
 class ProductResourceTest extends ResourceTestUtils
 {
     /**

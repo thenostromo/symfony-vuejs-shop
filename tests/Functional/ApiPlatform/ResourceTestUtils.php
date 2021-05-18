@@ -8,6 +8,9 @@ use Symfony\Bundle\FrameworkBundle\Test\WebTestCase;
 use Symfony\Component\BrowserKit\AbstractBrowser;
 use Symfony\Component\HttpFoundation\Response;
 
+/**
+ * @group functional
+ */
 class ResourceTestUtils extends WebTestCase
 {
     /**

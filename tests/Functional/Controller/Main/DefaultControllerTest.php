@@ -5,6 +5,9 @@ namespace App\Tests\Functional\Controller\Main;
 use Symfony\Bundle\FrameworkBundle\Test\WebTestCase;
 use Symfony\Component\HttpFoundation\Response;
 
+/**
+ * @group functional
+ */
 class DefaultControllerTest extends WebTestCase
 {
     public function testRedirectEmptyUrlToLocale(): void

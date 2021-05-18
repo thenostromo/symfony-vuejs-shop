@@ -6,6 +6,9 @@ use App\DataFixtures\UserFixtures;
 use App\Tests\Functional\SymfonyPanther\BasePantherTestCase;
 use Symfony\Component\HttpFoundation\Response;
 
+/**
+ * @group functional
+ */
 class AuthLoginControllerTest extends BasePantherTestCase
 {
     /**

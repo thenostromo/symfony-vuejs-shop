@@ -37,14 +37,19 @@ class EmailVerifier
     }
 
     /**
-     * @throws VerifyEmailExceptionInterface
+     * @param string $requestUri
+     * @param UserInterface $user
      */
-    public function handleEmailConfirmation(Request $request, UserInterface $user): void
+    public function handleEmailConfirmation(string $requestUri, UserInterface $user): void
     {
-        $this->verifyEmailHelper->validateEmailConfirmation($request->getUri(), $user->getId(), $user->getEmail());
+        try {
+            $this->verifyEmailHelper->validateEmailConfirmation($requestUri, $user->getId(), $user->getEmail());
 
-        $user->setIsVerified(true);
+            $user->setIsVerified(true);
 
-        $this->userManager->save($user);
+            $this->userManager->save($user);
+        } catch (VerifyEmailExceptionInterface $e) {
+
+        }
     }
 }
