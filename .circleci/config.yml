@@ -36,11 +36,12 @@ jobs:
           keys:
             - node-v1-{{ checksum "package.json" }}
             - node-v1-
-      - run: yarn run build
+      - run: yarn install
       - save_cache:
           key: node-v1-{{ checksum "package.json" }}
           paths:
             - node_modules
+      - run: yarn run build
       - run:
           name: Run web server
           command: php bin/console server:run
