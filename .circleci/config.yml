@@ -8,8 +8,6 @@ jobs:
       - checkout
 
       - run: sudo apt update
-      - run: wget https://get.symfony.com/cli/installer -O - | bash
-      - run: sudo mv /home/circleci/.symfony/bin/symfony /usr/local/bin/symfony
       - run: sudo apt install libpng-dev libpq-dev libxslt1.1 libxslt1-dev
       - run: sudo docker-php-ext-install zip gd pgsql xsl
 
@@ -49,6 +47,9 @@ jobs:
           command: php bin/console server:run
           background: true
 
-      - run:
-          name: "Run Tests"
-          command: make tests
+      - run: php bin/console doctrine:database:drop --force || true
+      - run: php bin/console doctrine:database:create
+      - run: php bin/console doctrine:migrations:migrate -n
+      - run: php bin/console doctrine:schema:update --force
+      - run: php bin/console hautelook:fixtures:load -n
+      - run: php ./vendor/bin/phpunit
