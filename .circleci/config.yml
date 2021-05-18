@@ -43,6 +43,15 @@ jobs:
             - node_modules
       - run: yarn run build
 
+      - run:
+        name: Download Selenium
+        command: curl -O https://selenium-release.storage.googleapis.com/3.141/selenium-server-standalone-3.141.59.jar
+
+      - run:
+        name: Start Selenium
+        command: java -jar selenium-server-standalone-3.141.59.jar
+        background: true
+
       - run: php bin/console doctrine:database:drop --force || true
       - run: php bin/console doctrine:database:create
       - run: php bin/console doctrine:migrations:migrate -n
