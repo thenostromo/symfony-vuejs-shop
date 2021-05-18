@@ -1,19 +1,17 @@
+import { setCookie, getCookie } from "../../../utils/cookie-manager";
+
 window.toggleFiltersVisibility = function toggleFiltersVisibility(section) {
-  const filtersVisibleJSON = localStorage.getItem('filtersVisible');
-  const filtersVisible = filtersVisibleJSON ? JSON.parse(filtersVisibleJSON) : {};
+  const filtersKey = "filtersVisible_" + section;
+  const filtersSavedValue = getCookie(filtersKey);
 
-  filtersVisible[section] = filtersVisible[section] === undefined
-    ? 1
-    : !filtersVisible[section]
+  const visibleValue = filtersSavedValue === "false";
 
-  localStorage.setItem('filtersVisible', JSON.stringify(filtersVisible));
+  setCookie(filtersKey, visibleValue, { secure: true, "max-age": 3600 });
 }
 
 window.changeFiltersBlockVisibility = function changeFiltersBlockVisibility(filtersSection, element) {
-  const filtersVisibleJSON = localStorage.getItem('filtersVisible');
-  const filtersVisible = JSON.parse(filtersVisibleJSON);
+  const filtersKey = "filtersVisible_" + filtersSection;
+  const filtersSavedValue = getCookie(filtersKey);
 
-  element.style.display = filtersVisible[filtersSection]
-    ? "block"
-    : "none";
+  element.style.display = filtersSavedValue === "false" ? "block" : "none";
 }

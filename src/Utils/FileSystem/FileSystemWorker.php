@@ -18,10 +18,8 @@ class FileSystemWorker
 
     /**
      * @param string $folder
-     *
-     * @return string
      */
-    public function createFolderIfNotExist(string $folder)
+    public function createFolderIfNotExist(string $folder): void
     {
         if (!$this->filesystem->exists($folder)) {
             $this->filesystem->mkdir($folder);
@@ -30,10 +28,8 @@ class FileSystemWorker
 
     /**
      * @param string $item
-     *
-     * @return string
      */
-    public function remove(string $item)
+    public function remove(string $item): void
     {
         if ($this->filesystem->exists($item)) {
             $this->filesystem->remove($item);

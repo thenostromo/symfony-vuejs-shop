@@ -602,5 +602,41 @@
         <target></target>
       </segment>
     </unit>
+    <unit id="lpzL089" name="Email">
+      <segment>
+        <source>Email</source>
+        <target>Email</target>
+      </segment>
+    </unit>
+    <unit id="1wueJLy" name="Created">
+      <segment>
+        <source>Created</source>
+        <target>Created</target>
+      </segment>
+    </unit>
+    <unit id="yOPpKmL" name="Processing">
+      <segment>
+        <source>Processing</source>
+        <target>Processing</target>
+      </segment>
+    </unit>
+    <unit id="FUI3DkH" name="Complected">
+      <segment>
+        <source>Complected</source>
+        <target>Complected</target>
+      </segment>
+    </unit>
+    <unit id="kGEVZXO" name="Delivered">
+      <segment>
+        <source>Delivered</source>
+        <target>Delivered</target>
+      </segment>
+    </unit>
+    <unit id="2kBN6xE" name="Denied">
+      <segment>
+        <source>Denied</source>
+        <target>Denied</target>
+      </segment>
+    </unit>
   </file>
 </xliff>

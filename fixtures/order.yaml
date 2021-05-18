@@ -1,0 +1,4 @@
+App\Entity\Order:
+  order_{1..2}:
+    owner: '@user_1'
+    totalPrice: 100
