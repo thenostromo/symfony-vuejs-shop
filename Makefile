@@ -40,6 +40,9 @@ lint-js: ## Lints JS coding standarts
 fix-js: ## Fixes JS files
 	$(NPX) eslint assets/js --fix
 
+message-consume:
+	symfony console messenger:consume async -vv
+
 
 ##
 ## Контроль качества кода

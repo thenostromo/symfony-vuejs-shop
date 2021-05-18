@@ -1,2 +1,6 @@
 twig:
-    strict_variables: true
+    paths:
+        'assets/images': images
+        'assets/css': css
+        'public/build': build
+    default_path: '%kernel.project_dir%/templates'

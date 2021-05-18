@@ -8,7 +8,8 @@ jobs:
       - checkout
 
       - run: sudo apt update
-      - run: sudo docker-php-ext-install zip
+      - run: sudo apt install libpng-dev libpq-dev libxslt1.1 libxslt1-dev
+      - run: sudo docker-php-ext-install zip gd pgsql xsl
 
       - restore_cache:
           keys:
@@ -18,6 +19,10 @@ jobs:
       - run:
           name: "Create Environment file"
           command: mv .env.test .env
+
+      - run:
+          name: "Create Build folder"
+          command: mkdir -m 777 ./public/build
 
       - run:
           name: "Install Dependencies"
@@ -31,16 +36,27 @@ jobs:
           keys:
             - node-v1-{{ checksum "package.json" }}
             - node-v1-
-      - run: yarn install
+      - run: npm install
       - save_cache:
           key: node-v1-{{ checksum "package.json" }}
           paths:
             - node_modules
-      - run:
-          name: Run web server
-          command: php bin/console server:run
-          background: true
+      - run: npm run build
 
       - run:
-          name: "Run Tests"
-          command: make tests
+          name: Download Selenium
+          command: curl -O https://selenium-release.storage.googleapis.com/3.141/selenium-server-standalone-3.141.59.jar
+
+      - run:
+          name: Start Selenium
+          command: java -jar selenium-server-standalone-3.141.59.jar
+          background: true
+      - run: ls -la public
+      - run: ls -la public/build
+
+      - run: php bin/console doctrine:database:drop --force || true
+      - run: php bin/console doctrine:database:create
+      - run: php bin/console doctrine:migrations:migrate -n
+      - run: php bin/console doctrine:schema:update --force
+      - run: php bin/console hautelook:fixtures:load -n
+      - run: php ./vendor/bin/phpunit
