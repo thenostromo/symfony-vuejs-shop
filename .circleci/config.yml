@@ -51,6 +51,8 @@ jobs:
           name: Start Selenium
           command: java -jar selenium-server-standalone-3.141.59.jar
           background: true
+      - run: ls -la public
+      - run: ls -la public/build
 
       - run: php bin/console doctrine:database:drop --force || true
       - run: php bin/console doctrine:database:create
