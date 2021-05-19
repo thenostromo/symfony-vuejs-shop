@@ -21,10 +21,6 @@ jobs:
           command: mv .env.test .env
 
       - run:
-          name: "Create Build folder"
-          command: mkdir -m 777 ./public/build
-
-      - run:
           name: "Install Dependencies"
           command: composer install -n --prefer-dist
 

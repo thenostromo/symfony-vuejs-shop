@@ -16,7 +16,7 @@ set('composer_options', '{{composer_action}} --verbose --prefer-dist --no-progre
 add('shared_files', ['.env.local']);
 add('shared_dirs', ['public/uploads']);
 
-host('test')
+host('test') 
     ->hostname('localhost')
     ->user('thenostromo')
     ->port(22)
