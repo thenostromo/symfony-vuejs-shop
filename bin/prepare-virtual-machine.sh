@@ -1,10 +1,10 @@
 #!/usr/bin/env bash
-sudo apt-get update
-sudo apt-get install -y libzip-dev libpng-dev libpq-dev libxslt1.1 libxslt1-dev libnss3-tools --no-install-recommends
-sudo apt-get install -y curl git unzip wget mc nano acl --no-install-recommends
+sudo apt update
+sudo apt install -y libzip-dev libpng-dev libpq-dev libxslt1.1 libxslt1-dev libnss3-tools
+sudo apt install -y curl git unzip wget mc nano acl
 
 # POSTGRESQL
-yum install postgresql postgresql-contrib
+sudo apt install postgresql postgresql-contrib
 #next: sudo -u postgres psql ,
 #next create database ranked_choice;
 #next create user rc_admin with encrypted password 'rc1234';
@@ -26,8 +26,8 @@ curl -sL https://deb.nodesource.com/setup_14.x  | bash - && \
 wget https://get.symfony.com/cli/installer -O - | bash \
     && mv /root/.symfony/bin/symfony /usr/local/bin/symfony
 
-sudo mkdir -p /var/www/todo-symfony
-sudo chown sammy:sammy /var/www/todo-symfony
+sudo mkdir -p /var/www/ranked_choice
+sudo chown redlesleys:redlesleys /var/www/ranked_choice
 cd /var/www
 git clone https://github.com/php-demos/todo-symfony.git todo-symfony
 
