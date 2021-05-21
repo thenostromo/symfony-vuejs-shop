@@ -1,6 +1,6 @@
 #!/usr/bin/env bash
 echo "Install dependencies";
-composer install --no-interaction --optimize-autoloader;
+composer install --no-interaction --no-dev --optimize-autoloader;
 
 echo "Clear cache";
 php bin/console cache:clear --no-warmup;
@@ -15,9 +15,16 @@ echo "Change permissions to cache";
 chmod -R 777 var/*
 
 echo "Install node_modules";
-npm install;
+#npm install;
 
 echo "Build javascript for production";
-npm run build;
+#npm run build;
+
+echo "Run supervisor"
+service supervisor stop
+service supervisor start
+#supervisorctl reread
+#supervisorctl update
+#supervisorctl start messenger-consume:*
 
 exec "$@"

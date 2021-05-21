@@ -68,3 +68,27 @@ tests:
 	symfony console hautelook:fixtures:load -n
 	symfony php ./vendor/bin/phpunit --group functional,integration,unit $@
 .PHONY: tests
+
+##
+## DOCKER
+## ----------------------
+docker__project-prod__init:
+	sh ./bin/docker__project-prod__init.sh
+
+docker__project-dev__init:
+	sh ./bin/docker__project-dev__init.sh
+
+docker__containers__list:
+	sh ./bin/docker__containers__list.sh
+
+docker__containers__clean:
+	sh ./bin/docker__containers__clean.sh
+
+docker__php-fpm__connect:
+	sh ./bin/docker__php-fpm__connect.sh
+
+docker__php-fpm__symfony-server-log: # watch messenger command
+	sh ./bin/docker__php-fpm__symfony-server-log.sh
+
+docker__db__connect-db-client:
+	sh ./bin/docker__db__connect-db-client.sh
