@@ -99,11 +99,6 @@ class Product
     private $size;
 
     /**
-     * @ORM\ManyToMany(targetEntity=Order::class, mappedBy="products")
-     */
-    private $orders;
-
-    /**
      * @ORM\ManyToOne(targetEntity=Category::class, inversedBy="products")
      * @Groups({"product:list", "product:list:write", "product:item", "order:item", "sale_collection:item"})
      */
@@ -118,11 +113,6 @@ class Product
      * @ORM\Column(type="boolean")
      */
     private $isDeleted;
-
-    /**
-     * @ORM\ManyToMany(targetEntity=SaleCollection::class, mappedBy="products")
-     */
-    private $saleCollections;
 
     /**
      * @ORM\OneToMany(targetEntity=ProductImage::class, mappedBy="product", orphanRemoval=true)
@@ -144,10 +134,8 @@ class Product
     public function __construct()
     {
         $this->createdAt = new \DateTimeImmutable();
-        $this->orders = new ArrayCollection();
         $this->isPublished = false;
         $this->isDeleted = false;
-        $this->saleCollections = new ArrayCollection();
         $this->productImages = new ArrayCollection();
         $this->saleCollectionProducts = new ArrayCollection();
         $this->orderProducts = new ArrayCollection();
@@ -230,33 +218,6 @@ class Product
         return $this;
     }
 
-    /**
-     * @return Collection|Order[]
-     */
-    public function getOrders(): Collection
-    {
-        return $this->orders;
-    }
-
-    public function addOrder(Order $order): self
-    {
-        if (!$this->orders->contains($order)) {
-            $this->orders[] = $order;
-            $order->addProduct($this);
-        }
-
-        return $this;
-    }
-
-    public function removeOrder(Order $order): self
-    {
-        if ($this->orders->removeElement($order)) {
-            $order->removeProduct($this);
-        }
-
-        return $this;
-    }
-
     public function getCategory(): ?Category
     {
         return $this->category;
@@ -289,33 +250,6 @@ class Product
     public function setIsDeleted(bool $isDeleted): self
     {
         $this->isDeleted = $isDeleted;
-
-        return $this;
-    }
-
-    /**
-     * @return Collection|SaleCollection[]
-     */
-    public function getSaleCollections(): Collection
-    {
-        return $this->saleCollections;
-    }
-
-    public function addSaleCollection(SaleCollection $saleCollection): self
-    {
-        if (!$this->saleCollections->contains($saleCollection)) {
-            $this->saleCollections[] = $saleCollection;
-            $saleCollection->addProduct($this);
-        }
-
-        return $this;
-    }
-
-    public function removeSaleCollection(SaleCollection $saleCollection): self
-    {
-        if ($this->saleCollections->removeElement($saleCollection)) {
-            $saleCollection->removeProduct($this);
-        }
 
         return $this;
     }

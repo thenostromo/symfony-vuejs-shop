@@ -29,11 +29,11 @@ wget https://get.symfony.com/cli/installer -O - | bash \
 sudo mkdir -p /var/www/ranked_choice
 sudo chown redlesleys:redlesleys /var/www/ranked_choice
 cd /var/www
-git clone https://github.com/php-demos/todo-symfony.git todo-symfony
+git clone git@github.com:thenostromo/Symfony5CourseShop.git ranked_choice
 
-sudo setfacl -R -m u:www-data:rX todo-symfony
-sudo setfacl -R -m u:www-data:rwX todo-symfony/app/cache todo-symfony/app/logs
-sudo setfacl -dR -m u:www-data:rwX todo-symfony/app/cache todo-symfony/app/logs
+sudo setfacl -R -m u:www-data:rX ranked_choice
+sudo setfacl -R -m u:www-data:rwX ranked_choice/var/cache todo-symfony/var/log
+sudo setfacl -dR -m u:www-data:rwX ranked_choice/var/cache todo-symfony/var/log
 export SYMFONY_ENV=prod
 composer install --no-dev --optimize-autoloader
 php app/console doctrine:schema:create

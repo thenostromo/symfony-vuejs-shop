@@ -6,13 +6,11 @@ use App\DataFixtures\UserFixtures;
 use App\Tests\Functional\SymfonyPanther\BasePantherTestCase;
 use Symfony\Component\HttpFoundation\Response;
 
-/**
- * @group functional
- */
 class AuthLoginControllerTest extends BasePantherTestCase
 {
     /**
      * Default testing.
+     * @group functional
      */
     public function testLogin(): void
     {
@@ -33,6 +31,7 @@ class AuthLoginControllerTest extends BasePantherTestCase
 
     /**
      * For testing UI in browser (real-time).
+     * @group functional-selenium
      */
     public function testLoginWithSeleniumClient(): void
     {
@@ -56,6 +55,7 @@ class AuthLoginControllerTest extends BasePantherTestCase
 
     /**
      * For testing UI in browser (browser hide).
+     * @group functional
      */
     public function testLoginWithPantherClient(): void
     {

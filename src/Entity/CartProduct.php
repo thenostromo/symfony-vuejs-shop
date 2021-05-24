@@ -42,7 +42,7 @@ class CartProduct
     private $id;
 
     /**
-     * @ORM\ManyToOne(targetEntity=Cart::class, inversedBy="product")
+     * @ORM\ManyToOne(targetEntity=Cart::class, inversedBy="cartProducts")
      * @ORM\JoinColumn(nullable=false)
      *
      * @Groups({"cart_product:item", "cart_product:list", "cart_product:write"})
