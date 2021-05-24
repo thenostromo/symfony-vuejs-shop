@@ -69,6 +69,9 @@ tests:
 	symfony php ./vendor/bin/phpunit --group functional,integration,unit $@
 .PHONY: tests
 
+tests-preset-configuration:
+	sh ./bin/tests-preset.sh
+
 ##
 ## DOCKER
 ## ----------------------
