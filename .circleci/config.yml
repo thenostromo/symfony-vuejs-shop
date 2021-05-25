@@ -45,7 +45,7 @@ jobs:
 
       - run:
           name: Move Symfony Cli to local bin
-          command: mv ~/.symfony/bin/symfony /usr/local/bin/symfony
+          command: sudo mv ~/.symfony/bin/symfony /usr/local/bin/symfony
 
       - run:
           name: Start Selenium
