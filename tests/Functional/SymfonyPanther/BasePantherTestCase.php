@@ -37,7 +37,7 @@ class BasePantherTestCase extends PantherTestCase
     private function getChromeOptions(): ChromeOptions
     {
         $chromeOptions = new ChromeOptions();
-        $chromeOptions->addArguments(['--window-size=1920,1080', '--no-sandbox', '--disable-dev-shm-usage']);
+        $chromeOptions->addArguments(['--window-size=1920,1080', '--headless', '--no-sandbox', '--disable-dev-shm-usage']);
 
         return $chromeOptions;
     }
