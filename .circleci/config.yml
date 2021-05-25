@@ -40,6 +40,19 @@ jobs:
       - run: npm run build
 
       - run:
+          name: Download Symfony Cli
+          command: wget https://get.symfony.com/cli/installer -O - | bash
+
+      - run:
+          name: Move Symfony Cli to local bin
+          command: mv ~/.symfony/bin/symfony /usr/local/bin/symfony
+
+      - run:
+          name: Start Selenium
+          command: java -jar selenium-server-standalone-3.141.59.jar
+          background: true
+
+      - run:
           name: Download Selenium
           command: curl -O https://selenium-release.storage.googleapis.com/3.141/selenium-server-standalone-3.141.59.jar
 
