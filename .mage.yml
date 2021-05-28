@@ -1,0 +1,28 @@
+magephp:
+  environments:
+    production:
+      user: redlesleys
+      branch: master
+      from: ./
+      host_path: /var/www/ranked-choice.com
+      releases: 3
+      exclude:
+        - ./var/*
+        - ./vendor/*
+        - ./node_modules/*
+        - ./public/build/*
+        - ./public/bundles/*
+        - ./public/uploads/*
+        - .env.local
+      hosts:
+        - 35.229.119.165
+      pre-deploy:
+        - git/update
+        - composer/install
+        - composer/dump-autoload
+      on-deploy:
+        - symfony/cache-warmup: { env: 'prod' }
+        - symfony/assets-install: { env: 'prod' }
+      on-release:
+      post-release:
+      post-deploy:

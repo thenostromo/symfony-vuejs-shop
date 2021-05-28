@@ -4,7 +4,7 @@
         "Read more about it at https://getcomposer.org/doc/01-basic-usage.md#installing-dependencies",
         "This file is @generated automatically"
     ],
-    "content-hash": "f8897e8ca016181b4a8c0d8f22769881",
+    "content-hash": "a5f69bb25c58245402a9ce3a3630b5ab",
     "packages": [
         {
             "name": "api-platform/core",
@@ -11710,6 +11710,73 @@
         }
     ],
     "packages-dev": [
+        {
+            "name": "andres-montanez/magallanes",
+            "version": "4.1.1",
+            "source": {
+                "type": "git",
+                "url": "https://github.com/andres-montanez/Magallanes.git",
+                "reference": "e7afcbfedfeb2e4dfa707f45919c866cb644bcd4"
+            },
+            "dist": {
+                "type": "zip",
+                "url": "https://api.github.com/repos/andres-montanez/Magallanes/zipball/e7afcbfedfeb2e4dfa707f45919c866cb644bcd4",
+                "reference": "e7afcbfedfeb2e4dfa707f45919c866cb644bcd4",
+                "shasum": ""
+            },
+            "require": {
+                "monolog/monolog": "~1.11 | ^2.0",
+                "php": "^7.2 | ^8.0",
+                "symfony/console": "^4.0 | ^5.0",
+                "symfony/event-dispatcher": "^4.0 | ^5.0",
+                "symfony/filesystem": "^4.0 | ^5.0",
+                "symfony/finder": "^4.0 | ^5.0",
+                "symfony/process": "^4.0 | ^5.0",
+                "symfony/yaml": "^4.0 | ^5.0"
+            },
+            "require-dev": {
+                "php-coveralls/php-coveralls": "~2.0",
+                "phpunit/phpunit": "^8.0"
+            },
+            "suggest": {
+                "ext-posix": "*"
+            },
+            "bin": [
+                "bin/mage"
+            ],
+            "type": "library",
+            "extra": {
+                "branch-alias": {
+                    "dev-master": "4.0.x-dev",
+                    "dev-discovery-one": "4.x-dev"
+                }
+            },
+            "autoload": {
+                "psr-4": {
+                    "Mage\\": "src/"
+                }
+            },
+            "notification-url": "https://packagist.org/downloads/",
+            "license": [
+                "MIT"
+            ],
+            "authors": [
+                {
+                    "name": "Andrés Montañez",
+                    "email": "andresmontanez@gmail.com"
+                }
+            ],
+            "description": "The Deployment Tool for PHP Applications",
+            "homepage": "https://magephp.com",
+            "keywords": [
+                "deployment"
+            ],
+            "support": {
+                "issues": "https://github.com/andres-montanez/Magallanes/issues",
+                "source": "https://github.com/andres-montanez/Magallanes/tree/4.1.1"
+            },
+            "time": "2021-02-20T20:22:10+00:00"
+        },
         {
             "name": "behat/behat",
             "version": "v3.8.1",

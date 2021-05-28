@@ -72,6 +72,9 @@ tests:
 tests-preset-configuration:
 	sh ./bin/tests-preset.sh
 
+magallanes:
+	$(VENDOR)/bin/mage
+
 ##
 ## DOCKER
 ## ----------------------

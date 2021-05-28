@@ -60,6 +60,7 @@
         "twig/string-extra": "^3.3"
     },
     "require-dev": {
+        "andres-montanez/magallanes": "^4.1",
         "bex/behat-screenshot": "^2.1",
         "dama/doctrine-test-bundle": "^6.5",
         "dbrekelmans/bdi": "^0.3.0",
